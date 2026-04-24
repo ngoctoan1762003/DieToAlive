@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8189ef6899a534b85f427eb7df14dd, type: 3}
+  m_Name: ListSwordCard
+  m_EditorClassIdentifier: 
+  configs:
+  - cardID: 200
+    diceValue: 12
+    statType: 28000000
+    range: 1
+    chooseBetterDice: 0
+    weightPenalty: 0
+  - cardID: 201
+    diceValue: 12
+    statType: 2800000032000000
+    range: 1
+    chooseBetterDice: 0
+    weightPenalty: 0
+  - cardID: 202
+    diceValue: 12
+    statType: 3200000028000000
+    range: 1
+    chooseBetterDice: 1
+    weightPenalty: 0
+  - cardID: 203
+    diceValue: 0
+    statType: 32000000
+    range: 1
+    chooseBetterDice: 0
+    weightPenalty: 0
+  - cardID: 204
+    diceValue: 6
+    statType: 32000000
+    range: 1
+    chooseBetterDice: 0
+    weightPenalty: 0
