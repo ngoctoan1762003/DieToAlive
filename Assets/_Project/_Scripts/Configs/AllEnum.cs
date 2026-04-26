@@ -126,3 +126,9 @@ public enum DamageType
     Pierce,
     Blunt
 }
+
+public enum InventoryItemType
+{
+    Weapon,
+    Tool
+}
