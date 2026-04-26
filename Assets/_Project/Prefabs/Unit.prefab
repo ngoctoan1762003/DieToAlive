@@ -204,13 +204,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2614075675273457580}
+  - component: {fileID: 4923558352716428493}
   m_Layer: 5
   m_Name: Action
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2614075675273457580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -231,6 +232,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4923558352716428493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191232806157371567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4497ce8aaf56ef4faf3da3112115057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: 3500863418445815317}
 --- !u!1 &1301755432473933665
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +402,11 @@ MonoBehaviour:
   targetBtn: {fileID: 2542345155324837434}
   diceTarget: {fileID: 504432167172702649}
   diceTargetBtn: {fileID: 2330831503952862982}
+  actionCountText: {fileID: 1309082184343354930}
   healthBarBehaviour: {fileID: 144844159395093547}
+  cardMechanics: 
+  currentMechanicIndex: 0
+  priorityCard: 0
 --- !u!1 &2033495890642301792
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,6 +1638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6742265389188640833}
+  - component: {fileID: 5596753207890252609}
   m_Layer: 5
   m_Name: Action
   m_TagString: Untagged
@@ -1649,6 +1668,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5596753207890252609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6558302769403828474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4497ce8aaf56ef4faf3da3112115057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: 3500863418445815317}
 --- !u!1 &8797189359271130092
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,7 +1740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

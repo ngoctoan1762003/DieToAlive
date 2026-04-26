@@ -4,6 +4,7 @@ using UnityEngine;
 public class CardLogic 
 {
     private CardConfig cardConfig;
+    public CardConfig CardConfig => cardConfig;
     private Card card;
     private Unit unit;
     private Unit target;
@@ -28,9 +29,9 @@ public class CardLogic
         }
     }
 
-    private void OnCompleted(int val)
+    protected virtual void OnCompleted(int val)
     {
-        GameSystem.Instance.ToDiscard(card);
+        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card);
         target.TakeDamage(unit, val);
     }
 }

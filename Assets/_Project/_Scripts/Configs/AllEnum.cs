@@ -20,13 +20,15 @@ public enum UnitID
 
 public enum CardID
 {
+    None = 0, 
+    
     //Basic
     BasicEvade = 10,
     BasicAttack = 11,
     BasicBlock = 12,
     BasicRemoveWeapon = 13,
     BasicUse = 14,
-    BasicDash = 15,
+    // BasicDash = 15,
     BasicEquip = 16,
     
     //Dagger
@@ -117,7 +119,8 @@ public enum PassiveID
 public enum CardType
 {
     Offensive,
-    Defensive
+    Defensive,
+    UnInterruptable
 }
 
 public enum DamageType
