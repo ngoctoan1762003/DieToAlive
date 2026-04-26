@@ -8,4 +8,5 @@ public class UnitConfigs : ScriptableObject
     public CardID[] cardIDs;
     public PassiveID[] passiveIDs;
     public int maxHP;
+    public CardID[] mechanics;
 }

@@ -11,9 +11,8 @@ public class ListCardConfigs : ScriptableObject
 public class CardConfig
 {
     public CardID cardID;
-    public float diceValue;
     public StatType[] statType;
-    public int range;
+    public int actionNeed;
     public bool chooseBetterDice;
     public CardType cardType;
     public DamageType damageType;

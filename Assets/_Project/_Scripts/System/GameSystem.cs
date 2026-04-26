@@ -12,6 +12,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private Transform mainGameTrans;
     
     [SerializeField] private Unit player;
+    public Unit Player => player;
     
     [Header("Cards")]
     [SerializeField] private List<CardID> deckIDs;
@@ -29,9 +30,12 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private Transform handCardsTransform;
     
     private List<Unit> enemies;
+    private List<Unit> actionQueue;
     
     private static GameSystem instance;
     public static GameSystem Instance => instance;
+
+    private bool isInAction;
 
     private void Awake()
     {
@@ -46,14 +50,25 @@ public class GameSystem : MonoBehaviour
 
         unitPool = new AddressablesPool<Unit>(unitPrefab, 10);
         cardPool = new AddressablesPool<Card>(cardPrefab, 10);
-    }
-
-    private void Start()
-    {
         Setup();
         enemies = new List<Unit>();
-        SetupUnit(UnitID.WolfLeader);
+        actionQueue = new List<Unit>();
+        isInAction = false;
         player.Setup(UnitID.Main);
+        SetupUnit(UnitID.WolfLeader);
+    }
+
+    private void Update()
+    {
+        if (!isInAction)
+        {
+            if (actionQueue.Count > 0)
+            {
+                actionQueue[0].Execute();
+                actionQueue.RemoveAt(0);
+                isInAction = true;
+            }
+        }
     }
 
     public bool IsInHand(Card card)
@@ -87,7 +102,7 @@ public class GameSystem : MonoBehaviour
             (drawPileCards[i], drawPileCards[randomIndex]) = (drawPileCards[randomIndex], drawPileCards[i]);
         }
         
-        Draw(6);
+        Draw(6, false);
     }
 
     public void ChooseCard(Card card)
@@ -101,6 +116,7 @@ public class GameSystem : MonoBehaviour
         drawPileCards.Remove(card);
         discardCards.Add(card);
         card.transform.SetParent(discardPileCardsTransform);
+        DecreaseActionEnemy();
     }
 
     public void ShowTarget(bool val)
@@ -111,7 +127,7 @@ public class GameSystem : MonoBehaviour
         }
     }
 
-    public void Draw(int number)
+    public void Draw(int number, bool decreaseEnemyAction = true)
     {
         for (int i = 0; i < number; i++)
         {
@@ -119,6 +135,7 @@ public class GameSystem : MonoBehaviour
             {
                 Card cardToDraw = drawPileCards[drawPileCards.Count - 1];
                 cardToDraw.GetComponent<RectTransform>().SetParent(handCardsTransform);
+                cardToDraw.transform.localPosition = Vector3.zero;
                 handCards.Add(cardToDraw);
                 drawPileCards.RemoveAt(drawPileCards.Count - 1);
             }
@@ -132,10 +149,11 @@ public class GameSystem : MonoBehaviour
                 else
                 {
                     Debug.LogWarning("No more cards in deck or discard pile!");
-                    break;
+                    return;
                 }
             }
         }
+        if (decreaseEnemyAction) DecreaseActionEnemy();
     }
 
     private void ReshuffleDiscardIntoDraw()
@@ -155,6 +173,19 @@ public class GameSystem : MonoBehaviour
         Debug.Log("Discard pile reshuffled into Draw pile.");
     }
 
+    private void DecreaseActionEnemy()
+    {
+        foreach (var enemy in enemies)
+        {
+            enemy.DecreaseAction();
+        }
+    }
+
+    public void AddActionRequest(Unit unit)
+    {
+        actionQueue.Add(unit);
+    }
+    
 	public void UseCard(Unit enemy)
     {
         selectedCard.Execute(enemy);

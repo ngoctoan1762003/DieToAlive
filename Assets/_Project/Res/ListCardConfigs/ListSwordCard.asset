@@ -14,32 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   configs:
   - cardID: 200
-    diceValue: 12
     statType: 28000000
-    range: 1
+    actionNeed: 0
     chooseBetterDice: 0
-    weightPenalty: 0
+    cardType: 0
+    damageType: 0
   - cardID: 201
-    diceValue: 12
     statType: 2800000032000000
-    range: 1
+    actionNeed: 0
     chooseBetterDice: 0
-    weightPenalty: 0
+    cardType: 0
+    damageType: 0
   - cardID: 202
-    diceValue: 12
     statType: 3200000028000000
-    range: 1
+    actionNeed: 0
     chooseBetterDice: 1
-    weightPenalty: 0
+    cardType: 0
+    damageType: 1
   - cardID: 203
-    diceValue: 0
     statType: 32000000
-    range: 1
+    actionNeed: 0
     chooseBetterDice: 0
-    weightPenalty: 0
+    cardType: 0
+    damageType: 0
   - cardID: 204
-    diceValue: 6
     statType: 32000000
-    range: 1
+    actionNeed: 0
     chooseBetterDice: 0
-    weightPenalty: 0
+    cardType: 2
+    damageType: 0
