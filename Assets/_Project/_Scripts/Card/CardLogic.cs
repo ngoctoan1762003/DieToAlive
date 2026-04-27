@@ -8,6 +8,7 @@ public class CardLogic
     private Card card;
     private Unit unit;
     private Unit target;
+    public Action onUsed;
 
     public virtual void Setup(Unit unit, Card card, CardID cardID)
     {
@@ -42,5 +43,6 @@ public class CardLogic
         target.TakeDamage(unit, val);
         GameSystem.Instance.CompletedAction();
         unit.onEndAction?.Invoke();
+        onUsed?.Invoke();
     }
 }

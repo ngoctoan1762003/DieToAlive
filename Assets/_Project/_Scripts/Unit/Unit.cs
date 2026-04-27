@@ -51,6 +51,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     [SerializeField] private Button diceTargetBtn;
     [SerializeField] private TextMeshProUGUI actionCountText;
     [SerializeField] private HealthBarBehaviour healthBarBehaviour;
+    [SerializeField] private Transform readyActionTransform;
 
     // Card
     private CardLogic actionCard;
@@ -194,6 +195,10 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     public void ReadyCard(CardLogic card)
     {
         readyCards.Add(card);
+        ReadyActionUIBehaviour readyAction = GameSystem.Instance.GetReadyActionPrefab(readyActionTransform);
+        readyAction.Setup(card.CardConfig, this);
+        readyAction.transform.localScale = Vector3.one;
+        card.onUsed += readyAction.Use;
     }
 
     public void Execute()

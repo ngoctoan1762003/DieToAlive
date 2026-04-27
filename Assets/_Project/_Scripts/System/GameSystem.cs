@@ -22,6 +22,8 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private List<Card> discardCards;
     [SerializeField] private AssetReference cardPrefab;
     private AddressablesPool<Card> cardPool;
+    [SerializeField] private AssetReference readyActionPrefab;
+    private AddressablesPool<ReadyActionUIBehaviour> readyActionPool;
     private Card selectedCard;
     public Card SelectedCard => selectedCard;
 
@@ -50,6 +52,7 @@ public class GameSystem : MonoBehaviour
 
         unitPool = new AddressablesPool<Unit>(unitPrefab, 10);
         cardPool = new AddressablesPool<Card>(cardPrefab, 10);
+        readyActionPool = new AddressablesPool<ReadyActionUIBehaviour>(readyActionPrefab, 10);
         Setup();
         enemies = new List<Unit>();
         actionQueue = new List<Unit>();
@@ -69,6 +72,11 @@ public class GameSystem : MonoBehaviour
                 isInAction = true;
             }
         }
+    }
+
+    public ReadyActionUIBehaviour GetReadyActionPrefab(Transform parent)
+    {
+        return readyActionPool.GetObjectAndActive(parent);
     }
 
     public void CompletedAction()
