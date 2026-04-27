@@ -9,9 +9,12 @@ public class LibraryPanel : MonoBehaviour
     [SerializeField] private Button backButton;
     [SerializeField] private LibraryItemUI libraryItemUIPrefab;
     [SerializeField] private TextMeshProUGUI observationPointTXT;
+    [SerializeField] private SkillAndPassivePanel skillAndPassivePanel;
+
     private void OnEnable()
     {
         observationPointTXT.text = "Observation Point: " + LibraryManager.Instance.ObservationPoints.ToString();
+        skillAndPassivePanel.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -44,6 +47,12 @@ public class LibraryPanel : MonoBehaviour
         {
             var item = Instantiate(libraryItemUIPrefab, contentRoot);
             item.Init(unit);
+            item.OnClick += OnItemClicked;
         }
+    }
+    private void OnItemClicked(UnitConfigs unit)
+    {
+        skillAndPassivePanel.gameObject.SetActive(true);
+        skillAndPassivePanel.Init(unit);
     }
 }

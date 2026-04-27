@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: WolfEvadeSuccess
   m_EditorClassIdentifier: 
   id: 120
+  icon: {fileID: 0}
+  passiveName: Wolf Evade Success
+  description: Wolf Evade Success
   strengthGain: 1

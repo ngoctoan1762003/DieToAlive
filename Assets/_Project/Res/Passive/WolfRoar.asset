@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: WolfRoar
   m_EditorClassIdentifier: 
   id: 140
+  icon: {fileID: 0}
+  passiveName: Wolf Roar
+  description: Wolf Roar
   hpThreshold: 50
