@@ -12,7 +12,7 @@ public class Card : MonoBehaviour, IPointerClickHandler, IInPool
     {
         this.cardID = cardID;
         nameText.text = cardID.ToString();
-        cardLogic = new CardLogic();
+        cardLogic = DataManager.Instance.GetCardLogic(cardID);
         cardLogic.Setup(unit, this, cardID);
     }
 

@@ -397,6 +397,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca8dab6b582e5d4e8523cbc56e9a398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strength:
+    baseValue: 0
+  dexterity:
+    baseValue: 0
+  defense:
+    baseValue: 0
+  magic:
+    baseValue: 0
+  maxHP:
+    baseValue: 0
   sprite: {fileID: 5499627270558751556}
   target: {fileID: 6106178307487334760}
   targetBtn: {fileID: 2542345155324837434}
@@ -404,9 +414,6 @@ MonoBehaviour:
   diceTargetBtn: {fileID: 2330831503952862982}
   actionCountText: {fileID: 1309082184343354930}
   healthBarBehaviour: {fileID: 144844159395093547}
-  cardMechanics: 
-  currentMechanicIndex: 0
-  priorityCard: 0
 --- !u!1 &2033495890642301792
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +489,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: fe0370b88801c6c4bbfc32b73d885744, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

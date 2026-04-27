@@ -18,6 +18,9 @@ public class CardLogic
     
     public virtual void Execute(Unit enemy)
     {
+        UIManager.Instance.BlackCover.gameObject.SetActive(true);
+        unit.Highlight();
+        enemy.Highlight();
         target = enemy;
         switch (cardConfig.cardType)
         {
@@ -32,6 +35,12 @@ public class CardLogic
     protected virtual void OnCompleted(int val)
     {
         if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card);
+        else unit.SetupActionCard();
+        UIManager.Instance.BlackCover.gameObject.SetActive(false);
+        unit.DeHighlight();
+        target.DeHighlight();
         target.TakeDamage(unit, val);
+        GameSystem.Instance.CompletedAction();
+        unit.onEndAction?.Invoke();
     }
 }

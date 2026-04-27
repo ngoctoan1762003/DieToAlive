@@ -71,6 +71,11 @@ public class GameSystem : MonoBehaviour
         }
     }
 
+    public void CompletedAction()
+    {
+        isInAction = false;
+    }
+
     public bool IsInHand(Card card)
     {
         return handCards.Contains(card);
@@ -79,7 +84,7 @@ public class GameSystem : MonoBehaviour
     public void SetupUnit(UnitID unitID)
     {
         Unit u = unitPool.GetObjectAndActive(mainGameTrans);
-        u.transform.localPosition = new Vector3(2.5f, -2.5f, 0);
+        u.transform.localPosition = new Vector3(Random.Range(-1, 8f), Random.Range(-4, -2), 0);
         u.Setup(unitID);
         enemies.Add(u);
     }

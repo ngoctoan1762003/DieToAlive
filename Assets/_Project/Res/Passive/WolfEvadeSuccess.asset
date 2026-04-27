@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: WolfEvadeSuccess
   m_EditorClassIdentifier: 
   id: 120
+  passiveActivationType: 2
   strengthGain: 1
