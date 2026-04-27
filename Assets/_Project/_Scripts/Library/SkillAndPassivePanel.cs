@@ -8,6 +8,20 @@ public class SkillAndPassivePanel : MonoBehaviour
     [SerializeField] private Transform PassiveContainer;
     [SerializeField] private CardInfo CardInfoPrefab;
     [SerializeField] private Transform ContentContainter;
+    [SerializeField] private Button BackButton;
+
+    private void Start()
+    {
+        BackButton.onClick.AddListener(delegate
+        {
+            gameObject.SetActive(false);
+        });
+    }
+
+    private void OnDestroy()
+    {
+        BackButton.onClick.RemoveAllListeners();
+    }
 
     public void Init(UnitConfigs unit)
     {
@@ -20,7 +34,14 @@ public class SkillAndPassivePanel : MonoBehaviour
             if (data == null) continue;
 
             var item = Instantiate(CardInfoPrefab, SkillContainer);
-            item.Init(data.icon, data.cardName, data.description);
+
+            bool unlocked = LibraryManager.Instance.IsSkillUnlocked(unit.unitID, cardID);
+
+            item.Init(
+                data.icon,
+                data.cardName,
+                unlocked ? data.description : "???"
+            );
         }
 
         foreach (var passiveID in unit.passiveIDs)
@@ -29,7 +50,14 @@ public class SkillAndPassivePanel : MonoBehaviour
             if (data == null) continue;
 
             var item = Instantiate(CardInfoPrefab, PassiveContainer);
-            item.Init(data.icon, data.passiveName, data.description);
+
+            bool unlocked = LibraryManager.Instance.IsPassiveUnlocked(unit.unitID, passiveID);
+
+            item.Init(
+                data.icon,
+                data.passiveName,
+                unlocked ? data.description : "???"
+            );
         }
 
         Canvas.ForceUpdateCanvases();

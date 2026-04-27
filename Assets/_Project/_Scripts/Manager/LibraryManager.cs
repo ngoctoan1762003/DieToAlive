@@ -21,6 +21,7 @@ public class LibraryManager : MonoBehaviour
         Instance = this;
         Init();
         Load();
+        SyncWithConfig();
     }
 
     void Init()
@@ -31,11 +32,31 @@ public class LibraryManager : MonoBehaviour
 
             if (!states.ContainsKey(id))
             {
-                states.Add(id, new LibraryItemState
+                var newState = new LibraryItemState
                 {
                     id = id,
                     isDiscovered = false
-                });
+                };
+
+                foreach (var card in unit.cardIDs)
+                {
+                    newState.skills.Add(new SkillState
+                    {
+                        id = card.ToString(),
+                        isUnlocked = false
+                    });
+                }
+
+                foreach (var passive in unit.passiveIDs)
+                {
+                    newState.passives.Add(new PassiveState
+                    {
+                        id = passive.ToString(),
+                        isUnlocked = false
+                    });
+                }
+
+                states.Add(id, newState);
             }
         }
     }
@@ -55,9 +76,55 @@ public class LibraryManager : MonoBehaviour
         }
     }
 
+    // Unlock skill
+    public void UnlockSkill(UnitID unitID, CardID cardID)
+    {
+        if (!states.TryGetValue(unitID.ToString(), out var unit)) return;
+
+        var skill = unit.skills.Find(s => s.id == cardID.ToString());
+        if (skill == null) return;
+
+        if (!skill.isUnlocked)
+        {
+            skill.isUnlocked = true;
+            Save();
+        }
+    }
+
+    // Unlock passive
+    public void UnlockPassive(UnitID unitID, PassiveID passiveID)
+    {
+        if (!states.TryGetValue(unitID.ToString(), out var unit)) return;
+
+        var p = unit.passives.Find(s => s.id == passiveID.ToString());
+        if (p == null) return;
+
+        if (!p.isUnlocked)
+        {
+            p.isUnlocked = true;
+            Save();
+        }
+    }
+
     public bool IsDiscovered(UnitID unitID)
     {
         return states.TryGetValue(unitID.ToString(), out var state) && state.isDiscovered;
+    }
+
+    public bool IsSkillUnlocked(UnitID unitID, CardID cardID)
+    {
+        if (!states.TryGetValue(unitID.ToString(), out var unit)) return false;
+
+        var skill = unit.skills.Find(s => s.id == cardID.ToString());
+        return skill != null && skill.isUnlocked;
+    }
+
+    public bool IsPassiveUnlocked(UnitID unitID, PassiveID passiveID)
+    {
+        if (!states.TryGetValue(unitID.ToString(), out var unit)) return false;
+
+        var p = unit.passives.Find(s => s.id == passiveID.ToString());
+        return p != null && p.isUnlocked;
     }
 
     // ================= SAVE =================
@@ -100,12 +167,29 @@ public class LibraryManager : MonoBehaviour
                 return;
             }
 
-            // load states
             foreach (var entry in data.states)
             {
-                if (states.ContainsKey(entry.id))
+                if (!states.ContainsKey(entry.id)) continue;
+
+                var local = states[entry.id];
+
+                // load unit
+                local.isDiscovered = entry.isDiscovered;
+
+                // load skills
+                foreach (var savedSkill in entry.skills)
                 {
-                    states[entry.id].isDiscovered = entry.isDiscovered;
+                    var skill = local.skills.Find(s => s.id == savedSkill.id);
+                    if (skill != null)
+                        skill.isUnlocked = savedSkill.isUnlocked;
+                }
+
+                // load passives
+                foreach (var savedPassive in entry.passives)
+                {
+                    var p = local.passives.Find(s => s.id == savedPassive.id);
+                    if (p != null)
+                        p.isUnlocked = savedPassive.isUnlocked;
                 }
             }
 
@@ -115,6 +199,45 @@ public class LibraryManager : MonoBehaviour
         {
             Debug.LogError("Load failed: " + e);
             Save();
+        }
+    }
+
+    // For expansion
+    void SyncWithConfig()
+    {
+        foreach (var unit in allUnits)
+        {
+            string id = unit.unitID.ToString();
+
+            if (!states.ContainsKey(id)) continue;
+
+            var state = states[id];
+
+            // sync skills
+            foreach (var card in unit.cardIDs)
+            {
+                if (!state.skills.Exists(s => s.id == card.ToString()))
+                {
+                    state.skills.Add(new SkillState
+                    {
+                        id = card.ToString(),
+                        isUnlocked = false
+                    });
+                }
+            }
+
+            // sync passives
+            foreach (var passive in unit.passiveIDs)
+            {
+                if (!state.passives.Exists(p => p.id == passive.ToString()))
+                {
+                    state.passives.Add(new PassiveState
+                    {
+                        id = passive.ToString(),
+                        isUnlocked = false
+                    });
+                }
+            }
         }
     }
 
