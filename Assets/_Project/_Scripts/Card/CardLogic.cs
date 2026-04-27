@@ -9,12 +9,42 @@ public class CardLogic
     private Unit unit;
     private Unit target;
     public Action onUsed;
+    private CardLogic clashCard;
+    public CardLogic ClashCard => clashCard;
 
     public virtual void Setup(Unit unit, Card card, CardID cardID)
     {
         this.unit = unit;
         this.card = card;
         cardConfig = DataManager.Instance.GetCardConfig(cardID);
+    }
+
+    public void SetClashCard(CardLogic cardLogic)
+    {
+        Debug.Log(unit + " " + cardLogic);
+        if (unit == GameSystem.Instance.Player)
+        {
+            if (cardLogic == null)
+            {
+                GameSystem.Instance.AddToHand(card);
+            }
+            else
+            {
+                GameSystem.Instance.RemoveCardFromHand(card);
+            }
+        }
+        this.clashCard = cardLogic;
+    }
+
+    public void AddReadyCard(CardLogic targetCard)
+    {
+        if (targetCard.clashCard != null)
+        {
+            targetCard.clashCard.SetClashCard(null);
+            targetCard.SetClashCard(null);
+        }
+        SetClashCard(targetCard);
+        targetCard.SetClashCard(this);
     }
     
     public virtual void Execute(Unit enemy)

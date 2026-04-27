@@ -7,6 +7,7 @@ public class Card : MonoBehaviour, IPointerClickHandler, IInPool
     [SerializeField] private CardID cardID;
     [SerializeField] private TextMeshProUGUI nameText;
     private CardLogic cardLogic;
+    public CardLogic CardLogic => cardLogic;
     
     public void Setup(Unit unit, CardID cardID)
     {

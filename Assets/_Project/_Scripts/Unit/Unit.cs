@@ -79,6 +79,12 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
             if (target.enabled == false) return;
             GameSystem.Instance.UseCard(this);
         });
+        diceTargetBtn.onClick.AddListener(() =>
+        {
+            if (GameSystem.Instance.SelectedCard == null) return;
+            if (diceTarget.enabled == false) return;
+            GameSystem.Instance.ReadyCard(GameSystem.Instance.SelectedCard, actionCard);
+        });
     }
 
     public void Setup(UnitID id)
@@ -192,6 +198,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         ActionCount--;
     }
 
+    // for enemies
     public void ReadyCard(CardLogic card)
     {
         readyCards.Add(card);

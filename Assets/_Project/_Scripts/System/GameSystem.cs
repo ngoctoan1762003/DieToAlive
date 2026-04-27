@@ -20,16 +20,21 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private List<Card> handCards;
     [SerializeField] private List<Card> drawPileCards;
     [SerializeField] private List<Card> discardCards;
+    
     [SerializeField] private AssetReference cardPrefab;
     private AddressablesPool<Card> cardPool;
     [SerializeField] private AssetReference readyActionPrefab;
     private AddressablesPool<ReadyActionUIBehaviour> readyActionPool;
+    
     private Card selectedCard;
     public Card SelectedCard => selectedCard;
+
+    private List<Card> readyCards = new();
 
     [SerializeField] private Transform drawPileCardsTransform;
     [SerializeField] private Transform discardPileCardsTransform;
     [SerializeField] private Transform handCardsTransform;
+    [SerializeField] private Transform readyCardsTransform;
     
     private List<Unit> enemies;
     private List<Unit> actionQueue;
@@ -147,9 +152,7 @@ public class GameSystem : MonoBehaviour
             if (drawPileCards.Count > 0)
             {
                 Card cardToDraw = drawPileCards[drawPileCards.Count - 1];
-                cardToDraw.GetComponent<RectTransform>().SetParent(handCardsTransform);
-                cardToDraw.transform.localPosition = Vector3.zero;
-                handCards.Add(cardToDraw);
+                AddToHand(cardToDraw);
                 drawPileCards.RemoveAt(drawPileCards.Count - 1);
             }
             else
@@ -167,6 +170,18 @@ public class GameSystem : MonoBehaviour
             }
         }
         if (decreaseEnemyAction) DecreaseActionEnemy();
+    }
+
+    public void AddToHand(Card cardToDraw)
+    {
+        cardToDraw.GetComponent<RectTransform>().SetParent(handCardsTransform);
+        cardToDraw.transform.localPosition = Vector3.zero;
+        handCards.Add(cardToDraw);
+    }
+
+    public void RemoveCardFromHand(Card cardToDraw)
+    {
+        handCards.Remove(cardToDraw);
     }
 
     private void ReshuffleDiscardIntoDraw()
@@ -206,7 +221,12 @@ public class GameSystem : MonoBehaviour
         ShowTarget(false);
     }
 
-	public void ReadyCard()
+    // for player
+	public void ReadyCard(Card readyCard, CardLogic targetCard)
 	{
-	}
+        readyCards.Add(readyCard);
+        readyCard.CardLogic.AddReadyCard(targetCard);
+        readyCard.transform.SetParent(readyCardsTransform);
+        ShowTarget(false);
+    }
 }
