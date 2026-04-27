@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: WolfEquipBlock
   m_EditorClassIdentifier: 
   id: 110
+  icon: {fileID: 0}
+  passiveName: Wolf Equip Block
+  description: Wolf Equip Block
   activationAction: 3

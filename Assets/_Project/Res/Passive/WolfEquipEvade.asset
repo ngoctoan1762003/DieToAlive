@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: WolfEquipEvade
   m_EditorClassIdentifier: 
   id: 100
+  icon: {fileID: 0}
+  passiveName: Wolf Equip Evade
+  description: Wolf Equip Evade

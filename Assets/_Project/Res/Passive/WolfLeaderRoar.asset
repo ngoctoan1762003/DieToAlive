@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: WolfLeaderRoar
   m_EditorClassIdentifier: 
   id: 130
+  icon: {fileID: 0}
+  passiveName: Wolf Leader Roar
+  description: Wolf Leader Roar
   passiveActivationType: 4
   hpThreshold:
   - 75

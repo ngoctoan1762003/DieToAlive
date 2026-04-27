@@ -162,3 +162,10 @@ public enum InventoryItemType
     Weapon,
     Tool
 }
+
+public enum LibraryItemType
+{
+    Enemy,
+    Skill,
+    Passive
+}
