@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: WolfRoar
   m_EditorClassIdentifier: 
   id: 140
+  passiveActivationType: 4
   hpThreshold: 50
