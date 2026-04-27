@@ -16,4 +16,5 @@ MonoBehaviour:
   icon: {fileID: 0}
   passiveName: Wolf Evade Success
   description: Wolf Evade Success
+  passiveActivationType: 2
   strengthGain: 1

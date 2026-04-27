@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -18,6 +19,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI diceText;
     [SerializeField] private Button drawButton;
     [SerializeField] private CardPopupDescription popupDescription;
+    [SerializeField] private Image blackCover;
+    public Image BlackCover => blackCover;
+    [SerializeField] private AssetReference damagePopupAsset;
+    private AddressablesPool<DamagePopup> damagePopupPool;
     
     [Header("Settings")]
     [SerializeField] private float rollDuration = 0.7f;
@@ -30,6 +35,7 @@ public class UIManager : MonoBehaviour
         
         drawButton.onClick.AddListener(() => GameSystem.Instance.Draw(1));
         popupDescription.UpdateTransform(new Vector3(1000, 1000));
+        damagePopupPool = new AddressablesPool<DamagePopup>(damagePopupAsset, 10, canvasRect);
     }
 
     public void ShowDice(Action<int> onComplete)
@@ -60,6 +66,21 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         onComplete?.Invoke(targetVal);
         diceContainer.gameObject.SetActive(false);
+    }
+
+    public void ShowDamage(float damage, Vector2 trans)
+    {
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, trans);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect, 
+            screenPos, 
+            Camera.main, 
+            out Vector2 localPoint
+        );
+
+        var damagePopup = damagePopupPool.GetObjectAndActive();
+        damagePopup.ShowDamage(damage.ToString(), localPoint);
     }
 
     public void ShowDescription(CardConfig config, Vector2 mousePos)

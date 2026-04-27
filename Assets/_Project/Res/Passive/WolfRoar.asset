@@ -16,4 +16,5 @@ MonoBehaviour:
   icon: {fileID: 0}
   passiveName: Wolf Roar
   description: Wolf Roar
+  passiveActivationType: 4
   hpThreshold: 50

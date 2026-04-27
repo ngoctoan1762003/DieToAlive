@@ -6,4 +6,5 @@ public class PassiveConfig : ScriptableObject
     public Sprite icon;
     public string passiveName;
     [TextArea] public string description;
+    public PassiveActivationType passiveActivationType;
 }

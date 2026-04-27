@@ -16,6 +16,7 @@ public enum UnitID
     Main = 10,
     WolfLeader = 10000,
     Wolf = 10010,
+    LittleWolf = 10020,
 }
 
 public enum CardID
@@ -114,6 +115,32 @@ public enum PassiveID
     WolfRoar = 140,
     
     
+}
+
+public enum StatusID
+{
+    None,
+    Burn,
+    Bleed,
+    Wound,
+    Fragile,
+    Paralyze,
+    Stun,
+    Anger,
+    Protection,
+    Corrupt,
+    Weaken,
+    Poison,
+    BuffStrength
+}
+
+public enum PassiveActivationType
+{
+    OnEndAction,
+    OnStartAction,
+    OnEvadeSuccess,
+    OnClash,
+    OnChangeStat
 }
 
 public enum CardType
