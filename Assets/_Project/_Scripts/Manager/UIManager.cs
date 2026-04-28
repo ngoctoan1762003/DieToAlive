@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 using UnityEngine.AddressableAssets;
@@ -15,18 +16,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform canvasRect;
     
     [Header("UI References")]
-    [SerializeField] private GameObject diceContainer;
-    [SerializeField] private TextMeshProUGUI diceText;
     [SerializeField] private Button drawButton;
     [SerializeField] private CardPopupDescription popupDescription;
     [SerializeField] private Image blackCover;
     public Image BlackCover => blackCover;
     [SerializeField] private AssetReference damagePopupAsset;
     private AddressablesPool<DamagePopup> damagePopupPool;
-    
-    [Header("Settings")]
-    [SerializeField] private float rollDuration = 0.7f;
-    [SerializeField] private int shuffleCount = 10;
+
 
     private void Awake()
     {
@@ -38,37 +34,33 @@ public class UIManager : MonoBehaviour
         damagePopupPool = new AddressablesPool<DamagePopup>(damagePopupAsset, 10, canvasRect);
     }
 
-    public void ShowDice(Action<int> onComplete)
+    public void ShowDice(string name, Unit u, Action<int> onComplete)
     {
         int finalVal = Random.Range(1, 21);
-        
-        StopAllCoroutines();
-        StartCoroutine(DiceAnim(finalVal, onComplete));
+  
+        u.ShowDiceAnim(name, finalVal, onComplete);
     }
 
-    IEnumerator DiceAnim(int targetVal, Action<int> onComplete)
+    public void ClashAnim(string clashName, Unit clash, string readyName, Unit ready, Action<bool, int> onComplete)
     {
-        diceContainer.gameObject.SetActive(true);
-        float waitTime = rollDuration / shuffleCount;
-
-        for (int i = 0; i < shuffleCount; i++)
-        {
-            diceText.text = Random.Range(1, 21).ToString();
-            
-            yield return new WaitForSeconds(waitTime);
-        }
-
-        diceText.text = targetVal.ToString();
+        int clashVal = Random.Range(1, 21);
+        int readyVal = Random.Range(1, 21);
         
-        diceText.transform.localScale = Vector3.one * 1.2f;
-        yield return new WaitForSeconds(0.1f);
-        diceText.transform.localScale = Vector3.one;
-        yield return new WaitForSeconds(1f);
-        onComplete?.Invoke(targetVal);
-        diceContainer.gameObject.SetActive(false);
+        Debug.Log(clash + " " + clashVal);
+        Debug.Log(ready + " " + readyVal);
+        clash.ShowClash(true);
+        ready.ShowClash(true);
+        clash.ShowDiceAnim(clashName, clashVal, null);
+        ready.ShowDiceAnim(readyName, readyVal, null);
+        DOVirtual.DelayedCall(2, () =>
+        {
+            onComplete?.Invoke(clashVal >= readyVal, 0);
+            clash.ShowClash(false);
+            ready.ShowClash(false);
+        });
     }
 
-    public void ShowDamage(float damage, Vector2 trans)
+    public void ShowDamage(string damage, Vector2 trans)
     {
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, trans);
 
@@ -80,7 +72,7 @@ public class UIManager : MonoBehaviour
         );
 
         var damagePopup = damagePopupPool.GetObjectAndActive();
-        damagePopup.ShowDamage(damage.ToString(), localPoint);
+        damagePopup.ShowDamage(damage, localPoint);
     }
 
     public void ShowDescription(CardConfig config, Vector2 mousePos)

@@ -52,7 +52,7 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   mainGameTrans: {fileID: 0}
   player: {fileID: 0}
-  deckIDs: 0a0000000b0000000c0000000d0000000e00000010000000
+  deckIDs: 0a0000000b0000000c0000000d0000000e000000100000000b0000000b0000000b0000000b0000000b0000000b0000000b000000
   decks: []
   handCards: []
   drawPileCards: []
@@ -63,6 +63,13 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  readyActionPrefab:
+    m_AssetGUID: 220bbe58af42faa4a8ebf78f06d81ba6
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   drawPileCardsTransform: {fileID: 0}
   discardPileCardsTransform: {fileID: 0}
   handCardsTransform: {fileID: 0}
+  readyCardsTransform: {fileID: 0}

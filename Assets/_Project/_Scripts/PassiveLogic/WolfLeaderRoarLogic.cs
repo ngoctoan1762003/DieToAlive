@@ -18,10 +18,8 @@ public class WolfLeaderRoarLogic : PassiveLogic
         base.Execute();
 
         if (index >= config.hpThreshold.Length) return;
-        Debug.Log(config.hpThreshold[index] / 100 + " " + unit.CurrentHP / unit.maxHP.value);
         if (config.hpThreshold[index] / 100 >= unit.CurrentHP / unit.maxHP.value)
         {
-            Debug.Log("WolfLeaderRoarLogic Execute");
             unit.SetPriorityCard(CardID.WolfLeaderRoar);
             index++;
         }
