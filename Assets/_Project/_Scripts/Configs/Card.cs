@@ -2,11 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Card : MonoBehaviour, IPointerClickHandler, IInPool
+public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IInPool
 {
     [SerializeField] private CardID cardID;
     [SerializeField] private TextMeshProUGUI nameText;
     private CardLogic cardLogic;
+    public CardLogic CardLogic => cardLogic;
     
     public void Setup(Unit unit, CardID cardID)
     {
@@ -33,5 +34,21 @@ public class Card : MonoBehaviour, IPointerClickHandler, IInPool
 
     public void OnDead()
     {
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (cardLogic.ClashCard != null)
+        {
+            cardLogic.ClashCard.Unit.GlowActionCard();
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (cardLogic.ClashCard != null)
+        {
+            cardLogic.ClashCard.Unit.HideGlowActionCard();
+        }
     }
 }

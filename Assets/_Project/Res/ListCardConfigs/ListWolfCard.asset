@@ -37,13 +37,13 @@ MonoBehaviour:
     chooseBetterDice: 0
     cardType: 0
     damageType: 0
-  - cardID: 10
+  - cardID: 100000
     statType: 32000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 1
     damageType: 0
-  - cardID: 12
+  - cardID: 100010
     statType: 14000000
     actionNeed: 0
     chooseBetterDice: 0

@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.EventSystems; // Required for event interfaces
+using UnityEngine.EventSystems; 
 
 public class SkillCardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
@@ -20,14 +21,21 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private List<Card> handCards;
     [SerializeField] private List<Card> drawPileCards;
     [SerializeField] private List<Card> discardCards;
+    
     [SerializeField] private AssetReference cardPrefab;
     private AddressablesPool<Card> cardPool;
+    [SerializeField] private AssetReference readyActionPrefab;
+    private AddressablesPool<ReadyActionUIBehaviour> readyActionPool;
+    
     private Card selectedCard;
     public Card SelectedCard => selectedCard;
+
+    private List<Card> readyCards = new();
 
     [SerializeField] private Transform drawPileCardsTransform;
     [SerializeField] private Transform discardPileCardsTransform;
     [SerializeField] private Transform handCardsTransform;
+    [SerializeField] private Transform readyCardsTransform;
     
     private List<Unit> enemies;
     private List<Unit> actionQueue;
@@ -50,6 +58,7 @@ public class GameSystem : MonoBehaviour
 
         unitPool = new AddressablesPool<Unit>(unitPrefab, 10);
         cardPool = new AddressablesPool<Card>(cardPrefab, 10);
+        readyActionPool = new AddressablesPool<ReadyActionUIBehaviour>(readyActionPrefab, 10);
         Setup();
         enemies = new List<Unit>();
         actionQueue = new List<Unit>();
@@ -64,21 +73,35 @@ public class GameSystem : MonoBehaviour
         {
             if (actionQueue.Count > 0)
             {
-                actionQueue[0].Execute();
-                actionQueue.RemoveAt(0);
+                Unit u = actionQueue[0];
+                actionQueue.Remove(u);
+                u.Execute();
                 isInAction = true;
             }
         }
     }
 
+    public ReadyActionUIBehaviour GetReadyActionPrefab(Transform parent)
+    {
+        return readyActionPool.GetObjectAndActive(parent);
+    }
+
     public void CompletedAction()
     {
-        isInAction = false;
+        DOVirtual.DelayedCall(0.5f, () =>
+        {
+            isInAction = false;
+        });
     }
 
     public bool IsInHand(Card card)
     {
         return handCards.Contains(card);
+    }
+    
+    public bool IsInDiscard(Card card)
+    {
+        return discardCards.Contains(card);
     }
 
     public void SetupUnit(UnitID unitID)
@@ -96,6 +119,7 @@ public class GameSystem : MonoBehaviour
             Card card = cardPool.GetObjectAndActive(drawPileCardsTransform);
             card.Setup(player, cardID);
             card.transform.localScale = Vector3.one;
+            card.transform.localPosition = Vector3.zero;
             decks.Add(card);
         }
         
@@ -116,12 +140,12 @@ public class GameSystem : MonoBehaviour
         ShowTarget(true);
     }
     
-    public void ToDiscard(Card card)
+    public void ToDiscard(Card card, bool decreaseEnemyAction = true)
     {
         drawPileCards.Remove(card);
         discardCards.Add(card);
         card.transform.SetParent(discardPileCardsTransform);
-        DecreaseActionEnemy();
+        if (decreaseEnemyAction) DecreaseActionEnemy();
     }
 
     public void ShowTarget(bool val)
@@ -139,9 +163,7 @@ public class GameSystem : MonoBehaviour
             if (drawPileCards.Count > 0)
             {
                 Card cardToDraw = drawPileCards[drawPileCards.Count - 1];
-                cardToDraw.GetComponent<RectTransform>().SetParent(handCardsTransform);
-                cardToDraw.transform.localPosition = Vector3.zero;
-                handCards.Add(cardToDraw);
+                AddToHand(cardToDraw);
                 drawPileCards.RemoveAt(drawPileCards.Count - 1);
             }
             else
@@ -159,6 +181,18 @@ public class GameSystem : MonoBehaviour
             }
         }
         if (decreaseEnemyAction) DecreaseActionEnemy();
+    }
+
+    public void AddToHand(Card cardToDraw)
+    {
+        cardToDraw.GetComponent<RectTransform>().SetParent(handCardsTransform);
+        cardToDraw.transform.localPosition = Vector3.zero;
+        handCards.Add(cardToDraw);
+    }
+
+    public void RemoveCardFromHand(Card cardToDraw)
+    {
+        handCards.Remove(cardToDraw);
     }
 
     private void ReshuffleDiscardIntoDraw()
@@ -188,6 +222,7 @@ public class GameSystem : MonoBehaviour
 
     public void AddActionRequest(Unit unit)
     {
+        Debug.Log("add action");
         actionQueue.Add(unit);
     }
     
@@ -198,7 +233,12 @@ public class GameSystem : MonoBehaviour
         ShowTarget(false);
     }
 
-	public void ReadyCard()
+    // for player
+	public void ReadyCard(Card readyCard, CardLogic targetCard)
 	{
-	}
+        readyCards.Add(readyCard);
+        readyCard.CardLogic.AddReadyCard(targetCard);
+        readyCard.transform.SetParent(readyCardsTransform);
+        ShowTarget(false);
+    }
 }
