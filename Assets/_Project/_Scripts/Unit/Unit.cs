@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +38,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         {
             actionCount = value;
             actionCountText.text = actionCount.ToString();
-            if (actionCount == 0)
+            if (actionCount <= 0)
             {
                 GameSystem.Instance.AddActionRequest(this);
             }
@@ -52,6 +53,10 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     [SerializeField] private TextMeshProUGUI actionCountText;
     [SerializeField] private HealthBarBehaviour healthBarBehaviour;
     [SerializeField] private Transform readyActionTransform;
+    [SerializeField] private DiceUIBehaviour diceUIBehaviour;
+    [SerializeField] private Image currentActionIcon;
+    [SerializeField] private SpriteRenderer clash;
+    [SerializeField] private SpriteRenderer loseClash;
 
     // Card
     private CardLogic actionCard;
@@ -60,6 +65,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     private int currentMechanicIndex;
     private CardID priorityCard;
     private List<CardLogic> readyCards = new();
+    public List<CardLogic> ReadyCards => readyCards;
 
     // Passive Assign Activation
     public Action onEndAction;
@@ -84,6 +90,20 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
             if (GameSystem.Instance.SelectedCard == null) return;
             if (diceTarget.enabled == false) return;
             GameSystem.Instance.ReadyCard(GameSystem.Instance.SelectedCard, actionCard);
+        });
+    }
+
+    public void ShowClash(bool val)
+    {
+        clash.gameObject.SetActive(val);
+    }
+    
+    public void ShowLoseClash()
+    {
+        loseClash.gameObject.SetActive(true);
+        DOVirtual.DelayedCall(0.5f, () =>
+        {
+            loseClash.gameObject.SetActive(false);
         });
     }
 
@@ -156,6 +176,16 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         actionCard = null;
     }
 
+    public void GlowActionCard()
+    {
+        currentActionIcon.material = DataManager.Instance.GlowUIMat;
+    }
+    
+    public void HideGlowActionCard()
+    {
+        currentActionIcon.material = null;
+    }
+
     public void SetupActionCard()
     {
         if (priorityCard != CardID.None)
@@ -174,6 +204,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         currentMechanicIndex++;
         if (currentMechanicIndex >= cardMechanics.Length) currentMechanicIndex = 0;
         onStartAction?.Invoke();
+        currentActionIcon.sprite = DataManager.Instance.GetActionIcon(config);
     }
 
     public void ShowTarget(bool val)
@@ -182,10 +213,16 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         diceTarget.enabled = val;
     }
 
+    public void ShowDiceAnim(string name, int targetVal, Action<int> onComplete)
+    {
+        diceUIBehaviour.gameObject.SetActive(true);
+        diceUIBehaviour.ShowDiceAnim(name, targetVal, onComplete);
+    }
+
     public void TakeDamage(Unit dealDmgUnit, float damage)
     {
         CurrentHP -= damage;
-        UIManager.Instance.ShowDamage(damage, transform.position);
+        UIManager.Instance.ShowDamage(damage.ToString(), transform.position);
     }
 
     private void Dead()
@@ -206,6 +243,11 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         readyAction.Setup(card.CardConfig, this);
         readyAction.transform.localScale = Vector3.one;
         card.onUsed += readyAction.Use;
+    }
+
+    public void RemoveReadyCard(CardLogic logic)
+    {
+        readyCards.Remove(logic);
     }
 
     public void Execute()
@@ -260,6 +302,14 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     public void SetPriorityCard(CardID cardID)
     {
         priorityCard = cardID;
+    }
+
+    public void Push(Vector3 direction, float distance, float duration = 0.25f)
+    {
+        Vector3 destination = transform.position + (direction.normalized * distance);
+        destination.x = Mathf.Clamp(destination.x, -10f, 10f);
+        transform.DOMove(destination, duration)
+            .SetEase(Ease.OutQuad);
     }
 
     public void Highlight()

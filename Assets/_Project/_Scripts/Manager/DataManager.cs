@@ -11,6 +11,16 @@ public class DataManager : MonoBehaviour
     [SerializeField] private List<PassiveConfig> passiveConfigs;
     [SerializeField] private List<ListCardConfigs> cardConfigs;
 
+    // Icon
+    [SerializeField] private Sprite slash;
+    [SerializeField] private Sprite pierce;
+    [SerializeField] private Sprite blunt;
+    [SerializeField] private Sprite block;
+    [SerializeField] private Sprite evade;
+    
+    [SerializeField] private Material glowUIMat;
+    public Material GlowUIMat => glowUIMat;
+    
     private void Awake()
     {
         if (instance == null)
@@ -21,6 +31,28 @@ public class DataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public Sprite GetActionIcon(CardConfig config)
+    {
+        switch (config.cardType)
+        {
+            case CardType.Offensive:
+                switch (config.damageType)
+                {
+                    case DamageType.Slash: return slash;
+                    case DamageType.Pierce: return pierce;
+                    case DamageType.Blunt: return blunt;
+                }
+
+                break;
+            case CardType.Defensive:
+                if (config.cardID.ToString().Contains("Evade")) return evade;
+                if (config.cardID.ToString().Contains("Block")) return block;
+                break;
+        }
+
+        return null;
     }
 
     public UnitConfigs GetUnitConfig(UnitID unitID)

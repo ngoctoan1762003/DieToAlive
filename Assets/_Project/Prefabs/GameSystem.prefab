@@ -72,3 +72,4 @@ MonoBehaviour:
   drawPileCardsTransform: {fileID: 0}
   discardPileCardsTransform: {fileID: 0}
   handCardsTransform: {fileID: 0}
+  readyCardsTransform: {fileID: 0}

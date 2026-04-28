@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
@@ -72,8 +73,9 @@ public class GameSystem : MonoBehaviour
         {
             if (actionQueue.Count > 0)
             {
-                actionQueue[0].Execute();
-                actionQueue.RemoveAt(0);
+                Unit u = actionQueue[0];
+                actionQueue.Remove(u);
+                u.Execute();
                 isInAction = true;
             }
         }
@@ -86,12 +88,20 @@ public class GameSystem : MonoBehaviour
 
     public void CompletedAction()
     {
-        isInAction = false;
+        DOVirtual.DelayedCall(0.5f, () =>
+        {
+            isInAction = false;
+        });
     }
 
     public bool IsInHand(Card card)
     {
         return handCards.Contains(card);
+    }
+    
+    public bool IsInDiscard(Card card)
+    {
+        return discardCards.Contains(card);
     }
 
     public void SetupUnit(UnitID unitID)
@@ -109,6 +119,7 @@ public class GameSystem : MonoBehaviour
             Card card = cardPool.GetObjectAndActive(drawPileCardsTransform);
             card.Setup(player, cardID);
             card.transform.localScale = Vector3.one;
+            card.transform.localPosition = Vector3.zero;
             decks.Add(card);
         }
         
@@ -129,12 +140,12 @@ public class GameSystem : MonoBehaviour
         ShowTarget(true);
     }
     
-    public void ToDiscard(Card card)
+    public void ToDiscard(Card card, bool decreaseEnemyAction = true)
     {
         drawPileCards.Remove(card);
         discardCards.Add(card);
         card.transform.SetParent(discardPileCardsTransform);
-        DecreaseActionEnemy();
+        if (decreaseEnemyAction) DecreaseActionEnemy();
     }
 
     public void ShowTarget(bool val)
@@ -211,6 +222,7 @@ public class GameSystem : MonoBehaviour
 
     public void AddActionRequest(Unit unit)
     {
+        Debug.Log("add action");
         actionQueue.Add(unit);
     }
     
