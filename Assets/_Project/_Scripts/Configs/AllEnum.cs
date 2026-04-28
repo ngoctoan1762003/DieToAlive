@@ -169,3 +169,11 @@ public enum LibraryItemType
     Skill,
     Passive
 }
+
+public enum NodeType
+{
+    Combat,
+    Safe,
+    Encounter,
+    Chest
+}
