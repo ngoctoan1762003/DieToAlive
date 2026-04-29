@@ -18,6 +18,9 @@ public class AudioManager : MonoBehaviour{
     [Range(0, 1)]
     public float SFXVolume = 1;
 
+    [Range(0, 1)]
+    public float Heart = 1;
+
     Bus masterBus;
     Bus musicBus;
     Bus ambienceBus;
@@ -41,9 +44,9 @@ public class AudioManager : MonoBehaviour{
         eventEmitters = new List<StudioEventEmitter>();
 
         masterBus = RuntimeManager.GetBus("bus:/");
-        //musicBus = RuntimeManager.GetBus("bus:/Music");
-        //ambienceBus = RuntimeManager.GetBus("bus:/Ambience");
-        //sfxBus = RuntimeManager.GetBus("bus:/SFX");
+        musicBus = RuntimeManager.GetBus("bus:/Music");
+        ambienceBus = RuntimeManager.GetBus("bus:/Ambience");
+        sfxBus = RuntimeManager.GetBus("bus:/SFX");
     }
 
     private void Start()
@@ -51,6 +54,7 @@ public class AudioManager : MonoBehaviour{
         //GamePlayController.OnLose += CleanUp;
         //GamePlayController.OnWin += CleanUp;
         InitializeAmbience(FMODEvents.Instance.Ambience);
+        InitializeAmbience(FMODEvents.Instance.HeartBeatsAmbience);
         InitializeMusic(FMODEvents.Instance.Music);
     }
 
@@ -63,9 +67,10 @@ public class AudioManager : MonoBehaviour{
     private void Update()
     {
         masterBus.setVolume(masterVolume);
-        //musicBus.setVolume(musicVolume);
-        //ambienceBus.setVolume(ambienceVolume);
-        //sfxBus.setVolume(SFXVolume);
+        musicBus.setVolume(musicVolume);
+        ambienceBus.setVolume(ambienceVolume);
+        sfxBus.setVolume(SFXVolume);
+        SetAmbienceParameter("HeartValue", Heart);
     }
 
     private void InitializeAmbience(EventReference ambienceEventReference)

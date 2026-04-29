@@ -154,7 +154,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5717496689135693084}
   - component: {fileID: 7579258957634084216}
-  - component: {fileID: 1264289160402919494}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -174,7 +173,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 810159100965711437}
   m_Father: {fileID: 2413372344495955006}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7579258957634084216
@@ -194,13 +194,46 @@ MonoBehaviour:
   musicVolume: 1
   ambienceVolume: 1
   SFXVolume: 1
---- !u!114 &1264289160402919494
+  Heart: 0
+--- !u!1 &8531695776048491275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 810159100965711437}
+  - component: {fileID: 3736028605239338299}
+  m_Layer: 0
+  m_Name: FMODEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &810159100965711437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531695776048491275}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5717496689135693084}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3736028605239338299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6012407828601992276}
+  m_GameObject: {fileID: 8531695776048491275}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28e214f479a77ff4c887c468099ae6aa, type: 3}
@@ -213,10 +246,17 @@ MonoBehaviour:
       Data3: 1269549978
       Data4: 1879270962
     Path: event:/Ambience/Wind
+  <HeartBeatsAmbience>k__BackingField:
+    Guid:
+      Data1: 61061089
+      Data2: 1310375719
+      Data3: -190011977
+      Data4: -1185357815
+    Path: event:/Ambience/HeartBeat
   <Music>k__BackingField:
     Guid:
-      Data1: 2001471738
-      Data2: 1334910103
-      Data3: 465705404
-      Data4: -859690808
-    Path: event:/Music/Level/WolfMusic
+      Data1: 1111006298
+      Data2: 1146190832
+      Data3: 1992539823
+      Data4: 649342033
+    Path: event:/Music/Level/LichMusic
