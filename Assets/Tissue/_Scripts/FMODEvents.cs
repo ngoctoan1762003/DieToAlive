@@ -7,16 +7,14 @@ public class FMODEvents : MonoBehaviour{
 
     [field: Header("Ambience")]
     [field: SerializeField] public EventReference Ambience { get; private set; }
+    [field: SerializeField] public EventReference HeartBeatsAmbience { get; private set; }
+
 
     [field: Header("Music")]
     [field: SerializeField] public EventReference Music { get; private set; }
 
     //[field: Header("Player SFX")]
-    //[field: SerializeField] public EventReference PlayerFootsteps { get; private set; }
 
-    //[field: Header("Truck SFX")]
-    //[field: SerializeField] public EventReference TruckEngineNoises { get; private set; }
-    //[field: Header("Coin SFX")]
     //[field: SerializeField] public EventReference coinCollected { get; private set; }
     //[field: SerializeField] public EventReference coinIdle { get; private set; }
 
