@@ -33,6 +33,11 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public ListCardConfigs GetCardListByWeapon(WeaponID id)
+    {
+        return cardConfigs.FirstOrDefault(c => c.weaponID == id);
+    }
+
     public Sprite GetActionIcon(CardConfig config)
     {
         switch (config.cardType)

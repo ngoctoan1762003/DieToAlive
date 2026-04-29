@@ -17,9 +17,9 @@ public class InventoryPanel : MonoBehaviour
         InventoryManager.Instance.OnInventoryChanged += Refresh;
         Refresh();
 
-        BackButton.onClick.AddListener(delegate
+        BackButton.onClick.AddListener(() =>
         {
-            gameObject.SetActive(false);
+            InventoryManager.Instance.Hide();
         });
     }
 

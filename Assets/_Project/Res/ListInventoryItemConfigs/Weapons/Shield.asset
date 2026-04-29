@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Shield
   type: 0
+  weaponID: 4
   icon: {fileID: 0}
   weight: 5

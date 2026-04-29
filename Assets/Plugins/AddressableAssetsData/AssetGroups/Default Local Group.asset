@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 644639c5ac73948468f6fc5bd196c3cb
   m_SerializeEntries:
+  - m_GUID: 220bbe58af42faa4a8ebf78f06d81ba6
+    m_Address: Assets/_Project/Prefabs/ReadyAction.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 45dba09038c3ab541b80a0b52d3f765a
     m_Address: Assets/_Project/Prefabs/DamagePopup.prefab
     m_ReadOnly: 0
@@ -22,6 +27,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 840e0248b53d13a46bf27df88a447895
     m_Address: Assets/Prefabs/Unit.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ce2d92e76fd3684184f665e500351ac
+    m_Address: Assets/_Project/Prefabs/WeaponItem.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
