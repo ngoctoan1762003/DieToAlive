@@ -4,6 +4,7 @@ using System;
 [CreateAssetMenu(fileName = "List Card Config", menuName = "Configs/ListCardConfigs")]
 public class ListCardConfigs : ScriptableObject
 {
+    public WeaponID weaponID;
     public CardConfig[] configs;
 }
 

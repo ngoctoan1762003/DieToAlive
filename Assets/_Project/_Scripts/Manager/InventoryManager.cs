@@ -8,6 +8,7 @@ public class InventoryManager : MonoBehaviour
     public List<InventoryItem> items = new();
     public float MaxWeight = 15f;
     public Action OnInventoryChanged;
+    [SerializeField] private CanvasGroup canvasGroup;
 
     private void Awake()
     {
@@ -61,5 +62,22 @@ public class InventoryManager : MonoBehaviour
     public bool CanCarry(InventoryItemConfigs config, int amount = 1)
     {
         return CurrentWeight + config.weight * amount <= MaxWeight;
+    }
+
+    public List<InventoryItem> GetAllWeaponHave()
+    {
+        return items.FindAll(i => i.config.type == InventoryItemType.Weapon);
+    }
+
+    public void Show()
+    {
+        canvasGroup.alpha = 1;
+        canvasGroup.blocksRaycasts = true;
+    }
+    
+    public void Hide()
+    {
+        canvasGroup.alpha = 0;
+        canvasGroup.blocksRaycasts = false;
     }
 }
