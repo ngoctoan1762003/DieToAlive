@@ -25,7 +25,6 @@ public class DiceUIBehaviour : MonoBehaviour
     
     IEnumerator DiceAnim(int targetVal, Action<int> onComplete)
     {
-        Debug.Log(targetVal);
         float waitTime = rollDuration / shuffleCount;
 
         for (int i = 0; i < shuffleCount; i++)

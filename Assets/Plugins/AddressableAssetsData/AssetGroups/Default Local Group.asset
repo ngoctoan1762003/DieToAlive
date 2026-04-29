@@ -40,6 +40,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1358cacd592ff74ebe176dc79ba4576
+    m_Address: Assets/_Project/Prefabs/StatusEffect.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 14bb144a003087b4cad48ad24a64bb82, type: 2}
   m_SchemaSet:

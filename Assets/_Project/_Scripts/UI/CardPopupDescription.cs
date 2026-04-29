@@ -13,6 +13,12 @@ public class CardPopupDescription : MonoBehaviour
         nameText.text = config.cardID.ToString();
         description.text = config.cardID.ToString();
     }
+    
+    public void ShowInformation(StatusEffect statusEffect)
+    {
+        nameText.text = statusEffect.GetID().ToString();
+        description.text = statusEffect.GetID().ToString();
+    }
 
     public void UpdateTransform(Vector2 trans)
     {

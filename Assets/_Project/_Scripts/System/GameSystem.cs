@@ -14,8 +14,14 @@ public class GameSystem : MonoBehaviour
 
     [SerializeField] private Unit player;
     public Unit Player => player;
-
-    [Header("Cards")] [SerializeField] private List<CardID> deckIDs;
+    
+    [Header("Effect")]
+    [SerializeField] private AssetReference statusEffectPrefab;
+    private AddressablesPool<StatusEffectUIBehaviour> statusEffectPool;
+    
+    [Header("Cards")]
+    [SerializeField] private List<CardID> deckIDs;
+    [SerializeField] private List<Card> decks;
     [SerializeField] private List<Card> handCards;
     [SerializeField] private List<Card> drawPileCards;
     [SerializeField] private List<Card> discardCards;
@@ -57,6 +63,7 @@ public class GameSystem : MonoBehaviour
         unitPool = new AddressablesPool<Unit>(unitPrefab, 10);
         cardPool = new AddressablesPool<Card>(cardPrefab, 10);
         readyActionPool = new AddressablesPool<ReadyActionUIBehaviour>(readyActionPrefab, 10);
+        statusEffectPool = new AddressablesPool<StatusEffectUIBehaviour>(statusEffectPrefab, 10);
         Setup();
         enemies = new List<Unit>();
         actionQueue = new List<Unit>();
@@ -105,6 +112,11 @@ public class GameSystem : MonoBehaviour
     public ReadyActionUIBehaviour GetReadyActionPrefab(Transform parent)
     {
         return readyActionPool.GetObjectAndActive(parent);
+    }
+
+    public StatusEffectUIBehaviour GetStatusEffectUI()
+    {
+        return statusEffectPool.GetObjectAndActive();
     }
 
     public void CompletedAction()
@@ -210,7 +222,7 @@ public class GameSystem : MonoBehaviour
 
     public void ToDiscard(Card card, bool decreaseEnemyAction = true)
     {
-        drawPileCards.Remove(card);
+        handCards.Remove(card);
         discardCards.Add(card);
         card.transform.SetParent(discardPileCardsTransform);
         CalculateHandTransform();

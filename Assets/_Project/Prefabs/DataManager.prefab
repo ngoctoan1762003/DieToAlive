@@ -71,5 +71,29 @@ MonoBehaviour:
   blunt: {fileID: 21300000, guid: d09f855ec5bd1884abe4603c91f74138, type: 3}
   block: {fileID: 21300000, guid: e6bb7685d1963e34ba240269ca4cd36b, type: 3}
   evade: {fileID: 21300000, guid: 4e21df12af4e9704b97f0f69f8263c2a, type: 3}
+  configs:
+  - id: 1
+    icon: {fileID: 21300000, guid: c8a63b953450358469ae79da88cc98e2, type: 3}
+  - id: 12
+    icon: {fileID: 21300000, guid: d5d187f69ebf21e4e9ae01aee4fc33f7, type: 3}
+  - id: 2
+    icon: {fileID: 21300000, guid: 8c5582e441a61d049875b7fc46acf85b, type: 3}
+  - id: 3
+    icon: {fileID: 21300000, guid: c15c60a14770a834daeb7de819f5dc7f, type: 3}
+  - id: 4
+    icon: {fileID: 21300000, guid: e46c6b73ffa911e4884b79d01364ea0a, type: 3}
+  - id: 5
+    icon: {fileID: 21300000, guid: 705f3d0888dbf15439de3a6b762047e5, type: 3}
+  - id: 6
+    icon: {fileID: 21300000, guid: 07c49a9115921234192fc1fed0e3525c, type: 3}
+  - id: 7
+    icon: {fileID: 21300000, guid: 639a2fb36fd940c4fbaae045976a4498, type: 3}
+  - id: 8
+    icon: {fileID: 21300000, guid: 2048470c888e97c41b59e5f346c23b64, type: 3}
+  - id: 9
+    icon: {fileID: 21300000, guid: 4a1b86c8f3b003e42b411c93c8dfe10a, type: 3}
+  - id: 10
+    icon: {fileID: 21300000, guid: 2048470c888e97c41b59e5f346c23b64, type: 3}
+  - id: 11
+    icon: {fileID: 21300000, guid: 2048470c888e97c41b59e5f346c23b64, type: 3}
   glowUIMat: {fileID: 2100000, guid: ba48e1a6edb3b8c4db65a8170370c2ba, type: 2}
-  normalUIMat: {fileID: 0}

@@ -18,6 +18,8 @@ public class DataManager : MonoBehaviour
     [SerializeField] private Sprite block;
     [SerializeField] private Sprite evade;
     
+    [SerializeField] private List<StatusEffectIconConfig> configs;
+    
     [SerializeField] private Material glowUIMat;
     public Material GlowUIMat => glowUIMat;
     
@@ -33,6 +35,11 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public Sprite GetStatusEffectIcon(StatusID id)
+    {
+        return configs.FirstOrDefault(c => c.id == id)?.icon;
+    }
+    
     public ListCardConfigs GetCardListByWeapon(WeaponID id)
     {
         return cardConfigs.FirstOrDefault(c => c.weaponID == id);
@@ -95,4 +102,11 @@ public class DataManager : MonoBehaviour
 
         return new CardLogic();
     }
+}
+
+[Serializable]
+public class StatusEffectIconConfig
+{
+    public StatusID id;
+    public Sprite icon;
 }
