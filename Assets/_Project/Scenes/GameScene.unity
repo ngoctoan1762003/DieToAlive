@@ -333,7 +333,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 15208708267667307, guid: 05e5909ffc75c5c4c86c81e1f5b3ac0e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -20.000061
+      value: -20.000046
       objectReference: {fileID: 0}
     - target: {fileID: 436852624001464831, guid: 05e5909ffc75c5c4c86c81e1f5b3ac0e, type: 3}
       propertyPath: blackCover
@@ -349,7 +349,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3596842072947628112, guid: 05e5909ffc75c5c4c86c81e1f5b3ac0e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -20.000061
+      value: -20.000046
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809645667330004337, guid: 05e5909ffc75c5c4c86c81e1f5b3ac0e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809645667330004337, guid: 05e5909ffc75c5c4c86c81e1f5b3ac0e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809645667330004337, guid: 05e5909ffc75c5c4c86c81e1f5b3ac0e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809645667330004337, guid: 05e5909ffc75c5c4c86c81e1f5b3ac0e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5479542863063284623, guid: 05e5909ffc75c5c4c86c81e1f5b3ac0e, type: 3}
       propertyPath: m_Camera
@@ -441,7 +457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9095256379904740914, guid: 05e5909ffc75c5c4c86c81e1f5b3ac0e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -20.000061
+      value: -20.000046
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

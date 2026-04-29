@@ -41,11 +41,11 @@ MonoBehaviour:
     statType: 32000000
     actionNeed: 0
     chooseBetterDice: 0
-    cardType: 2
+    cardType: 3
     damageType: 0
   - cardID: 16
     statType: 32000000
     actionNeed: 0
     chooseBetterDice: 0
-    cardType: 2
+    cardType: 4
     damageType: 0
