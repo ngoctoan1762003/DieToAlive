@@ -17,6 +17,8 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
 
     private float _currentHP;
 
+    [SerializeField] private Transform statusEffectTrans;
+
     public float CurrentHP
     {
         get { return _currentHP; }
@@ -265,17 +267,22 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
 
     private void AddStatusEffectHolder(StatusEffect statusEffect, int lifeTurn)
     {
-        var statusEffectHolder = gameObject.AddComponent<StatusEffectHolder>();
-
+        StatusEffectHolder statusEffectHolder = gameObject.AddComponent<StatusEffectHolder>();
+        StatusEffectUIBehaviour statusEffectUIBehaviour = GameSystem.Instance.GetStatusEffectUI();
+        statusEffectUIBehaviour.Setup(statusEffect, lifeTurn);
+        statusEffectUIBehaviour.transform.SetParent(statusEffectTrans);
+        statusEffectUIBehaviour.transform.localScale = Vector3.one;
+        Debug.Log(statusEffectUIBehaviour);
+        
         switch (statusEffect.GetID())
         {
             case StatusID.Poison:
-                statusEffectHolder.Init(
+                statusEffectHolder.Init(statusEffectUIBehaviour,
                     new StatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()),
                     lifeTurn);
                 break;
             case StatusID.BuffStrength:
-                statusEffectHolder.Init(
+                statusEffectHolder.Init(statusEffectUIBehaviour,
                     new BuffStrengthStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
                 break;
@@ -296,6 +303,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     {
         statusEffectHolders.Remove(statusEffectHolder);
         statusEffectHolder.StatusEffect.EndEffect();
+        statusEffectHolder.UIEffect.gameObject.SetActive(false); 
         Destroy(statusEffectHolder);
     }
 

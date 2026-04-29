@@ -18,6 +18,8 @@ public class DataManager : MonoBehaviour
     [SerializeField] private Sprite block;
     [SerializeField] private Sprite evade;
     
+    [SerializeField] private List<StatusEffectIconConfig> configs;
+    
     [SerializeField] private Material glowUIMat;
     public Material GlowUIMat => glowUIMat;
     
@@ -31,6 +33,11 @@ public class DataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public Sprite GetStatusEffectIcon(StatusID id)
+    {
+        return configs.FirstOrDefault(c => c.id == id)?.icon;
     }
 
     public Sprite GetActionIcon(CardConfig config)
@@ -90,4 +97,11 @@ public class DataManager : MonoBehaviour
 
         return new CardLogic();
     }
+}
+
+[Serializable]
+public class StatusEffectIconConfig
+{
+    public StatusID id;
+    public Sprite icon;
 }

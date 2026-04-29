@@ -8,6 +8,8 @@ public class StatusEffectHolder : MonoBehaviour
     [SerializeField] StatusEffect statusEffect;
     [SerializeField] Unit unit;
     public StatusEffect StatusEffect => statusEffect;
+    private StatusEffectUIBehaviour uiEffect;
+    public StatusEffectUIBehaviour UIEffect => uiEffect;
 
     private Cooldown endEffectCooldown;
     
@@ -19,8 +21,9 @@ public class StatusEffectHolder : MonoBehaviour
     private bool isTickEffect = false;
     private Cooldown tickEffectCooldown;
 
-    public void Init(StatusEffect statusEffect, float lifeTurn)
+    public void Init(StatusEffectUIBehaviour uiEffect, StatusEffect statusEffect, float lifeTurn)
     {
+        this.uiEffect = uiEffect;
         this.statusEffect = statusEffect;
         isInfinite = lifeTurn == -1;
         endEffectCooldown = new Cooldown(lifeTurn);

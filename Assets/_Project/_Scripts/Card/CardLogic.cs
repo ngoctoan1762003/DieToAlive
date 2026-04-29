@@ -119,6 +119,7 @@ public class CardLogic
                 UIManager.Instance.ShowDamage(cardConfig.cardID.ToString(), unit.transform.position);
                 GameSystem.Instance.CompletedAction();
                 UIManager.Instance.BlackCover.gameObject.SetActive(false);
+                if (cardConfig.cardID.ToString().Contains("Evade")) unit.onEvadeSuccess?.Invoke();
                 break;
         }
     }
@@ -147,9 +148,6 @@ public class CardLogic
         else if (target.ActionCount <= 0) target.SetupActionCard();
         UIManager.Instance.BlackCover.gameObject.SetActive(false);
 
-        Debug.Log("Result: " + win + " execute " + (win ? cardConfig.cardID : clashCard.cardConfig.cardID));
-        Debug.Log("Clash: " + unit);
-        Debug.Log("Target: " + target);
         if (win)
         {
             clashCard.SetClashCard(null);

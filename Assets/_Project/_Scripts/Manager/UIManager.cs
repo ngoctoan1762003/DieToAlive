@@ -89,6 +89,21 @@ public class UIManager : MonoBehaviour
 
         popupDescription.UpdateTransform(localPoint);
     }
+    
+    public void ShowDescription(StatusEffect statusEffect, Vector2 mousePos)
+    {
+        popupDescription.gameObject.SetActive(true);
+        popupDescription.ShowInformation(statusEffect);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect, 
+            mousePos, 
+            Camera.main, 
+            out Vector2 localPoint
+        );
+
+        popupDescription.UpdateTransform(localPoint);
+    }
 
     public void HideDescription()
     {

@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 644639c5ac73948468f6fc5bd196c3cb
   m_SerializeEntries:
+  - m_GUID: 220bbe58af42faa4a8ebf78f06d81ba6
+    m_Address: Assets/_Project/Prefabs/ReadyAction.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 45dba09038c3ab541b80a0b52d3f765a
     m_Address: Assets/_Project/Prefabs/DamagePopup.prefab
     m_ReadOnly: 0
@@ -27,6 +32,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cffd030d86b886a4abef91cd6ec81cd8
     m_Address: Assets/Prefabs/Card.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1358cacd592ff74ebe176dc79ba4576
+    m_Address: Assets/_Project/Prefabs/StatusEffect.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
