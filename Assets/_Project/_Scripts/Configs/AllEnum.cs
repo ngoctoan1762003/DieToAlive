@@ -147,7 +147,9 @@ public enum CardType
 {
     Offensive,
     Defensive,
-    UnInterruptable
+    UnInterruptable,
+    UseItem,
+    UseWeapon
 }
 
 public enum DamageType
@@ -161,6 +163,19 @@ public enum InventoryItemType
 {
     Weapon,
     Tool
+}
+
+public enum WeaponID
+{
+    None = 0,
+    Bow = 10,
+    Claymore = 20,
+    Dagger = 30,
+    Rapier = 40,
+    Shield = 50,
+    Spear = 60,
+    Staff = 70,
+    Sword = 80
 }
 
 public enum LibraryItemType

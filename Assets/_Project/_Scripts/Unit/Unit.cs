@@ -209,9 +209,9 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         currentActionIcon.sprite = DataManager.Instance.GetActionIcon(config);
     }
 
-    public void ShowTarget(bool val)
+    public void ShowTarget(bool val, bool showDiceOnly = false)
     {
-        target.enabled = val;
+        if (!showDiceOnly) target.enabled = val;
         diceTarget.enabled = val;
     }
 

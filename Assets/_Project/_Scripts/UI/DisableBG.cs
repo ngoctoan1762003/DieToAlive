@@ -11,6 +11,7 @@ public class DisableBG : MonoBehaviour
         button.onClick.AddListener(() =>
         {
             GameSystem.Instance.ShowTarget(false);
+            UIManager.Instance.HideInventoryNeed();
         });
     }
 }

@@ -68,6 +68,8 @@ public class CardLogic
         float attackThreshold = 3f;
         Vector3 targetPos = target.transform.position;
 
+        UIManager.Instance.CardContainer.SetActive(false);
+        
         // Calculate distance
         float distance = Vector3.Distance(unit.transform.position, targetPos);
 
@@ -120,6 +122,7 @@ public class CardLogic
                 GameSystem.Instance.CompletedAction();
                 UIManager.Instance.BlackCover.gameObject.SetActive(false);
                 if (cardConfig.cardID.ToString().Contains("Evade")) unit.onEvadeSuccess?.Invoke();
+                UIManager.Instance.CardContainer.SetActive(true);
                 break;
         }
     }
@@ -138,6 +141,7 @@ public class CardLogic
         decreaseEnemyAction = true;
         target.Push(target.transform.position.x > unit.transform.position.x ? Vector3.right : Vector3.left, 1);
         unopposedAttack = false;
+        UIManager.Instance.CardContainer.SetActive(true);
     }
 
     protected virtual void OnCompletedClash(bool win, int val)

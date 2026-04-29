@@ -22,8 +22,13 @@ public class UIManager : MonoBehaviour
     public Image BlackCover => blackCover;
     [SerializeField] private AssetReference damagePopupAsset;
     private AddressablesPool<DamagePopup> damagePopupPool;
-
-
+    [SerializeField] private WeaponInventory weaponInventory;
+    [SerializeField] private GameObject cardContainer;
+    public GameObject CardContainer => cardContainer;
+    
+    // Inventory
+    [SerializeField] private Button inventoryButton;
+    
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -32,6 +37,17 @@ public class UIManager : MonoBehaviour
         drawButton.onClick.AddListener(() => GameSystem.Instance.Draw(1));
         popupDescription.UpdateTransform(new Vector3(1000, 1000));
         damagePopupPool = new AddressablesPool<DamagePopup>(damagePopupAsset, 10, canvasRect);
+        inventoryButton.onClick.AddListener(() => InventoryManager.Instance.Show());
+    }
+
+    public void ShowInventoryNeed()
+    {
+        weaponInventory.Show();
+    }
+    
+    public void HideInventoryNeed()
+    {
+        weaponInventory.Hide();
     }
 
     public void ShowDice(string name, Unit u, Action<int> onComplete)

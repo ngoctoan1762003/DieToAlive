@@ -8,11 +8,14 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     [SerializeField] private TextMeshProUGUI nameText;
     private CardLogic cardLogic;
     public CardLogic CardLogic => cardLogic;
+    private InventoryItem source;
+    public InventoryItem Source => source;
     
-    public void Setup(Unit unit, CardID cardID)
+    public void Setup(Unit unit, CardID cardID, InventoryItem inventoryItem)
     {
         this.cardID = cardID;
         nameText.text = cardID.ToString();
+        source = inventoryItem;
         cardLogic = DataManager.Instance.GetCardLogic(cardID);
         cardLogic.Setup(unit, this, cardID);
     }

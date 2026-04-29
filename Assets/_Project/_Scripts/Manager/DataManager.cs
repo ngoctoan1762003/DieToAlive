@@ -39,6 +39,11 @@ public class DataManager : MonoBehaviour
     {
         return configs.FirstOrDefault(c => c.id == id)?.icon;
     }
+    
+    public ListCardConfigs GetCardListByWeapon(WeaponID id)
+    {
+        return cardConfigs.FirstOrDefault(c => c.weaponID == id);
+    }
 
     public Sprite GetActionIcon(CardConfig config)
     {

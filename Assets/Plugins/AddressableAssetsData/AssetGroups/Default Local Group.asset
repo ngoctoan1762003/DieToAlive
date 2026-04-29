@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ce2d92e76fd3684184f665e500351ac
+    m_Address: Assets/_Project/Prefabs/WeaponItem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cffd030d86b886a4abef91cd6ec81cd8
     m_Address: Assets/Prefabs/Card.prefab
     m_ReadOnly: 0
