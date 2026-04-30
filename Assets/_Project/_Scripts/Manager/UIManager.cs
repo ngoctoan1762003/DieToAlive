@@ -28,6 +28,8 @@ public class UIManager : MonoBehaviour
     
     // Inventory
     [SerializeField] private Button inventoryButton;
+    [SerializeField] private Button libraryButton;
+    [SerializeField] private CanvasGroup libraryCanvas;
     
     private void Awake()
     {
@@ -38,6 +40,11 @@ public class UIManager : MonoBehaviour
         popupDescription.UpdateTransform(new Vector3(1000, 1000));
         damagePopupPool = new AddressablesPool<DamagePopup>(damagePopupAsset, 10, canvasRect);
         inventoryButton.onClick.AddListener(() => InventoryManager.Instance.Show());
+        libraryButton.onClick.AddListener(() =>
+        {
+            libraryCanvas.alpha = 1;
+            libraryCanvas.blocksRaycasts = true;
+        });
     }
 
     public void ShowInventoryNeed(InventoryItemType type)
@@ -106,7 +113,7 @@ public class UIManager : MonoBehaviour
     public void ShowDescription(CardConfig config, Vector2 mousePos)
     {
         popupDescription.gameObject.SetActive(true);
-        popupDescription.ShowInformation(config);
+        popupDescription.ShowInformation(UnitID.None, config);
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRect, 
