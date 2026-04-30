@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Staff
   type: 0
-  weaponID: 6
+  weaponID: 70
   icon: {fileID: 0}
   weight: 5

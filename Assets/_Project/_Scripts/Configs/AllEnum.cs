@@ -33,7 +33,7 @@ public enum CardID
     BasicEvade = 10,
     BasicAttack = 11,
     BasicBlock = 12,
-    BasicRemoveWeapon = 13,
+    // ThrowWeapon = 13,
     BasicUse = 14,
     // BasicDash = 15,
     BasicEquip = 16,
@@ -53,24 +53,30 @@ public enum CardID
     
     //Bow
     Shoot = 300,
+    ThrowBow = 301,
+    RetrieveBow = 302,
     RetrieveArrow = 310,
     
     //Claymore
     EarthShaker = 400,
     Cyclone = 401,
-    Throw = 402,
+    ThrowClaymore = 402,
     RetrieveClaymore = 403,
     
     //Rapier
     Fleche = 500,
     RapierCounter = 501,
     Flurry = 502,
+    ThrowRapier = 503,
+    RetrieveRapier = 504,
     
     //Staff
     Fireball = 600,
     Healing = 601,
     HolyLight = 602,
     Bind = 603,
+    ThrowStaff = 604,
+    RetrieveStaff = 605,
     
     //Shield
     Bulwark = 700,
@@ -155,7 +161,8 @@ public enum CardType
     Defensive,
     UnInterruptable,
     UseItem,
-    UseWeapon
+    UseWeapon,
+    ThrowWeapon,
 }
 
 public enum DamageType
@@ -194,7 +201,7 @@ public enum ToolID
     Antidote = 50,
     Needle = 60,
     Cursed = 70,
-    Energy = 80
+    Energy = 80,
 }
 
 public enum LibraryItemType
