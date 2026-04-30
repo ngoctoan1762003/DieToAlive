@@ -71,7 +71,6 @@ public class LibraryManager : MonoBehaviour
         if (!states[id].isDiscovered)
         {
             states[id].isDiscovered = true;
-            observationPoints++;
             Save();
         }
     }
@@ -244,5 +243,23 @@ public class LibraryManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         Save();
+    }
+
+    public void AddObservationPoints(int amount)
+    {
+        if (amount <= 0) return;
+
+        observationPoints += amount;
+        Save();
+    }
+
+    public bool SpendObservationPoints(int amount)
+    {
+        if (amount <= 0) return false;
+        if (observationPoints < amount) return false;
+
+        observationPoints -= amount;
+        Save();
+        return true;
     }
 }

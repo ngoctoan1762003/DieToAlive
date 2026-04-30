@@ -41,6 +41,7 @@ public class CombatResultUI : MonoBehaviour
         ContinueButton.gameObject.SetActive(true);
         ReplayButton.gameObject.SetActive(false);
         Visual.SetActive(true);
+        LibraryManager.Instance.AddObservationPoints(1);
     }
 
     public void Lose()
