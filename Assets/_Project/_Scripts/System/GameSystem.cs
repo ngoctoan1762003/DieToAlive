@@ -261,7 +261,7 @@ public class GameSystem : MonoBehaviour
         }
 
         List<Card> newCards = drawPileCards.Where(c => c.Source == item).ToList();
-        Draw(2);
+        Draw(2, false);
         InventoryManager.Instance.RemoveItem(currentEquipWeapon);
     }
 

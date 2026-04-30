@@ -456,6 +456,10 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         ResetCardAction();
 
         readyCards.Clear();
+        for (int i = 0; i < readyActionTransform.childCount; i++)
+        {
+            readyActionTransform.GetChild(i).gameObject.SetActive(false);
+        }
     }
 
     public void Highlight()
