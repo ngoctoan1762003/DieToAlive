@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Heal Potion
   type: 1
+  weaponID: 0
+  toolID: 30
   icon: {fileID: 0}
   weight: 1

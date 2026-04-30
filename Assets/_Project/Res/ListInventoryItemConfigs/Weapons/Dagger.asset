@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Dagger
   type: 0
-  weaponID: 2
+  weaponID: 30
   icon: {fileID: 0}
   weight: 2

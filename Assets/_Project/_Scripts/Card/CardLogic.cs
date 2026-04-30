@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class CardLogic
 {
-    private CardConfig cardConfig;
+    protected CardConfig cardConfig;
     public CardConfig CardConfig => cardConfig;
-    private Card card;
-    private Unit unit;
+    protected Card card;
+    protected Unit unit;
     public Unit Unit => unit;
-    private Unit target;
+    protected Unit target;
     public Action onUsed;
-    private CardLogic clashCard;
+    protected CardLogic clashCard;
     public CardLogic ClashCard => clashCard;
-    private bool decreaseEnemyAction;
-    private bool unopposedAttack;
+    protected bool decreaseEnemyAction;
+    protected bool unopposedAttack;
 
     public virtual void Setup(Unit unit, Card card, CardID cardID)
     {
@@ -59,6 +59,15 @@ public class CardLogic
 
     public virtual void Execute(Unit enemy)
     {
+        if (cardConfig.cardType == CardType.UnInterruptable && cardConfig.cardID.ToString().Contains("Retrieve"))
+        {
+            GameSystem.Instance.SelectedCard.gameObject.SetActive(false);
+            GameSystem.Instance.SelectedCard.transform.SetParent(null);
+            RetrieveWeapon();
+            // GameSystem.Instance.ToDiscard(GameSystem.Instance.SelectedCard, cardConfig.haste);
+            return;
+        }
+        
         UIManager.Instance.BlackCover.gameObject.SetActive(true);
         unit.Highlight();
         enemy.Highlight();
@@ -92,6 +101,7 @@ public class CardLogic
         switch (cardConfig.cardType)
         {
             case CardType.Offensive:
+            case CardType.ThrowWeapon:
                 if (clashCard != null)
                 {
                     UIManager.Instance.ClashAnim(cardConfig.cardID.ToString(), unit,
@@ -113,34 +123,36 @@ public class CardLogic
                 {
                     UIManager.Instance.ShowDice(cardConfig.cardID.ToString(), unit, OnCompleted);
                 }
+                if (cardConfig.cardType == CardType.ThrowWeapon) ThrowWeapon();
 
                 break;
 
             case CardType.Defensive:
-                if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card);
+                if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, cardConfig.haste);
                 UIManager.Instance.ShowDamage(cardConfig.cardID.ToString(), unit.transform.position);
                 GameSystem.Instance.CompletedAction();
                 UIManager.Instance.BlackCover.gameObject.SetActive(false);
                 if (cardConfig.cardID.ToString().Contains("Evade")) unit.onEvadeSuccess?.Invoke();
                 UIManager.Instance.CardContainer.SetActive(true);
                 break;
+
         }
     }
 
     protected virtual void OnCompleted(int val)
     {
-        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, decreaseEnemyAction);
+        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, cardConfig.haste || decreaseEnemyAction);
         else unit.SetupActionCard();
         UIManager.Instance.BlackCover.gameObject.SetActive(false);
         unit.DeHighlight();
         target.DeHighlight();
-        target.TakeDamage(unit, val);
+        target.TakeDamage(unit, unit.CalculateDamage(val));
         GameSystem.Instance.CompletedAction();
-        unit.onEndAction?.Invoke();
         unit.RemoveReadyCard(this);
         decreaseEnemyAction = true;
         target.Push(target.transform.position.x > unit.transform.position.x ? Vector3.right : Vector3.left, 1);
         unopposedAttack = false;
+        unit.CountdownClashStatusEffect();
         UIManager.Instance.CardContainer.SetActive(true);
     }
 
@@ -165,11 +177,57 @@ public class CardLogic
         {
             clashCard.SetClashCard(null);
             clashCard.decreaseEnemyAction = clashCard.unopposedAttack || target != GameSystem.Instance.Player;
-            if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, decreaseEnemyAction);
+            if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, cardConfig.haste || decreaseEnemyAction);
             clashCard.Execute(unit);
             clashCard = null;
             unit.ShowLoseClash();
             unit.Push(target.transform.position.x > unit.transform.position.x ? Vector3.left : Vector3.right, 3);
         }
+        
+        unit.CountdownClashStatusEffect();
+        target.CountdownClashStatusEffect();
+    }
+    
+    protected virtual void ThrowWeapon()
+    {
+        DOVirtual.DelayedCall(2, () =>
+        {
+            GameSystem.Instance.ThrowWeapon();
+            
+            switch (CardConfig.cardID)
+            {
+                case CardID.ThrowBow:
+                    GameSystem.Instance.AddToDrawPile(CardID.RetrieveBow, card.Source);
+                    break;
+                case CardID.ThrowClaymore:
+                    GameSystem.Instance.AddToDrawPile(CardID.RetrieveClaymore, card.Source);
+                    break;
+                case CardID.ThrowDagger:
+                    GameSystem.Instance.AddToDrawPile(CardID.RetrieveDagger, card.Source);
+                    break;
+                case CardID.ThrowRapier:
+                    GameSystem.Instance.AddToDrawPile(CardID.RetrieveRapier, card.Source);
+                    break;
+                case CardID.ThrowShield:
+                    GameSystem.Instance.AddToDrawPile(CardID.RetrieveShield, card.Source);
+                    break;
+                case CardID.ThrowSpear:
+                    GameSystem.Instance.AddToDrawPile(CardID.RetrieveSpear, card.Source);
+                    break;
+                case CardID.ThrowStaff:
+                    GameSystem.Instance.AddToDrawPile(CardID.RetrieveStaff, card.Source);
+                    break;
+                case CardID.ThrowSword:
+                    GameSystem.Instance.AddToDrawPile(CardID.RetrieveSword, card.Source);
+                    break;
+            }
+
+            GameSystem.Instance.Draw(2, false);
+        });
+    }
+
+    protected virtual void RetrieveWeapon()
+    {
+        UIManager.Instance.ShowDamage("Retrieved " + cardConfig.weaponID.ToString(), GameSystem.Instance.Player.transform.position);
     }
 }

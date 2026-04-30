@@ -40,9 +40,9 @@ public class UIManager : MonoBehaviour
         inventoryButton.onClick.AddListener(() => InventoryManager.Instance.Show());
     }
 
-    public void ShowInventoryNeed()
+    public void ShowInventoryNeed(InventoryItemType type)
     {
-        weaponInventory.Show();
+        weaponInventory.Show(type);
     }
     
     public void HideInventoryNeed()
@@ -53,8 +53,9 @@ public class UIManager : MonoBehaviour
     public void ShowDice(string name, Unit u, Action<int> onComplete)
     {
         int finalVal = Random.Range(1, 21);
+        List<int> buffs = u.GetDiceBuff();
   
-        u.ShowDiceAnim(name, finalVal, onComplete);
+        u.ShowDiceAnim(name, finalVal, buffs, onComplete);
     }
 
     public void ClashAnim(string clashName, Unit clash, string readyName, Unit ready, Action<bool, int> onComplete)
@@ -62,12 +63,23 @@ public class UIManager : MonoBehaviour
         int clashVal = Random.Range(1, 21);
         int readyVal = Random.Range(1, 21);
         
-        Debug.Log(clash + " " + clashVal);
-        Debug.Log(ready + " " + readyVal);
+        List<int> clashBuffs = clash.GetDiceBuff();
+        List<int> readyBuffs = ready.GetDiceBuff();
         clash.ShowClash(true);
         ready.ShowClash(true);
-        clash.ShowDiceAnim(clashName, clashVal, null);
-        ready.ShowDiceAnim(readyName, readyVal, null);
+        clash.ShowDiceAnim(clashName, clashVal, clashBuffs, null);
+        ready.ShowDiceAnim(readyName, readyVal, readyBuffs, null);
+
+        foreach (var clashBuff in clashBuffs)
+        {
+            clashVal += clashBuff;
+        }
+        
+        foreach (var readyBuff in readyBuffs)
+        {
+            readyVal += readyBuff;
+        }
+        
         DOVirtual.DelayedCall(2, () =>
         {
             onComplete?.Invoke(clashVal >= readyVal, 0);
