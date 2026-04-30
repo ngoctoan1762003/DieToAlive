@@ -50,10 +50,13 @@ public class SkillAndPassivePanel : MonoBehaviour
             bool unlocked = LibraryManager.Instance.IsSkillUnlocked(unit.unitID, cardID);
 
             item.Init(
+                unlocked,
+                unit.unitID,
                 data.icon,
-                data.cardName,
+                unlocked ? data.cardName : "???",
                 unlocked ? data.description : "???"
             );
+            item.SetCardID(cardID);
         }
 
         foreach (var passiveID in unit.passiveIDs)
@@ -66,10 +69,13 @@ public class SkillAndPassivePanel : MonoBehaviour
             bool unlocked = LibraryManager.Instance.IsPassiveUnlocked(unit.unitID, passiveID);
 
             item.Init(
+                unlocked,
+                unit.unitID,
                 data.icon,
-                data.passiveName,
+                unlocked ? data.passiveName : "???",
                 unlocked ? data.description : "???"
             );
+            item.SetPassiveID(passiveID);
         }
 
         Canvas.ForceUpdateCanvases();

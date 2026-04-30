@@ -8,10 +8,10 @@ public class CardPopupDescription : MonoBehaviour
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private Vector2 offset;
     
-    public void ShowInformation(CardConfig config)
+    public void ShowInformation(UnitID id, CardConfig config)
     {
-        nameText.text = config.cardID.ToString();
-        description.text = config.cardID.ToString();
+        nameText.text = LibraryManager.Instance.IsSkillUnlocked(id, config.cardID) ? GameDatabase.Instance.GetCard(config.cardID).cardName : "???";
+        description.text = LibraryManager.Instance.IsSkillUnlocked(id, config.cardID) ? GameDatabase.Instance.GetCard(config.cardID).description : "???";
     }
     
     public void ShowInformation(StatusEffect statusEffect)
