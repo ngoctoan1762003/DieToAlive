@@ -38,6 +38,7 @@ public class CombatResultUI : MonoBehaviour
         HeadingTXT.text = "Victory";
         int goldEarn = Random.RandomRange(10, 20);
         GoldTXT.text = goldEarn.ToString();
+        ShopManager.Instance.AddGold(goldEarn);
         ContinueButton.gameObject.SetActive(true);
         ReplayButton.gameObject.SetActive(false);
         Visual.SetActive(true);
@@ -49,6 +50,7 @@ public class CombatResultUI : MonoBehaviour
         HeadingTXT.text = "Lose";
         int goldEarn = Random.RandomRange(0, 6);
         GoldTXT.text = goldEarn.ToString();
+        ShopManager.Instance.AddGold(goldEarn);
         ReplayButton.gameObject.SetActive(true);
         ContinueButton.gameObject.SetActive(false);
         Visual.SetActive(true);
