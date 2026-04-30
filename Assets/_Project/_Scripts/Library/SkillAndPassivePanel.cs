@@ -1,18 +1,22 @@
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class SkillAndPassivePanel : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI EnemyNameTXT;
+    [SerializeField] private Image EnemyIcon;
     [SerializeField] private Transform SkillContainer;
     [SerializeField] private Transform PassiveContainer;
     [SerializeField] private CardInfo CardInfoPrefab;
     [SerializeField] private Transform ContentContainter;
     [SerializeField] private Button BackButton;
 
+    private UnitID currentUnitID;
+
     private void Start()
     {
-        BackButton.onClick.AddListener(delegate
+        BackButton.onClick.AddListener(() =>
         {
             gameObject.SetActive(false);
         });
@@ -25,6 +29,14 @@ public class SkillAndPassivePanel : MonoBehaviour
 
     public void Init(UnitConfigs unit)
     {
+        if (currentUnitID == unit.unitID)
+            return;
+
+        currentUnitID = unit.unitID;
+
+        EnemyNameTXT.text = unit.unitID.ToString();
+        EnemyIcon.sprite = unit.sprite;
+
         Clear(SkillContainer);
         Clear(PassiveContainer);
 
