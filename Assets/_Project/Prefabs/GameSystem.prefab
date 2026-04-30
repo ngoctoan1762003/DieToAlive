@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4232733622866121502}
   - component: {fileID: 8557344954696516495}
   - component: {fileID: 5441381510651843907}
+  - component: {fileID: -6304247073915356586}
   m_Layer: 0
   m_Name: GameSystem
   m_TagString: Untagged
@@ -77,6 +78,12 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  diceBuffPrefab:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   drawPileCardsTransform: {fileID: 0}
   discardPileCardsTransform: {fileID: 0}
   handCardsTransform: {fileID: 0}
@@ -114,3 +121,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGold: 100
+  startGold: 100
+--- !u!114 &-6304247073915356586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6662655056691876157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac1d84608ecb854ebbc7fe804a455d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allUnits:
+  - {fileID: 11400000, guid: 0b55851b6c84b544686cef64c429c81d, type: 2}
+  - {fileID: 11400000, guid: e7f045c87b93bfb4683c039f098cd186, type: 2}
