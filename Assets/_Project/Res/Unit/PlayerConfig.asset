@@ -18,3 +18,4 @@ MonoBehaviour:
   passiveIDs: 
   maxHP: 100
   mechanics: 
+  canExceedCapMaxHP: 0

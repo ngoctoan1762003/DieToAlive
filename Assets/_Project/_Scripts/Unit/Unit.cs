@@ -279,6 +279,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     private void Dead()
     {
         gameObject.SetActive(false);
+        GameSystem.Instance.OnUnitDead(this);
     }
 
     public void DecreaseAction()
@@ -441,6 +442,20 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         destination.x = Mathf.Clamp(destination.x, -10f, 10f);
         transform.DOMove(destination, duration)
             .SetEase(Ease.OutQuad);
+    }
+
+    public void ResetUnit()
+    {
+        for (int i = statusEffectHolders.Count - 1; i >= 0; i--)
+        {
+            RemoveStatusEffect(statusEffectHolders[i]);
+        }
+
+        ResetPassiveTrigger();
+
+        ResetCardAction();
+
+        readyCards.Clear();
     }
 
     public void Highlight()

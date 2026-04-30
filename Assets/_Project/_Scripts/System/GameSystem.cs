@@ -57,6 +57,9 @@ public class GameSystem : MonoBehaviour
 
     private Unit currentEnemyAction;
 
+    private CombatNodeConfig currentCombatConfig;
+    private bool combatEnded = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -77,8 +80,154 @@ public class GameSystem : MonoBehaviour
         enemies = new List<Unit>();
         actionQueue = new List<Unit>();
         isInAction = false;
+        //player.Setup(UnitID.Main);
+        //SetupUnit(UnitID.WolfLeader);
+    }
+    public void StartCombat(CombatNodeConfig config)
+    {
+        combatEnded = false;
+        currentCombatConfig = config;
+
+        ClearCombat();
+
         player.Setup(UnitID.Main);
-        SetupUnit(UnitID.WolfLeader);
+
+        foreach (var enemyID in config.enemies)
+        {
+            SetupUnit(enemyID);
+        }
+
+        Setup();
+
+        Debug.Log("Start combat");
+    }
+
+    public void ReplayCombat()
+    {
+        if (currentCombatConfig == null)
+        {
+            return;
+        }
+
+        Debug.Log("Replay combat");
+
+        ResetToInitialState();
+        StartCombat(currentCombatConfig);
+    }
+
+    public void ClearCombat()
+    {
+        foreach (var enemy in enemies)
+        {
+            enemy.gameObject.SetActive(false);
+        }
+        enemies.Clear();
+
+        actionQueue.Clear();
+
+        // clear cards
+        foreach (var c in handCards) c.gameObject.SetActive(false);
+        foreach (var c in drawPileCards) c.gameObject.SetActive(false);
+        foreach (var c in discardCards) c.gameObject.SetActive(false);
+
+        handCards.Clear();
+        drawPileCards.Clear();
+        discardCards.Clear();
+        readyCards.Clear();
+    }
+
+    private void ResetUI()
+    {
+        UIManager.Instance.HideInventoryNeed();
+        ShowTarget(false);
+        selectedCard = null;
+    }
+
+    public void ResetToInitialState()
+    {
+        combatEnded = false;
+        isInAction = false;
+        isInDraw = false;
+
+        actionQueue.Clear();
+        currentEnemyAction = null;
+        selectedCard = null;
+
+        player.gameObject.SetActive(true);
+        player.ResetUnit(); 
+
+        foreach (var enemy in enemies)
+        {
+            enemy.ResetUnit();
+            enemy.gameObject.SetActive(false);
+        }
+        enemies.Clear();
+
+        ClearAllCards();
+
+        currentEquipWeapon = null;
+
+        ResetUI();
+    }
+
+    private void ClearAllCards()
+    {
+        List<Card> allCards = new();
+        allCards.AddRange(handCards);
+        allCards.AddRange(drawPileCards);
+        allCards.AddRange(discardCards);
+        allCards.AddRange(readyCards);
+
+        foreach (var c in allCards)
+        {
+            c.gameObject.SetActive(false);
+            c.transform.SetParent(null);
+        }
+
+        handCards.Clear();
+        drawPileCards.Clear();
+        discardCards.Clear();
+        readyCards.Clear();
+    }
+
+
+    public void OnUnitDead(Unit unit)
+    {
+        if (unit == player)
+        {
+            if (enemies.Any(e => e.gameObject.activeSelf))
+            {
+                EndCombat(false);
+            }
+            return;
+        }
+
+        enemies.Remove(unit);
+
+        if (!enemies.Any(e => e.gameObject.activeSelf))
+        {
+            EndCombat(true);
+        }
+    }
+    private void EndCombat(bool isWin)
+    {
+        if (combatEnded) return;
+        combatEnded = true;
+
+        isInAction = true;
+
+        if (isWin)
+        {
+            CombatResultUI.Instance.Win();
+            Debug.Log("Win");
+        }
+        else
+        {
+            CombatResultUI.Instance.Lose();
+            Debug.Log("Lose");
+        }
+
+        CombatResultUI.Instance.gameObject.SetActive(true);
     }
 
     private void Update()
