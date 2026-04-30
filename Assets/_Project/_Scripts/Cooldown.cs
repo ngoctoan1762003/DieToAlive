@@ -18,7 +18,7 @@ public class Cooldown
         }
         else
         {
-            lastUsedTime = Time.time;  // Initialize with current time
+            lastUsedTime = Time.time;
             isAvailable = false;
         }
     }

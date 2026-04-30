@@ -17,6 +17,12 @@ public enum UnitID
     WolfLeader = 10000,
     Wolf = 10010,
     LittleWolf = 10020,
+    Parasite = 10030,
+    Ann = 10040,
+    Benn = 10050,
+    Canis = 10060,
+    Lich = 10070,
+    Yinyang = 10080,
 }
 
 public enum CardID
@@ -208,7 +214,14 @@ public enum LibraryItemType
 public enum NodeType
 {
     Combat,
-    Safe,
-    Encounter,
+    Rest,
+    Shop,
     Chest
+}
+
+public enum LineState //For line node UI
+{
+    Locked,
+    Unlocked,
+    Visited
 }
