@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,5 +12,13 @@ public class StageConfigs : ScriptableObject
 [Serializable]
 public class StageNodeData
 {
+    public string nodeID;
     public NodeConfigs node;
+
+    public Vector2 position;
+
+    public List<string> nextNodeIDs;
+
+    public bool isUnlocked;
+    public bool isVisited;
 }

@@ -188,7 +188,14 @@ public enum LibraryItemType
 public enum NodeType
 {
     Combat,
-    Safe,
-    Encounter,
+    Rest,
+    Shop,
     Chest
+}
+
+public enum LineState //For line node UI
+{
+    Locked,
+    Unlocked,
+    Visited
 }

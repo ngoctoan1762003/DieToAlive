@@ -34,7 +34,6 @@ public class MenuManager : MonoBehaviour
     private Vector2 standardOriginalPos;
     private Tween standardTween;
 
-
     private void Awake()
     {
         rects = new RectTransform[]
@@ -132,6 +131,7 @@ public class MenuManager : MonoBehaviour
             CurrentPanel.SetActive(true);
             PlayStandardButtonBounce();
             TweenOut();
+            MapUIManager.Instance.ScrollAnimationROutine();
         });
         SettingButton.onClick.AddListener(delegate
         {
@@ -149,6 +149,10 @@ public class MenuManager : MonoBehaviour
             CurrentPanel.SetActive(false);
             CurrentPanel = null;
             TweenIn();
+        });
+        StandardModeButton.onClick.AddListener(delegate
+        {
+            gameObject.SetActive(false);
         });
     }
     private void TweenHeadingIn()

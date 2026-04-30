@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8fba5bef5c61aa47a14ca0a929f8355, type: 3}
-  m_Name: Encounter Node
+  m_Script: {fileID: 11500000, guid: 47aeaeddfa5fc694d842a53fd799f3ef, type: 3}
+  m_Name: Chest Node H
   m_EditorClassIdentifier: 
-  nodeID: 
-  nodeType: 2
-  description: 
-  options: []
+  nodeID: H
+  nodeType: 3
