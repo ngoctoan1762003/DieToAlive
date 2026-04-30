@@ -186,16 +186,15 @@ public enum WeaponID
 
 public enum ToolID
 {
-    Bomb = 0,
-    HealPotion = 10,
-    Smoke = 20,
-    Trap = 30,
-    ManaPotion = 40,
-    Arrow = 50,
-    Balo = 60,
-    Bandage = 70,
-    Antidote = 80,
-    Needle = 90
+    None = 0,
+    Bomb = 10,
+    Trap = 20,
+    HealPotion = 30,
+    Bandage = 40,
+    Antidote = 50,
+    Needle = 60,
+    Cursed = 70,
+    Energy = 80
 }
 
 public enum LibraryItemType

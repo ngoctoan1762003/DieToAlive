@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8188909094617779880}
   - component: {fileID: 4232733622866121502}
   - component: {fileID: 8557344954696516495}
+  - component: {fileID: 5441381510651843907}
   m_Layer: 0
   m_Name: GameSystem
   m_TagString: Untagged
@@ -98,3 +99,18 @@ MonoBehaviour:
     node: {fileID: 0}
     position: {x: 0, y: 0}
     nextNodeIDs: []
+    isUnlocked: 0
+    isVisited: 0
+--- !u!114 &5441381510651843907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6662655056691876157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67a0f22c7eb0ba6449f114dc2c230085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerGold: 100

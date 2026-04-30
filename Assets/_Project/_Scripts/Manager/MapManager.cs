@@ -151,6 +151,18 @@ public class MapManager : MonoBehaviour
 
             case NodeType.Shop:
                 MapUIManager.Instance.CloseMap();
+
+                var shopConfig = currentNode.node as ShopNodeConfig;
+
+                if (shopConfig != null)
+                {
+                    ShopManager.Instance.OpenShop(shopConfig);
+                }
+                else
+                {
+                    Debug.LogError("Node is Shop but config is not ShopNodeConfig!");
+                }
+
                 Debug.Log("Shop node");
                 break;
 
