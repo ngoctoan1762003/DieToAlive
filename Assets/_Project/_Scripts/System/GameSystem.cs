@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -63,6 +63,10 @@ public class GameSystem : MonoBehaviour
     private Vector3 playerStartPos;
     private Transform playerStartParent;
 
+    private int savedHP;
+    private int savedMaxHP;
+    private bool isReplay = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -91,7 +95,9 @@ public class GameSystem : MonoBehaviour
     }
     public void StartCombat(CombatNodeConfig config)
     {
+        UIManager.Instance.ResetUI();
         InventoryManager.Instance.SaveSnapshot();
+        ResetToInitialState();
         player.transform.SetParent(playerStartParent);
         player.transform.localPosition = playerStartPos;
         player.transform.localRotation = Quaternion.identity;
@@ -100,8 +106,20 @@ public class GameSystem : MonoBehaviour
         currentCombatConfig = config;
 
         ClearCombat();
+        ClearAllCards();
 
-        player.Setup(UnitID.Main);
+        player.Setup(UnitID.Main, false);
+
+        if (!isReplay)
+        {
+            savedHP = (int)player.CurrentHP;
+        }
+
+
+        if (isReplay)
+        {
+            player.SetHP(savedHP);
+        }
 
         foreach (var enemyID in config.enemies)
         {
@@ -109,25 +127,21 @@ public class GameSystem : MonoBehaviour
         }
 
         Setup();
-
-        Debug.Log("Start combat");
     }
 
     public void ReplayCombat()
     {
-        if (currentCombatConfig == null)
-        {
-            return;
-        }
-
-        UIManager.Instance.ResetUI();
+        if (currentCombatConfig == null) return;
 
         Debug.Log("Replay combat");
 
-        InventoryManager.Instance.RestoreSnapshot();
+        isReplay = true;
 
+        InventoryManager.Instance.RestoreSnapshot();
         ResetToInitialState();
         StartCombat(currentCombatConfig);
+
+        isReplay = false;
     }
 
     public void ClearCombat()

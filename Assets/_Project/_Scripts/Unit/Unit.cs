@@ -30,6 +30,12 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
             onChangeStat?.Invoke();
         }
     }
+    public void SetHP(float hp)
+    {
+        _currentHP = Mathf.Clamp(hp, 0, maxHP.value);
+        healthBarBehaviour.SetHP(_currentHP, maxHP.value, 0);
+        onChangeStat?.Invoke();
+    }
 
     private int actionCount;
 
@@ -125,28 +131,38 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         });
     }
 
-    public void Setup(UnitID id)
+    public void Setup(UnitID id, bool resetHP = true)
     {
         ResetCardAction();
         ResetPassiveTrigger();
 
         UnitConfigs config = DataManager.Instance.GetUnitConfig(id);
-        SetupStat(config);
+        SetupStat(config, resetHP);
         SetupPassive(config);
         onStartAction += CountdownDOTStatusEffect;
 
         if (this != GameSystem.Instance.Player) SetupActionCard();
     }
 
-    private void SetupStat(UnitConfigs config)
+    private void SetupStat(UnitConfigs config, bool resetHP)
     {
         maxHP = new Stat();
         strength = new Stat();
         dexterity = new Stat();
         defense = new Stat();
         magic = new Stat();
+
         maxHP.baseValue = config.maxHP;
-        CurrentHP = maxHP.value;
+
+        if (resetHP || _currentHP <= 0)
+        {
+            CurrentHP = maxHP.value;
+        }
+        else
+        {
+            SetHP(_currentHP);
+        }
+
         sprite.sprite = config.sprite;
         cardMechanics = config.mechanics;
         canExceedCapMaxHP = config.canExceedCapMaxHP;
@@ -285,6 +301,9 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     public void DecreaseAction()
     {
         ActionCount--;
+
+        if (ActionCount < 0)
+            ActionCount = 0;
     }
 
     // for enemies
