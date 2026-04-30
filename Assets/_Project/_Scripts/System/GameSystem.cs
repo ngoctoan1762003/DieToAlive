@@ -60,6 +60,9 @@ public class GameSystem : MonoBehaviour
     private CombatNodeConfig currentCombatConfig;
     private bool combatEnded = false;
 
+    private Vector3 playerStartPos;
+    private Transform playerStartParent;
+
     private void Awake()
     {
         if (instance == null)
@@ -82,9 +85,17 @@ public class GameSystem : MonoBehaviour
         isInAction = false;
         //player.Setup(UnitID.Main);
         //SetupUnit(UnitID.WolfLeader);
+
+        playerStartPos = player.transform.localPosition;
+        playerStartParent = player.transform.parent;
     }
     public void StartCombat(CombatNodeConfig config)
     {
+        InventoryManager.Instance.SaveSnapshot();
+        player.transform.SetParent(playerStartParent);
+        player.transform.localPosition = playerStartPos;
+        player.transform.localRotation = Quaternion.identity;
+
         combatEnded = false;
         currentCombatConfig = config;
 
@@ -109,7 +120,11 @@ public class GameSystem : MonoBehaviour
             return;
         }
 
+        UIManager.Instance.ResetUI();
+
         Debug.Log("Replay combat");
+
+        InventoryManager.Instance.RestoreSnapshot();
 
         ResetToInitialState();
         StartCombat(currentCombatConfig);
@@ -154,7 +169,11 @@ public class GameSystem : MonoBehaviour
         selectedCard = null;
 
         player.gameObject.SetActive(true);
-        player.ResetUnit(); 
+        player.ResetUnit();
+
+        player.transform.SetParent(playerStartParent);
+        player.transform.localPosition = playerStartPos;
+        player.transform.localRotation = Quaternion.identity;
 
         foreach (var enemy in enemies)
         {
@@ -273,15 +292,15 @@ public class GameSystem : MonoBehaviour
                 player.RemoveStatusEffectByID(StatusID.Bleed);
                 break;
             case ToolID.Bomb:
-                foreach (var enemy in enemies)
+                foreach (var enemy in enemies.ToList())
                 {
                     enemy.TakeDamage(null, 10);
                 }
                 break;
             case ToolID.Cursed:
-                foreach (var enemy in enemies)
+                foreach (var enemy in enemies.ToList())
                 {
-                    enemy.AddStatusEffect(new FragileStatusEffect(StatusID.Fragile, enemy).SetValue(new List<float>(){1}), 5);
+                    enemy.AddStatusEffect(new FragileStatusEffect(StatusID.Fragile, enemy).SetValue(new List<float>() { 1 }), 5);
                 }
                 break;
             case ToolID.Energy:

@@ -148,4 +148,10 @@ public class UIManager : MonoBehaviour
         );
         popupDescription.UpdateTransform(localPoint);
     }
+
+    public void ResetUI()
+    {
+        BlackCover.gameObject.SetActive(false);
+        cardContainer.gameObject.SetActive(true);
+    }
 }
