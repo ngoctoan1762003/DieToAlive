@@ -13,6 +13,7 @@ public enum StatType
 
 public enum UnitID
 {
+    None = 0,
     Main = 10,
     WolfLeader = 10000,
     Wolf = 10010,
@@ -117,6 +118,7 @@ public enum Class
 
 public enum PassiveID
 {
+    None = 0,
     QuickAction = 10,
     
     // Wolf  

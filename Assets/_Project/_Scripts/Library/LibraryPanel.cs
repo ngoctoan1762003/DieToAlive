@@ -10,20 +10,18 @@ public class LibraryPanel : MonoBehaviour
     [SerializeField] private LibraryItemUI libraryItemUIPrefab;
     [SerializeField] private TextMeshProUGUI observationPointTXT;
     [SerializeField] private SkillAndPassivePanel skillAndPassivePanel;
-
-    private void OnEnable()
-    {
-        observationPointTXT.text = "Observation Point: " + LibraryManager.Instance.ObservationPoints.ToString();
-        skillAndPassivePanel.gameObject.SetActive(false);
-    }
+    [SerializeField] private CanvasGroup canvasGroup;
 
     private void Start()
     {
         RenderAll();
         backButton.onClick.AddListener(() =>
         {
-            gameObject.SetActive(false);
+            canvasGroup.alpha = 0;
+            canvasGroup.blocksRaycasts = false;
         });
+        observationPointTXT.text = "Observation Point: " + LibraryManager.Instance.ObservationPoints.ToString();
+        skillAndPassivePanel.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
