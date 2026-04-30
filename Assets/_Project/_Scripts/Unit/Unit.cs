@@ -59,7 +59,8 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     [SerializeField] private Image currentActionIcon;
     [SerializeField] private SpriteRenderer clash;
     [SerializeField] private SpriteRenderer loseClash;
-
+    private bool canExceedCapMaxHP = true;
+    
     // Card
     private CardLogic actionCard;
     public CardLogic ActionCard => actionCard;
@@ -95,6 +96,21 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         });
     }
 
+    public List<int> GetDiceBuff()
+    {
+        List<int> buffs = new();
+        foreach (var statusEffectHolder in statusEffectHolders.Where(s => s.StatusEffect.GetID() == StatusID.BuffStrength))
+        {
+            buffs.Add((int)statusEffectHolder.StatusEffect.GetValues()[0]);
+        }
+        foreach (var statusEffectHolder in statusEffectHolders.Where(s => s.StatusEffect.GetID() == StatusID.Paralyze))
+        {
+            buffs.Add((int)-statusEffectHolder.StatusEffect.GetValues()[0]);
+        }
+
+        return buffs;
+    }
+
     public void ShowClash(bool val)
     {
         clash.gameObject.SetActive(val);
@@ -117,6 +133,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         UnitConfigs config = DataManager.Instance.GetUnitConfig(id);
         SetupStat(config);
         SetupPassive(config);
+        onStartAction += CountdownDOTStatusEffect;
 
         if (this != GameSystem.Instance.Player) SetupActionCard();
     }
@@ -132,6 +149,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         CurrentHP = maxHP.value;
         sprite.sprite = config.sprite;
         cardMechanics = config.mechanics;
+        canExceedCapMaxHP = config.canExceedCapMaxHP;
     }
 
     private void SetupPassive(UnitConfigs config)
@@ -178,6 +196,16 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         actionCard = null;
     }
 
+    public void Heal(float amount)
+    {
+        CurrentHP += amount;
+        if (!canExceedCapMaxHP)
+        {
+            CurrentHP = Mathf.Clamp(CurrentHP, 0, maxHP.value);
+        }
+        UIManager.Instance.ShowDamage("+" + amount, transform.position);
+    }
+
     public void GlowActionCard()
     {
         currentActionIcon.material = DataManager.Instance.GlowUIMat;
@@ -205,7 +233,6 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         ActionCount = config.actionNeed;
         currentMechanicIndex++;
         if (currentMechanicIndex >= cardMechanics.Length) currentMechanicIndex = 0;
-        onStartAction?.Invoke();
         currentActionIcon.sprite = DataManager.Instance.GetActionIcon(config);
     }
 
@@ -215,16 +242,38 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         diceTarget.enabled = val;
     }
 
-    public void ShowDiceAnim(string name, int targetVal, Action<int> onComplete)
+    public void ShowDiceAnim(string name, int targetVal, List<int> buffs, Action<int> onComplete)
     {
         diceUIBehaviour.gameObject.SetActive(true);
-        diceUIBehaviour.ShowDiceAnim(name, targetVal, onComplete);
+        diceUIBehaviour.ShowDiceAnim(name, targetVal, buffs, onComplete);
+    }
+
+    public float CalculateDamage(float damage)
+    {
+        int weakenStack = (int)statusEffectHolders
+            .Where(s => s.StatusEffect.GetID() == StatusID.Weaken)
+            .Sum(s => s.StatusEffect.GetValues()[0]);
+        damage -= damage * weakenStack / 10;
+        
+        CountdownBuffDamageStatusEffect();
+        return damage;
     }
 
     public void TakeDamage(Unit dealDmgUnit, float damage)
     {
-        CurrentHP -= damage;
+        int fragileStack = (int)statusEffectHolders
+            .Where(s => s.StatusEffect.GetID() == StatusID.Fragile)
+            .Sum(s => s.StatusEffect.GetValues()[0]);
+        damage += damage * fragileStack / 10;
+        
+        int protectionStack = (int)statusEffectHolders
+            .Where(s => s.StatusEffect.GetID() == StatusID.Protection)
+            .Sum(s => s.StatusEffect.GetValues()[0]);
+        damage -= damage * protectionStack / 10;
+        
+        CurrentHP -= Mathf.CeilToInt(damage);
         UIManager.Instance.ShowDamage(damage.ToString(), transform.position);
+        CountdownTakeDamageStatusEffect();
     }
 
     private void Dead()
@@ -272,7 +321,6 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         statusEffectUIBehaviour.Setup(statusEffect, lifeTurn);
         statusEffectUIBehaviour.transform.SetParent(statusEffectTrans);
         statusEffectUIBehaviour.transform.localScale = Vector3.one;
-        Debug.Log(statusEffectUIBehaviour);
         
         switch (statusEffect.GetID())
         {
@@ -284,6 +332,36 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
             case StatusID.BuffStrength:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new BuffStrengthStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
+                    lifeTurn);
+                break;
+            case StatusID.Paralyze:
+                statusEffectHolder.Init(statusEffectUIBehaviour,
+                    new ParalyzeStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
+                    lifeTurn);
+                break;
+            case StatusID.Protection:
+                statusEffectHolder.Init(statusEffectUIBehaviour,
+                    new ProtectionStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
+                    lifeTurn);
+                break;
+            case StatusID.Stun:
+                statusEffectHolder.Init(statusEffectUIBehaviour,
+                    new StunStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
+                    lifeTurn);
+                break;
+            case StatusID.Fragile:
+                statusEffectHolder.Init(statusEffectUIBehaviour,
+                    new FragileStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
+                    lifeTurn);
+                break;
+            case StatusID.Weaken:
+                statusEffectHolder.Init(statusEffectUIBehaviour,
+                    new WeakenStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
+                    lifeTurn);
+                break;
+            case StatusID.Wound:
+                statusEffectHolder.Init(statusEffectUIBehaviour,
+                    new WoundStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
                 break;
         }
@@ -305,6 +383,51 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         statusEffectHolder.StatusEffect.EndEffect();
         statusEffectHolder.UIEffect.gameObject.SetActive(false); 
         Destroy(statusEffectHolder);
+    }
+    
+    public void RemoveStatusEffectByID(StatusID id)
+    {
+        for (int i = statusEffectHolders.Count - 1; i >= 0; i--)
+        {
+            if (statusEffectHolders[i].StatusEffect.GetID() != id) continue;
+            var statusEffectHolder = statusEffectHolders[i];
+            statusEffectHolders.Remove(statusEffectHolder);
+            statusEffectHolder.StatusEffect.EndEffect();
+            statusEffectHolder.UIEffect.gameObject.SetActive(false); 
+            Destroy(statusEffectHolder);
+        }
+    }
+
+    public void CountdownClashStatusEffect()
+    {
+        for (int i = statusEffectHolders.Count - 1; i >= 0; i--)
+        {
+            if (statusEffectHolders[i].StatusEffect.GetID() is StatusID.BuffStrength or StatusID.Paralyze) statusEffectHolders[i].TakeTurn();
+        }
+    }
+    
+    public void CountdownDOTStatusEffect()
+    {
+        for (int i = statusEffectHolders.Count - 1; i >= 0; i--)
+        {
+            if (statusEffectHolders[i].StatusEffect.GetID() is StatusID.Bleed or StatusID.Burn or StatusID.Poison or StatusID.Wound) statusEffectHolders[i].TakeTurn();
+        }
+    }    
+        
+    public void CountdownBuffDamageStatusEffect()
+    {
+        for (int i = statusEffectHolders.Count - 1; i >= 0; i--)
+        {
+            if (statusEffectHolders[i].StatusEffect.GetID() is StatusID.Weaken) statusEffectHolders[i].TakeTurn();
+        }
+    }
+    
+    public void CountdownTakeDamageStatusEffect()
+    {
+        for (int i = statusEffectHolders.Count - 1; i >= 0; i--)
+        {
+            if (statusEffectHolders[i].StatusEffect.GetID() is StatusID.Fragile or StatusID.Protection) statusEffectHolders[i].TakeTurn();
+        }
     }
 
     public void SetPriorityCard(CardID cardID)
