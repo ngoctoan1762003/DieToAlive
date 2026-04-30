@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Claymore
   type: 0
-  weaponID: 1
+  weaponID: 20
   icon: {fileID: 0}
   weight: 7

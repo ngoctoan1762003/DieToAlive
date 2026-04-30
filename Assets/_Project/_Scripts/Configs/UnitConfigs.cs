@@ -9,4 +9,5 @@ public class UnitConfigs : ScriptableObject
     public PassiveID[] passiveIDs;
     public int maxHP;
     public CardID[] mechanics;
+    public bool canExceedCapMaxHP;
 }

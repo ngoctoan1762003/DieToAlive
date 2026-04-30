@@ -64,9 +64,9 @@ public class InventoryManager : MonoBehaviour
         return CurrentWeight + config.weight * amount <= MaxWeight;
     }
 
-    public List<InventoryItem> GetAllWeaponHave()
+    public List<InventoryItem> GetAllItemByType(InventoryItemType item)
     {
-        return items.FindAll(i => i.config.type == InventoryItemType.Weapon);
+        return items.FindAll(i => i.config.type == item);
     }
 
     public void Show()
