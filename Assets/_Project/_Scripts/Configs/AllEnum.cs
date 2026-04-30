@@ -102,6 +102,25 @@ public enum CardID
     Bite = 10110,
     WolfRoar = 10120,
     
+    //Lich
+    Sacrifice = 10200,
+    Shared = 10210,
+    
+    //Skeleton
+    Rebuild = 10250,
+    
+    //YinYang
+    DimensionCut = 10300,
+    
+    //Parasite
+    Roll = 10400,
+    Evolve = 10410,
+    Absorb = 10420,
+    Throw = 10430,
+    
+    //Small Parasite
+    QuickBite = 10450,
+    
     // General
     WolfEvade = 100000,
     WolfBlock = 100010,
@@ -128,7 +147,33 @@ public enum PassiveID
     WolfLeaderRoar = 130,
     WolfRoar = 140,
     
+    // Lich
+    Summon = 200,
+    Protection = 210,
+    Concentrate = 220,
     
+    // Skeleton
+    SkeletonBlock = 250,
+    
+    // Yin Yang
+    OnChangeDimension = 300,
+    DimensionSwitch = 320,
+    YinDimension = 330,
+    YangDimension = 340,
+    
+    // Soul
+    DeadAndRevive = 350,
+    
+    // Parasite
+    EnvironmentChange = 400,
+    Evolve = 410,
+    
+    // Small Parasite
+    NoHPCap = 450,
+    
+    // Corpse
+    CorpeEquipBlock = 480,
+    CorpeBlockSuccess = 490,
 }
 
 public enum StatusID
