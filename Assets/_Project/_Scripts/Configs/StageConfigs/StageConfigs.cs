@@ -7,6 +7,24 @@ public class StageConfigs : ScriptableObject
 {
     public List<StageNodeData> nodes;
 
+    private void OnEnable()
+    {
+        ResetRuntime();
+    }
+
+    private void OnApplicationQuit()
+    {
+        ResetRuntime();
+    }
+
+    void ResetRuntime()
+    {
+        foreach (var node in nodes)
+        {
+            node.isUnlocked = false;
+            node.isVisited = false;
+        }
+    }
 }
 
 [Serializable]

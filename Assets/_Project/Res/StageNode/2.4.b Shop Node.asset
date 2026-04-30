@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5ba987797b87747842adbe4f75b478, type: 3}
-  m_Name: Combat Node C
+  m_Script: {fileID: 11500000, guid: 8e1baafc802437f40b7444d4ca3858de, type: 3}
+  m_Name: 2.4.b Shop Node
   m_EditorClassIdentifier: 
-  nodeID: C
-  nodeType: 0
-  enemies:
-  - {fileID: 11400000, guid: dc5ec7fed8cfecb43a3a6c45797b9745, type: 2}
+  nodeID: 2.4.b
+  nodeType: 2

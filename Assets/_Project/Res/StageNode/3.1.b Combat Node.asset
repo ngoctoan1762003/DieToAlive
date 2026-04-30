@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e1baafc802437f40b7444d4ca3858de, type: 3}
-  m_Name: Shop Node F
+  m_Script: {fileID: 11500000, guid: 1b5ba987797b87747842adbe4f75b478, type: 3}
+  m_Name: 3.1.b Combat Node
   m_EditorClassIdentifier: 
-  nodeID: 
-  nodeType: 2
+  nodeID: 3.1.b
+  nodeType: 0
+  enemies: 56270000

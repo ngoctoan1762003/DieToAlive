@@ -17,6 +17,12 @@ public enum UnitID
     WolfLeader = 10000,
     Wolf = 10010,
     LittleWolf = 10020,
+    Parasite = 10030,
+    Ann = 10040,
+    Benn = 10050,
+    Canis = 10060,
+    Lich = 10070,
+    Yinyang = 10080,
 }
 
 public enum CardID
@@ -176,6 +182,20 @@ public enum WeaponID
     Spear = 60,
     Staff = 70,
     Sword = 80
+}
+
+public enum ToolID
+{
+    Bomb = 0,
+    HealPotion = 10,
+    Smoke = 20,
+    Trap = 30,
+    ManaPotion = 40,
+    Arrow = 50,
+    Balo = 60,
+    Bandage = 70,
+    Antidote = 80,
+    Needle = 90
 }
 
 public enum LibraryItemType

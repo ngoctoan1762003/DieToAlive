@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b5ba987797b87747842adbe4f75b478, type: 3}
-  m_Name: Combat Node E
+  m_Name: 1.4.c Combat Node
   m_EditorClassIdentifier: 
-  nodeID: E
+  nodeID: 1.4.c
   nodeType: 0
-  enemies:
-  - {fileID: 11400000, guid: dc5ec7fed8cfecb43a3a6c45797b9745, type: 2}
+  enemies: 1a2700001a270000

@@ -32,18 +32,24 @@ public class MapUIManager : MonoBehaviour
     public void OpenMap()
     {
         gameObject.SetActive(true);
+        scrollRect.enabled = false;
 
         mapTween?.Kill();
 
         transform.localScale = new Vector3(originalScale.x, 0f, originalScale.z);
 
         mapTween = transform.DOScaleY(1f, 0.25f)
-            .SetEase(Ease.OutBack);
+            .SetEase(Ease.OutBack)
+                .OnComplete(() =>
+                {
+                    scrollRect.enabled = true;
+                });
     }
 
     public void CloseMap()
     {
         mapTween?.Kill();
+        scrollRect.enabled = false;
 
         transform.localScale = new Vector3(originalScale.x, 1f, originalScale.z);
 
@@ -52,6 +58,7 @@ public class MapUIManager : MonoBehaviour
             .OnComplete(() =>
             {
                 gameObject.SetActive(false);
+                scrollRect.enabled = true;
             });
     }
 
