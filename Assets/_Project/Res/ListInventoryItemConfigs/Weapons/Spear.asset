@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Spear
   type: 0
-  weaponID: 60
+  weaponID: 5
   icon: {fileID: 0}
   weight: 5

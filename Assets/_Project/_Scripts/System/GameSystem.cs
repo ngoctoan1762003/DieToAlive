@@ -30,8 +30,6 @@ public class GameSystem : MonoBehaviour
     private AddressablesPool<Card> cardPool;
     [SerializeField] private AssetReference readyActionPrefab;
     private AddressablesPool<ReadyActionUIBehaviour> readyActionPool;
-    [SerializeField] private AssetReference diceBuffPrefab;
-    private AddressablesPool<DiceBuffUIBehaviour> diceBuffPool;
 
     private Card selectedCard;
     public Card SelectedCard => selectedCard;
@@ -50,12 +48,6 @@ public class GameSystem : MonoBehaviour
     public static GameSystem Instance => instance;
 
     private bool isInAction;
-    
-    private bool isInDraw;
-
-    private InventoryItemConfigs currentEquipWeapon;
-
-    private Unit currentEnemyAction;
 
     private void Awake()
     {
@@ -72,7 +64,6 @@ public class GameSystem : MonoBehaviour
         cardPool = new AddressablesPool<Card>(cardPrefab, 10);
         readyActionPool = new AddressablesPool<ReadyActionUIBehaviour>(readyActionPrefab, 10);
         statusEffectPool = new AddressablesPool<StatusEffectUIBehaviour>(statusEffectPrefab, 10);
-        diceBuffPool = new AddressablesPool<DiceBuffUIBehaviour>(diceBuffPrefab, 10);
         Setup();
         enemies = new List<Unit>();
         actionQueue = new List<Unit>();
@@ -87,23 +78,16 @@ public class GameSystem : MonoBehaviour
         {
             if (actionQueue.Count > 0)
             {
-                currentEnemyAction = actionQueue[0];
-                actionQueue.Remove(currentEnemyAction);
-                currentEnemyAction.onStartAction?.Invoke();
-                currentEnemyAction.Execute();
+                Unit u = actionQueue[0];
+                actionQueue.Remove(u);
+                u.Execute();
                 isInAction = true;
             }
         }
     }
 
-    public DiceBuffUIBehaviour GetDiceBuff()
-    {
-        return diceBuffPool.GetObjectAndActive();
-    }
-    
     public void EquipWeapon(InventoryItem item)
     {
-        currentEquipWeapon = item.config;
         ListCardConfigs config = DataManager.Instance.GetCardListByWeapon(item.config.weaponID);
         foreach (var c in config.configs)
         {
@@ -112,43 +96,7 @@ public class GameSystem : MonoBehaviour
         }
 
         List<Card> newCards = drawPileCards.Where(c => c.Source == item).ToList();
-        Draw(2);
-        InventoryManager.Instance.RemoveItem(currentEquipWeapon);
-    }
-
-    public void UseItem(InventoryItemConfigs config)
-    {
-        switch (config.toolID)
-        {
-            case ToolID.Bandage:
-                player.RemoveStatusEffectByID(StatusID.Bleed);
-                break;
-            case ToolID.Bomb:
-                foreach (var enemy in enemies)
-                {
-                    enemy.TakeDamage(null, 10);
-                }
-                break;
-            case ToolID.Cursed:
-                foreach (var enemy in enemies)
-                {
-                    enemy.AddStatusEffect(new FragileStatusEffect(StatusID.Fragile, enemy).SetValue(new List<float>(){1}), 5);
-                }
-                break;
-            case ToolID.Energy:
-                player.AddStatusEffect(new BuffStrengthStatusEffect(StatusID.BuffStrength, player).SetValue(new List<float>(){1}), 5);
-                break;
-            case ToolID.HealPotion:
-                player.Heal(10);
-                break;
-            case ToolID.Needle:
-                player.RemoveStatusEffectByID(StatusID.Wound);
-                break;
-            case ToolID.Trap:
-                player.AddStatusEffect(new StunStatusEffect(StatusID.Stun, player), 1);
-                break;
-        }
-        InventoryManager.Instance.RemoveItem(config);
+        Draw(newCards[Random.Range(0, newCards.Count)]);
     }
 
     public void AddToDrawPile(CardID cardID, InventoryItem item)
@@ -159,57 +107,6 @@ public class GameSystem : MonoBehaviour
         card.transform.localPosition = Vector3.zero;
         drawPileCards.Add(card);
         CalculateDrawTransform();
-    }
-
-    public void ThrowWeapon()
-    {
-        for (int i = drawPileCards.Count - 1; i >= 0; i--)
-        {
-            var drawPileCard = drawPileCards[i];
-            if (drawPileCard.Source != null && drawPileCard.Source.config == currentEquipWeapon)
-            {
-                drawPileCards.Remove(drawPileCard);
-                drawPileCard.gameObject.SetActive(false);
-                drawPileCard.transform.SetParent(null);
-            }
-        }
-        for (int i = handCards.Count - 1; i >= 0; i--)
-        {
-            var handCard = handCards[i];
-            if (handCard.Source != null && handCard.Source.config == currentEquipWeapon)
-            {
-                handCards.Remove(handCard);
-                handCard.gameObject.SetActive(false);
-                handCard.transform.SetParent(null);
-            }
-        }
-        for (int i = discardCards.Count - 1; i >= 0; i--)
-        {
-            var discardCard = discardCards[i];
-            if (discardCard.Source != null && discardCard.Source.config == currentEquipWeapon)
-            {
-                discardCards.Remove(discardCard);
-                discardCard.gameObject.SetActive(false);
-                discardCard.transform.SetParent(null);
-            }
-        }
-        for (int i = readyCards.Count - 1; i >= 0; i--)
-        {
-            var readyCard = readyCards[i];
-            if (readyCard.Source.config == currentEquipWeapon)
-            {
-                readyCards.Remove(readyCard);
-                readyCard.gameObject.SetActive(false);
-                readyCard.CardLogic.ClashCard.SetClashCard(null);
-                readyCard.CardLogic.SetClashCard(null);
-                readyCard.transform.SetParent(null);
-            }
-        }
-        
-        CalculateDiscardTransform();
-        CalculateDrawTransform();
-        CalculateHandTransform();
-        CalculateReadyTransform();
     }
 
     public ReadyActionUIBehaviour GetReadyActionPrefab(Transform parent)
@@ -224,12 +121,7 @@ public class GameSystem : MonoBehaviour
 
     public void CompletedAction()
     {
-        DOVirtual.DelayedCall(1f, () =>
-        {
-            isInAction = false;
-            currentEnemyAction.onEndAction?.Invoke();
-            currentEnemyAction = null;
-        });
+        DOVirtual.DelayedCall(0.5f, () => { isInAction = false; });
     }
 
     public bool IsInHand(Card card)
@@ -272,23 +164,15 @@ public class GameSystem : MonoBehaviour
     {
         selectedCard = card;
         if (card.CardLogic.CardConfig.cardType == CardType.Defensive ||
-            card.CardLogic.CardConfig.cardType == CardType.Offensive ||
-            card.CardLogic.CardConfig.cardType == CardType.ThrowWeapon)
+            card.CardLogic.CardConfig.cardType == CardType.Offensive)
         {
             UIManager.Instance.HideInventoryNeed();
             ShowTarget(true);
         }
-        else if (card.CardLogic.CardConfig.cardType == CardType.UseItem)
+        else if (card.CardLogic.CardConfig.cardType == CardType.UseItem ||
+                 card.CardLogic.CardConfig.cardType == CardType.UseWeapon)
         {
-            UIManager.Instance.ShowInventoryNeed(InventoryItemType.Tool);
-        }
-        else if (card.CardLogic.CardConfig.cardType == CardType.UseWeapon)
-        {
-            UIManager.Instance.ShowInventoryNeed(InventoryItemType.Weapon);
-        }
-        else if (card.CardLogic.CardConfig.cardType == CardType.UnInterruptable)
-        {
-            card.Execute(null);
+            UIManager.Instance.ShowInventoryNeed();
         }
     }
 
@@ -303,7 +187,7 @@ public class GameSystem : MonoBehaviour
         }
     }
     
-    public void CalculateHandTransform()
+    private void CalculateHandTransform()
     {
         float start = -handCardsTransform.childCount * 50 / 2;
         for (int i = 0; i < handCardsTransform.childCount; i++)
@@ -311,7 +195,6 @@ public class GameSystem : MonoBehaviour
             RectTransform trans = handCardsTransform.GetChild(i).GetComponent<RectTransform>();
             trans.pivot = Vector2.one * 0.5f;
             trans.DOAnchorPos(new Vector3(start + 50 * i, 0, 0), 0.5f);
-            trans.GetComponent<Card>().SetOrigin(new Vector3(start + 50 * i, 0, 0));
         }
     }
     
@@ -352,16 +235,12 @@ public class GameSystem : MonoBehaviour
         foreach (var enemy in enemies)
         {
             enemy.ShowTarget(val,
-                selectedCard != null && 
-                selectedCard.CardLogic.CardConfig.cardType is CardType.Defensive);
+                selectedCard != null && selectedCard.CardLogic.CardConfig.cardType == CardType.Defensive);
         }
     }
 
     public void Draw(int number, bool decreaseEnemyAction = true)
     {
-        if (isInDraw) return;
-        isInDraw = true;
-        DOVirtual.DelayedCall(0.5f, () => isInDraw = false);
         for (int i = 0; i < number; i++)
         {
             if (drawPileCards.Count > 0)

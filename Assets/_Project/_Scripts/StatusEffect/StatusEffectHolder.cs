@@ -11,36 +11,41 @@ public class StatusEffectHolder : MonoBehaviour
     private StatusEffectUIBehaviour uiEffect;
     public StatusEffectUIBehaviour UIEffect => uiEffect;
 
-    private int turnLeft;
-
-    private StatusID[] showStatus = new StatusID[] { };
-
+    private Cooldown endEffectCooldown;
+    
+    private StatusID[] showStatus = new StatusID[] {};
+    
     private bool isInfinite;
     public bool IsInfinite => isInfinite;
 
     private bool isTickEffect = false;
+    private Cooldown tickEffectCooldown;
 
-    public void Init(StatusEffectUIBehaviour uiEffect, StatusEffect statusEffect, int lifeTurn)
+    public void Init(StatusEffectUIBehaviour uiEffect, StatusEffect statusEffect, float lifeTurn)
     {
         this.uiEffect = uiEffect;
         this.statusEffect = statusEffect;
         isInfinite = lifeTurn == -1;
-        turnLeft = lifeTurn;
+        endEffectCooldown = new Cooldown(lifeTurn);
         unit = gameObject.GetComponent<Unit>();
         isTickEffect = statusEffect.IsTickEffect;
+        tickEffectCooldown = new Cooldown(statusEffect.GetTickDuration());
     }
 
-    public void TakeTurn()
+    public StatusEffectHolder TakeTurn()
     {
-        statusEffect.TakeTurn();
-        if (turnLeft == -1) return;
-        turnLeft--;
-        uiEffect.Setup(statusEffect, turnLeft);
-        if (!isInfinite && turnLeft <= 0)
+        if (isTickEffect && tickEffectCooldown.IsAvailable)
+        {
+            statusEffect.TakeTurn();
+            tickEffectCooldown.ResetClock();
+        }
+        if (!isInfinite && endEffectCooldown.IsAvailable)
         {
             unit.RemoveStatusEffect(this);
             statusEffect.EndEffect();
+            return this;
         }
+        return null;
     }
 
     public void ForceEnd()

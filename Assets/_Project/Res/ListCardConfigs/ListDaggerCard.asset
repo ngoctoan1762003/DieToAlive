@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8189ef6899a534b85f427eb7df14dd, type: 3}
   m_Name: ListDaggerCard
   m_EditorClassIdentifier: 
-  weaponID: 30
   configs:
   - cardID: 100
     statType: 28000000
@@ -20,29 +19,21 @@ MonoBehaviour:
     chooseBetterDice: 0
     cardType: 0
     damageType: 0
-    weaponID: 0
-    haste: 1
   - cardID: 101
     statType: 28000000
     actionNeed: 0
     chooseBetterDice: 0
-    cardType: 5
+    cardType: 0
     damageType: 1
-    weaponID: 30
-    haste: 0
   - cardID: 102
     statType: 28000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 0
     damageType: 1
-    weaponID: 30
-    haste: 0
   - cardID: 103
     statType: 32000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 2
     damageType: 0
-    weaponID: 0
-    haste: 0

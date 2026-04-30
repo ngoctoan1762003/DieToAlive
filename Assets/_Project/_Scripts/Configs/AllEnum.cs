@@ -17,6 +17,12 @@ public enum UnitID
     WolfLeader = 10000,
     Wolf = 10010,
     LittleWolf = 10020,
+    Parasite = 10030,
+    Ann = 10040,
+    Benn = 10050,
+    Canis = 10060,
+    Lich = 10070,
+    Yinyang = 10080,
 }
 
 public enum CardID
@@ -27,7 +33,7 @@ public enum CardID
     BasicEvade = 10,
     BasicAttack = 11,
     BasicBlock = 12,
-    // ThrowWeapon = 13,
+    BasicRemoveWeapon = 13,
     BasicUse = 14,
     // BasicDash = 15,
     BasicEquip = 16,
@@ -47,30 +53,24 @@ public enum CardID
     
     //Bow
     Shoot = 300,
-    ThrowBow = 301,
-    RetrieveBow = 302,
     RetrieveArrow = 310,
     
     //Claymore
     EarthShaker = 400,
     Cyclone = 401,
-    ThrowClaymore = 402,
+    Throw = 402,
     RetrieveClaymore = 403,
     
     //Rapier
     Fleche = 500,
     RapierCounter = 501,
     Flurry = 502,
-    ThrowRapier = 503,
-    RetrieveRapier = 504,
     
     //Staff
     Fireball = 600,
     Healing = 601,
     HolyLight = 602,
     Bind = 603,
-    ThrowStaff = 604,
-    RetrieveStaff = 605,
     
     //Shield
     Bulwark = 700,
@@ -155,8 +155,7 @@ public enum CardType
     Defensive,
     UnInterruptable,
     UseItem,
-    UseWeapon,
-    ThrowWeapon,
+    UseWeapon
 }
 
 public enum DamageType
@@ -208,7 +207,14 @@ public enum LibraryItemType
 public enum NodeType
 {
     Combat,
-    Safe,
-    Encounter,
+    Rest,
+    Shop,
     Chest
+}
+
+public enum LineState //For line node UI
+{
+    Locked,
+    Unlocked,
+    Visited
 }

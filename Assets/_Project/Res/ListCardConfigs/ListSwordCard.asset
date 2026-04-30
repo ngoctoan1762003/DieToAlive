@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8189ef6899a534b85f427eb7df14dd, type: 3}
   m_Name: ListSwordCard
   m_EditorClassIdentifier: 
-  weaponID: 80
   configs:
   - cardID: 200
     statType: 28000000
@@ -20,37 +19,27 @@ MonoBehaviour:
     chooseBetterDice: 0
     cardType: 0
     damageType: 0
-    weaponID: 0
-    haste: 0
   - cardID: 201
     statType: 2800000032000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 0
     damageType: 0
-    weaponID: 0
-    haste: 0
   - cardID: 202
     statType: 3200000028000000
     actionNeed: 0
     chooseBetterDice: 1
     cardType: 0
     damageType: 1
-    weaponID: 0
-    haste: 0
   - cardID: 203
     statType: 32000000
     actionNeed: 0
     chooseBetterDice: 0
-    cardType: 5
+    cardType: 0
     damageType: 0
-    weaponID: 80
-    haste: 0
   - cardID: 204
     statType: 32000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 2
     damageType: 0
-    weaponID: 0
-    haste: 0

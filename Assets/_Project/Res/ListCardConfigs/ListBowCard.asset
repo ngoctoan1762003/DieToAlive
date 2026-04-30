@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8189ef6899a534b85f427eb7df14dd, type: 3}
   m_Name: ListBowCard
   m_EditorClassIdentifier: 
-  weaponID: 10
   configs:
   - cardID: 300
     statType: 28000000
@@ -20,29 +19,9 @@ MonoBehaviour:
     chooseBetterDice: 0
     cardType: 0
     damageType: 1
-    weaponID: 0
-    haste: 0
   - cardID: 310
     statType: 32000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 2
     damageType: 0
-    weaponID: 0
-    haste: 0
-  - cardID: 301
-    statType: 32000000
-    actionNeed: 0
-    chooseBetterDice: 0
-    cardType: 5
-    damageType: 2
-    weaponID: 10
-    haste: 0
-  - cardID: 302
-    statType: 32000000
-    actionNeed: 0
-    chooseBetterDice: 0
-    cardType: 2
-    damageType: 2
-    weaponID: 10
-    haste: 0

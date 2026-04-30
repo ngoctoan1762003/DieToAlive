@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Trap
   type: 1
-  weaponID: 0
-  toolID: 20
   icon: {fileID: 0}
   weight: 2

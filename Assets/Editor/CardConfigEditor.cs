@@ -12,8 +12,6 @@ public class CardConfigDrawer : PropertyDrawer
         SerializedProperty cardType = property.FindPropertyRelative("cardType");
         SerializedProperty chooseBetterDice = property.FindPropertyRelative("chooseBetterDice");
         SerializedProperty damageType = property.FindPropertyRelative("damageType");
-        SerializedProperty weaponID = property.FindPropertyRelative("weaponID");
-        SerializedProperty haste = property.FindPropertyRelative("haste");
 
         Rect fieldRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
         
@@ -29,16 +27,13 @@ public class CardConfigDrawer : PropertyDrawer
         DrawField(statType, true);
         DrawField(property.FindPropertyRelative("actionNeed"));
         DrawField(cardType);
-        DrawField(weaponID);
-        DrawField(haste);
 
         if (statType.arraySize >= 2)
         {
             DrawField(chooseBetterDice);
         }
 
-        if (cardType.enumValueIndex == (int)CardType.Offensive ||
-            cardType.enumValueIndex == (int)CardType.ThrowWeapon)
+        if (cardType.enumValueIndex == (int)CardType.Offensive)
         {
             DrawField(damageType);
         }
@@ -53,14 +48,11 @@ public class CardConfigDrawer : PropertyDrawer
         height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("statType")) + 2;
         height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("actionNeed")) + 2;
         height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("cardType")) + 2;
-        height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("weaponID")) + 2;
-        height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("haste")) + 2;
 
         if (property.FindPropertyRelative("statType").arraySize >= 2)
             height += EditorGUIUtility.singleLineHeight + 2;
 
-        if (property.FindPropertyRelative("cardType").enumValueIndex == (int)CardType.Offensive ||
-            property.FindPropertyRelative("cardType").enumValueIndex == (int)CardType.ThrowWeapon)
+        if (property.FindPropertyRelative("cardType").enumValueIndex == (int)CardType.Offensive)
             height += EditorGUIUtility.singleLineHeight + 2;
 
         return height;

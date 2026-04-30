@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8189ef6899a534b85f427eb7df14dd, type: 3}
   m_Name: ListStaffCard
   m_EditorClassIdentifier: 
-  weaponID: 70
   configs:
   - cardID: 600
     statType: 5a000000
@@ -20,45 +19,21 @@ MonoBehaviour:
     chooseBetterDice: 0
     cardType: 2
     damageType: 0
-    weaponID: 0
-    haste: 0
   - cardID: 601
     statType: 5a000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 2
     damageType: 0
-    weaponID: 0
-    haste: 0
   - cardID: 602
     statType: 5a000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 2
     damageType: 0
-    weaponID: 0
-    haste: 0
   - cardID: 603
     statType: 5a000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 2
     damageType: 0
-    weaponID: 0
-    haste: 0
-  - cardID: 604
-    statType: 5a000000
-    actionNeed: 0
-    chooseBetterDice: 0
-    cardType: 5
-    damageType: 2
-    weaponID: 70
-    haste: 0
-  - cardID: 605
-    statType: 32000000
-    actionNeed: 0
-    chooseBetterDice: 0
-    cardType: 2
-    damageType: 2
-    weaponID: 70
-    haste: 0

@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8189ef6899a534b85f427eb7df14dd, type: 3}
   m_Name: ListRapierCard
   m_EditorClassIdentifier: 
-  weaponID: 40
   configs:
   - cardID: 500
     statType: 28000000
@@ -20,37 +19,15 @@ MonoBehaviour:
     chooseBetterDice: 0
     cardType: 0
     damageType: 1
-    weaponID: 0
-    haste: 1
   - cardID: 501
     statType: 2800000032000000
     actionNeed: 0
     chooseBetterDice: 0
     cardType: 0
     damageType: 1
-    weaponID: 0
-    haste: 0
   - cardID: 502
     statType: 2800000032000000
     actionNeed: 0
     chooseBetterDice: 1
     cardType: 0
     damageType: 1
-    weaponID: 0
-    haste: 0
-  - cardID: 503
-    statType: 28000000
-    actionNeed: 0
-    chooseBetterDice: 1
-    cardType: 5
-    damageType: 1
-    weaponID: 40
-    haste: 0
-  - cardID: 504
-    statType: 32000000
-    actionNeed: 0
-    chooseBetterDice: 1
-    cardType: 2
-    damageType: 1
-    weaponID: 40
-    haste: 0

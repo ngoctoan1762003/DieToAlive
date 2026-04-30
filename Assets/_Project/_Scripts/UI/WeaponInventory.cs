@@ -15,7 +15,7 @@ public class WeaponInventory : MonoBehaviour
         weaponItemsPool = new AddressablesPool<WeaponItemUIBehaviour>(weaponItems, 10, weaponItemsTrans);
     }
 
-    public void Show(InventoryItemType type)
+    public void Show()
     {
         canvasGroup.alpha = 1;
         canvasGroup.blocksRaycasts = true;
@@ -25,7 +25,7 @@ public class WeaponInventory : MonoBehaviour
             weaponItemsTrans.GetChild(i).gameObject.SetActive(false);
         }
 
-        List<InventoryItem> weapons = InventoryManager.Instance.GetAllItemByType(type);
+        List<InventoryItem> weapons = InventoryManager.Instance.GetAllWeaponHave();
         for (int i = 0; i < weapons.Count; i++)
         {
             var weaponItem = weaponItemsPool.GetObjectAndActive();

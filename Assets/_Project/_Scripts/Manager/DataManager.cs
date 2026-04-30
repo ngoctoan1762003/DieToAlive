@@ -19,7 +19,6 @@ public class DataManager : MonoBehaviour
     [SerializeField] private Sprite evade;
     
     [SerializeField] private List<StatusEffectIconConfig> configs;
-    [SerializeField] private ListLocalizationConfigs localizationConfigs;
     
     [SerializeField] private Material glowUIMat;
     public Material GlowUIMat => glowUIMat;
@@ -34,11 +33,6 @@ public class DataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    public string GetLocalization(string key)
-    {
-        return localizationConfigs.GetValue(key);
     }
 
     public Sprite GetStatusEffectIcon(StatusID id)
@@ -104,48 +98,6 @@ public class DataManager : MonoBehaviour
                 return new WolfLeaderRoarSkillLogic();
             case CardID.WolfRoar:
                 return new WolfRoarSkillLogic();
-            case CardID.ThrowBow:
-            case CardID.ThrowClaymore:
-            case CardID.ThrowDagger:
-            case CardID.ThrowRapier:
-            case CardID.ThrowShield:
-            case CardID.ThrowSpear:
-            case CardID.ThrowSword:
-            case CardID.ThrowStaff:
-                return new ThrowCardLogic();
-            case CardID.RetrieveBow:
-            case CardID.RetrieveClaymore:
-            case CardID.RetrieveDagger:
-            case CardID.RetrieveRapier:
-            case CardID.RetrieveShield:
-            case CardID.RetrieveSpear:
-            case CardID.RetrieveSword:
-            case CardID.RetrieveStaff:
-                return new RetrieveCardLogic();
-            case CardID.SneakAttack:
-                return new SneakAttackLogic();
-            case CardID.Puncture:
-                return new PunctureLogic();
-            case CardID.Slash:
-                return new SlashLogic();
-            case CardID.SwordCounter:
-                return new CounterLogic();
-            case CardID.Thrust:
-                return new ThrustLogic();
-            case CardID.Fleche:
-                return new FlecheLogic();
-            case CardID.RapierCounter:
-                return new RapierCounterLogic();
-            case CardID.Flurry:
-                return new FlurryLogic();
-            case CardID.Bulwark:
-                return new BulwarkLogic();
-            case CardID.ShieldBash:
-                return new ShieldBashLogic();
-            case CardID.Piercing:
-                return new PiercingLogic();
-            case CardID.Sweep:
-                return new SweepLogic();
         }
 
         return new CardLogic();

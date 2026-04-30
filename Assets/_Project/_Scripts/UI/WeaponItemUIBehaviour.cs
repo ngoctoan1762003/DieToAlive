@@ -7,7 +7,6 @@ public class WeaponItemUIBehaviour : MonoBehaviour, IInPool
 {
     [SerializeField] private Button itemButton;
     [SerializeField] private TextMeshProUGUI itemName;
-    [SerializeField] private TextMeshProUGUI quantity;
     private InventoryItem item;
     
     private void Start()
@@ -18,7 +17,6 @@ public class WeaponItemUIBehaviour : MonoBehaviour, IInPool
     public void Setup(InventoryItem item)
     {
         itemName.text = item.config.name;
-        quantity.text = item.quantity.ToString();
         this.item = item;
     }
     
@@ -28,13 +26,12 @@ public class WeaponItemUIBehaviour : MonoBehaviour, IInPool
         {
             case InventoryItemType.Weapon:
                 GameSystem.Instance.EquipWeapon(item);
+                GameSystem.Instance.ToDiscard(GameSystem.Instance.SelectedCard);
+                UIManager.Instance.HideInventoryNeed();
                 break;
             case InventoryItemType.Tool:
-                GameSystem.Instance.UseItem(item.config);
                 break;
         }
-        GameSystem.Instance.ToDiscard(GameSystem.Instance.SelectedCard);
-        UIManager.Instance.HideInventoryNeed();
     }
     
     public void OnSpawn()

@@ -17,6 +17,4 @@ public class CardConfig
     public bool chooseBetterDice;
     public CardType cardType;
     public DamageType damageType;
-    public WeaponID weaponID;
-    public bool haste;
 }
