@@ -85,7 +85,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     public Action onChangeStat;
     public Action onTakeDamage;
     private UnitID unitID;
-    public UnitID UnitID;
+    public UnitID UnitID => unitID;
 
     private List<StatusEffectHolder> statusEffectHolders = new();
     public List<StatusEffectHolder> GetListStatusEffectHolders => statusEffectHolders;

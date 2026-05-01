@@ -110,10 +110,11 @@ public class UIManager : MonoBehaviour
         damagePopup.ShowDamage(damage, localPoint);
     }
 
-    public void ShowDescription(CardConfig config, Vector2 mousePos)
+    public void ShowDescription(UnitID unitID, CardConfig config, Vector2 mousePos)
     {
+        Debug.Log(unitID);
         popupDescription.gameObject.SetActive(true);
-        popupDescription.ShowInformation(UnitID.None, config);
+        popupDescription.ShowInformation(unitID, config);
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRect, 
