@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8189ef6899a534b85f427eb7df14dd, type: 3}
+  m_Name: ListParasiteCard
+  m_EditorClassIdentifier: 
+  weaponID: 0
+  configs:
+  - cardID: 10400
+    statType: 28000000
+    actionNeed: 3
+    chooseBetterDice: 0
+    cardType: 0
+    damageType: 2
+    weaponID: 0
+    haste: 0
+  - cardID: 10420
+    statType: 28000000
+    actionNeed: 3
+    chooseBetterDice: 0
+    cardType: 0
+    damageType: 2
+    weaponID: 0
+    haste: 0
+  - cardID: 10410
+    statType: 28000000
+    actionNeed: 3
+    chooseBetterDice: 0
+    cardType: 0
+    damageType: 2
+    weaponID: 0
+    haste: 0
+  - cardID: 10430
+    statType: 28000000
+    actionNeed: 3
+    chooseBetterDice: 0
+    cardType: 0
+    damageType: 2
+    weaponID: 0
+    haste: 0
+  - cardID: 10450
+    statType: 32000000
+    actionNeed: 2
+    chooseBetterDice: 0
+    cardType: 0
+    damageType: 1
+    weaponID: 0
+    haste: 0

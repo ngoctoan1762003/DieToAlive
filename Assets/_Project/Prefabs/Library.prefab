@@ -125,7 +125,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 70, y: -92.315}
+  m_AnchoredPosition: {x: 70, y: -67.5}
   m_SizeDelta: {x: 140, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3341946410630884277
@@ -205,7 +205,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 80, y: -143.565}
+  m_AnchoredPosition: {x: 80, y: -118.75}
   m_SizeDelta: {x: 130, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7575340234061687542
@@ -1243,7 +1243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 80, y: -260.695}
+  m_AnchoredPosition: {x: 80, y: -186.25}
   m_SizeDelta: {x: 130, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1161960394221519212
@@ -2127,6 +2127,7 @@ MonoBehaviour:
   libraryItemUIPrefab: {fileID: 4018851304985250929, guid: 0b8f45776d15d9548be2b9cb70c14268, type: 3}
   observationPointTXT: {fileID: 5215375529707249047}
   skillAndPassivePanel: {fileID: 5251704909398212803}
+  canvasGroup: {fileID: 0}
 --- !u!114 &8177549867853868750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2514,7 +2515,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 70, y: -82.315}
+  m_AnchoredPosition: {x: 70, y: -57.5}
   m_SizeDelta: {x: 140, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8994671341419182902
