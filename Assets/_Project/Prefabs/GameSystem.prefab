@@ -61,7 +61,7 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  deckIDs: 0a0000000b0000000c0000000d0000000e000000100000000b0000000b0000000b0000000b0000000b0000000b0000000b000000
+  deckIDs: 0a0000000b0000000c0000000e000000100000000e0000000b000000100000000b0000000c000000
   decks: []
   handCards: []
   drawPileCards: []
@@ -79,7 +79,7 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   diceBuffPrefab:
-    m_AssetGUID: 
+    m_AssetGUID: c17d2c23df69b61429d3433731d15700
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 
@@ -137,3 +137,7 @@ MonoBehaviour:
   allUnits:
   - {fileID: 11400000, guid: 0b55851b6c84b544686cef64c429c81d, type: 2}
   - {fileID: 11400000, guid: e7f045c87b93bfb4683c039f098cd186, type: 2}
+  - {fileID: 11400000, guid: dc5ec7fed8cfecb43a3a6c45797b9745, type: 2}
+  - {fileID: 11400000, guid: c909c73972045ec40b51b76bfcf175ae, type: 2}
+  - {fileID: 11400000, guid: 35f6b58d43379024b850854a3d663b97, type: 2}
+  - {fileID: 11400000, guid: 08bfd57408870c745a46f17ff926f7c6, type: 2}

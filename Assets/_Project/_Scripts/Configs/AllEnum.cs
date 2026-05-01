@@ -18,12 +18,17 @@ public enum UnitID
     WolfLeader = 10000,
     Wolf = 10010,
     LittleWolf = 10020,
-    Parasite = 10030,
-    Ann = 10040,
-    Benn = 10050,
-    Canis = 10060,
-    Lich = 10070,
-    Yinyang = 10080,
+    
+    Parasite = 10100,
+    SmallParasite = 10110,
+    Corpse = 10120,
+    
+    Lich = 10200,
+    Skeleton = 10210,
+    Turret = 10220,
+    
+    Yinyang = 10300,
+    Soul = 10310
 }
 
 public enum CardID
@@ -121,6 +126,8 @@ public enum CardID
     //Small Parasite
     QuickBite = 10450,
     
+    CorpseBlock = 10460,
+    
     // General
     WolfEvade = 100000,
     WolfBlock = 100010,
@@ -198,8 +205,10 @@ public enum PassiveActivationType
     OnEndAction,
     OnStartAction,
     OnEvadeSuccess,
+    OnBlockSuccess,
     OnClash,
-    OnChangeStat
+    OnChangeStat,
+    OnTakeDamage
 }
 
 public enum CardType

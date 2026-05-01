@@ -44,6 +44,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private Transform readyCardsTransform;
 
     private List<Unit> enemies;
+    public List<Unit> Enemies => enemies;
     private List<Unit> actionQueue;
 
     private static GameSystem instance;
