@@ -83,5 +83,19 @@ MonoBehaviour:
     en: Decrease heal by (stack * 10)%, reduce 1 lifeturn when heal
   - key: BuffStrengthDes
     en: Increase dice value by stack, reduce 1 life turn when roll
+  - key: BandageDes
+    en: Remove all Bleed
+  - key: BombDes
+    en: Deal 10 damage to all enemies
+  - key: CursedDes
+    en: Inflict 1 Fragile for 5 turns to all enemies
+  - key: EnergyDes
+    en: Gain 1 Strength for 5 turns
+  - key: HealPotionDes
+    en: Heal 10 HP
+  - key: NeedleDes
+    en: Remove all Wound
+  - key: TrapDes
+    en: Inflict Stun 2 turns to all enemies
   - key: RetrieveSpearDes
     en: Retrieve spear to inventory

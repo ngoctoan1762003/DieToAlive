@@ -24,9 +24,6 @@ MonoBehaviour:
   - cardID: 12
     price: 10
     quantity: 1
-  - cardID: 13
-    price: 10
-    quantity: 1
   - cardID: 14
     price: 10
     quantity: 1

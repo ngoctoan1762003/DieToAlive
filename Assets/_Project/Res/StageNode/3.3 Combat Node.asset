@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeID: 3.3
   nodeType: 0
-  enemies: 742700007e2700007e270000
+  enemies: 74270000882700008827000088270000
   BackGroundImage: {fileID: 21300000, guid: 5a24db7b1135362478b16f5794a32180, type: 3}

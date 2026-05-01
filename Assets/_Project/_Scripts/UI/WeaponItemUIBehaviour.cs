@@ -8,6 +8,7 @@ public class WeaponItemUIBehaviour : MonoBehaviour, IInPool
     [SerializeField] private Button itemButton;
     [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private TextMeshProUGUI quantity;
+    [SerializeField] private TextMeshProUGUI description;
     private InventoryItem item;
     
     private void Start()
@@ -20,6 +21,16 @@ public class WeaponItemUIBehaviour : MonoBehaviour, IInPool
         itemName.text = item.config.name;
         quantity.text = item.quantity.ToString();
         this.item = item;
+        switch (item.config.type)
+        {
+            case InventoryItemType.Weapon:
+                description.gameObject.SetActive(false);
+                break;
+            case InventoryItemType.Tool:
+                description.gameObject.SetActive(true);
+                description.text = DataManager.Instance.GetLocalization(item.config.toolID + "Des");
+                break;
+        }
     }
     
     private void Use()
