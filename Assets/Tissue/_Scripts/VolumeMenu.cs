@@ -12,7 +12,7 @@ public class VolumeMenu : MonoBehaviour
 
     private void Start() 
     {
-        menu.gameObject.SetActive(false);
+        //menu.gameObject.SetActive(false);
     }
 
     private void Update() 

@@ -34,12 +34,6 @@ MonoBehaviour:
     price: 10
     quantity: 1
   weaponItems:
-  - weaponID: 10
-    price: 10
-    quantity: 1
-  - weaponID: 20
-    price: 10
-    quantity: 1
   - weaponID: 30
     price: 10
     quantity: 1
@@ -50,9 +44,6 @@ MonoBehaviour:
     price: 10
     quantity: 1
   - weaponID: 60
-    price: 10
-    quantity: 1
-  - weaponID: 70
     price: 10
     quantity: 1
   - weaponID: 80

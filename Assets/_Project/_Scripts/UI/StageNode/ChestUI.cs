@@ -124,11 +124,13 @@ public class ChestUI : MonoBehaviour
         foreach (var weapon in currentChest.weaponRewards)
         {
             Debug.Log("Reward " + weapon.weaponID);
+            InventoryManager.Instance.AddItem(DataManager.Instance.GetWeaponConfig(weapon.weaponID), weapon.quantity);
         }
 
         foreach (var tool in currentChest.toolRewards)
         {
             Debug.Log("Reward " + tool.toolID);
+            InventoryManager.Instance.AddItem(DataManager.Instance.GetToolConfig(tool.toolID), tool.quantity);
         }
     }
 }
