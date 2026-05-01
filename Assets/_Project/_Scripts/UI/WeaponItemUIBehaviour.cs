@@ -27,6 +27,11 @@ public class WeaponItemUIBehaviour : MonoBehaviour, IInPool
         switch (item.config.type)
         {
             case InventoryItemType.Weapon:
+                if (GameSystem.Instance.CurrentEquipWeapon)
+                {
+                    UIManager.Instance.ShowDamage("Throw current weapon first", GameSystem.Instance.Player.transform.position);
+                    return;
+                }
                 GameSystem.Instance.EquipWeapon(item);
                 break;
             case InventoryItemType.Tool:

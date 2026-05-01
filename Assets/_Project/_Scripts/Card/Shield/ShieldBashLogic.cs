@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class ShieldBashLogic : CardLogic
 {
-    protected override void OnCompleted(int val)
+    protected override void OnDefense()
     {
-        base.OnCompleted(val);
+        base.OnDefense();
         target.AddStatusEffect(new StunStatusEffect(StatusID.Stun, target), 1);
     }
 }

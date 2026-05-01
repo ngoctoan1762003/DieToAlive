@@ -8,6 +8,6 @@ public class SmallParasiteBiteSkillLogic : CardLogic
         base.OnCompleted(val);
 
         unit.Heal(val);
-        GameSystem.Instance.Player.AddStatusEffect(new BleedStatusEffect(StatusID.Bleed, GameSystem.Instance.Player), 2);
+        GameSystem.Instance.Player.AddStatusEffect(new BleedStatusEffect(StatusID.Bleed, GameSystem.Instance.Player).SetValue(new List<float>(){2}), 2);
     }
 }

@@ -12,6 +12,7 @@ public class ParasiteThrowSkillLogic : CardLogic
             if (unit.CurrentHP > 15)
             {
                 GameSystem.Instance.SetupUnit(UnitID.SmallParasite);
+                unit.TakeDamage(null, 15);
             }
         }
     }

@@ -14,13 +14,11 @@ public class GameSystem : MonoBehaviour
 
     [SerializeField] private Unit player;
     public Unit Player => player;
-    
-    [Header("Effect")]
-    [SerializeField] private AssetReference statusEffectPrefab;
+
+    [Header("Effect")] [SerializeField] private AssetReference statusEffectPrefab;
     private AddressablesPool<StatusEffectUIBehaviour> statusEffectPool;
-    
-    [Header("Cards")]
-    [SerializeField] private List<CardID> deckIDs;
+
+    [Header("Cards")] [SerializeField] private List<CardID> deckIDs;
     [SerializeField] private List<Card> decks;
     [SerializeField] private List<Card> handCards;
     [SerializeField] private List<Card> drawPileCards;
@@ -36,7 +34,7 @@ public class GameSystem : MonoBehaviour
     private Card selectedCard;
     public Card SelectedCard => selectedCard;
 
-    private List<Card> readyCards = new();
+    [SerializeField] private List<Card> readyCards = new();
 
     [SerializeField] private Transform drawPileCardsTransform;
     [SerializeField] private Transform discardPileCardsTransform;
@@ -51,10 +49,11 @@ public class GameSystem : MonoBehaviour
     public static GameSystem Instance => instance;
 
     private bool isInAction;
-    
+
     private bool isInDraw;
 
     private InventoryItemConfigs currentEquipWeapon;
+    public InventoryItemConfigs CurrentEquipWeapon => currentEquipWeapon;
 
     private Unit currentEnemyAction;
 
@@ -94,6 +93,7 @@ public class GameSystem : MonoBehaviour
         playerStartPos = player.transform.localPosition;
         playerStartParent = player.transform.parent;
     }
+
     public void StartCombat(CombatNodeConfig config)
     {
         UIManager.Instance.ResetUI();
@@ -151,6 +151,7 @@ public class GameSystem : MonoBehaviour
         {
             enemy.gameObject.SetActive(false);
         }
+
         enemies.Clear();
 
         actionQueue.Clear();
@@ -195,6 +196,7 @@ public class GameSystem : MonoBehaviour
             enemy.ResetUnit();
             enemy.gameObject.SetActive(false);
         }
+
         enemies.Clear();
 
         ClearAllCards();
@@ -233,6 +235,7 @@ public class GameSystem : MonoBehaviour
             {
                 EndCombat(false);
             }
+
             return;
         }
 
@@ -243,6 +246,7 @@ public class GameSystem : MonoBehaviour
             EndCombat(true);
         }
     }
+
     private void EndCombat(bool isWin)
     {
         if (combatEnded) return;
@@ -283,7 +287,7 @@ public class GameSystem : MonoBehaviour
     {
         return diceBuffPool.GetObjectAndActive();
     }
-    
+
     public void EquipWeapon(InventoryItem item)
     {
         currentEquipWeapon = item.config;
@@ -311,15 +315,19 @@ public class GameSystem : MonoBehaviour
                 {
                     enemy.TakeDamage(null, 10);
                 }
+
                 break;
             case ToolID.Cursed:
                 foreach (var enemy in enemies.ToList())
                 {
-                    enemy.AddStatusEffect(new FragileStatusEffect(StatusID.Fragile, enemy).SetValue(new List<float>() { 1 }), 5);
+                    enemy.AddStatusEffect(
+                        new FragileStatusEffect(StatusID.Fragile, enemy).SetValue(new List<float>() { 1 }), 5);
                 }
+
                 break;
             case ToolID.Energy:
-                player.AddStatusEffect(new BuffStrengthStatusEffect(StatusID.BuffStrength, player).SetValue(new List<float>(){1}), 5);
+                player.AddStatusEffect(
+                    new BuffStrengthStatusEffect(StatusID.BuffStrength, player).SetValue(new List<float>() { 1 }), 5);
                 break;
             case ToolID.HealPotion:
                 player.Heal(10);
@@ -328,14 +336,20 @@ public class GameSystem : MonoBehaviour
                 player.RemoveStatusEffectByID(StatusID.Wound);
                 break;
             case ToolID.Trap:
-                player.AddStatusEffect(new StunStatusEffect(StatusID.Stun, player), 1);
+                foreach (var enemy in GameSystem.Instance.Enemies)
+                {
+                    enemy.AddStatusEffect(new StunStatusEffect(StatusID.Stun, enemy), 2);
+                }
+
                 break;
         }
+
         InventoryManager.Instance.RemoveItem(config);
     }
 
     public void AddToDrawPile(CardID cardID, InventoryItem item)
     {
+        Debug.Log(cardID);
         Card card = cardPool.GetObjectAndActive(drawPileCardsTransform);
         card.Setup(player, cardID, item);
         card.transform.localScale = Vector3.one;
@@ -346,6 +360,7 @@ public class GameSystem : MonoBehaviour
 
     public void ThrowWeapon()
     {
+        Debug.Log("removed");
         for (int i = drawPileCards.Count - 1; i >= 0; i--)
         {
             var drawPileCard = drawPileCards[i];
@@ -356,6 +371,8 @@ public class GameSystem : MonoBehaviour
                 drawPileCard.transform.SetParent(null);
             }
         }
+
+        Debug.Log("removed draw");
         for (int i = handCards.Count - 1; i >= 0; i--)
         {
             var handCard = handCards[i];
@@ -366,6 +383,8 @@ public class GameSystem : MonoBehaviour
                 handCard.transform.SetParent(null);
             }
         }
+
+        Debug.Log("removed hand");
         for (int i = discardCards.Count - 1; i >= 0; i--)
         {
             var discardCard = discardCards[i];
@@ -376,19 +395,25 @@ public class GameSystem : MonoBehaviour
                 discardCard.transform.SetParent(null);
             }
         }
+
+        Debug.Log("removed discard");
         for (int i = readyCards.Count - 1; i >= 0; i--)
         {
             var readyCard = readyCards[i];
-            if (readyCard.Source.config == currentEquipWeapon)
+            if (readyCard.Source != null && readyCard.Source.config == currentEquipWeapon)
             {
                 readyCards.Remove(readyCard);
                 readyCard.gameObject.SetActive(false);
+
                 readyCard.CardLogic.ClashCard.SetClashCard(null);
                 readyCard.CardLogic.SetClashCard(null);
                 readyCard.transform.SetParent(null);
             }
         }
-        
+
+        Debug.Log("removed ready");
+        currentEquipWeapon = null;
+
         CalculateDiscardTransform();
         CalculateDrawTransform();
         CalculateHandTransform();
@@ -485,7 +510,7 @@ public class GameSystem : MonoBehaviour
             trans.DOAnchorPos(new Vector3(-380 + 10 * i, 0, 0), 0.5f);
         }
     }
-    
+
     public void CalculateHandTransform()
     {
         float start = -handCardsTransform.childCount * 50 / 2;
@@ -497,7 +522,7 @@ public class GameSystem : MonoBehaviour
             trans.GetComponent<Card>().SetOrigin(new Vector3(start + 50 * i, 0, 0));
         }
     }
-    
+
     private void CalculateReadyTransform()
     {
         float start = -readyCardsTransform.childCount * 50 / 2;
@@ -524,6 +549,7 @@ public class GameSystem : MonoBehaviour
     {
         handCards.Remove(card);
         discardCards.Add(card);
+        readyCards.Remove(card);
         card.transform.SetParent(discardPileCardsTransform);
         CalculateHandTransform();
         CalculateDiscardTransform();
@@ -535,7 +561,7 @@ public class GameSystem : MonoBehaviour
         foreach (var enemy in enemies)
         {
             enemy.ShowTarget(val,
-                selectedCard != null && 
+                selectedCard != null &&
                 selectedCard.CardLogic.CardConfig.cardType is CardType.Defensive);
         }
     }

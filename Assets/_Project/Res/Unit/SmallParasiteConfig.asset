@@ -16,6 +16,6 @@ MonoBehaviour:
   unitID: 10110
   cardIDs: d2280000
   passiveIDs: c2010000
-  maxHP: 100
+  maxHP: 15
   mechanics: d2280000
   canExceedCapMaxHP: 1

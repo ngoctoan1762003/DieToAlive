@@ -376,7 +376,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
                 break;
             case StatusID.Bleed:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
-                    new BleedStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()),
+                    new BleedStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
                 break;
             case StatusID.BuffStrength:
