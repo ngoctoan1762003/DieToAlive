@@ -8,6 +8,7 @@ public class ChestNodeConfig : NodeConfigs
     public List<CardReward> cardRewards;
     public List<WeaponReward> weaponRewards;
     public List<ToolReward> toolRewards;
+    public int GoldAmount;
 }
 
 [System.Serializable]

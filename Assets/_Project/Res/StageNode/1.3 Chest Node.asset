@@ -16,10 +16,11 @@ MonoBehaviour:
   nodeType: 3
   cardRewards:
   - cardID: 10
-    quantity: 2
+    quantity: 1
   weaponRewards:
   - weaponID: 10
     quantity: 1
   toolRewards:
-  - toolID: 0
-    quantity: 2
+  - toolID: 10
+    quantity: 1
+  GoldAmount: 20

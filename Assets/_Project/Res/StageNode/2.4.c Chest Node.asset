@@ -14,3 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeID: 2.4.c
   nodeType: 3
+  cardRewards:
+  - cardID: 11
+    quantity: 1
+  weaponRewards:
+  - weaponID: 20
+    quantity: 1
+  toolRewards:
+  - toolID: 10
+    quantity: 1
+  GoldAmount: 30
