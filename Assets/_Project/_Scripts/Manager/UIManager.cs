@@ -35,8 +35,11 @@ public class UIManager : MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
-        
-        drawButton.onClick.AddListener(() => GameSystem.Instance.Draw(1));
+
+        drawButton.onClick.AddListener(() =>
+        {
+            GameSystem.Instance.Draw(1);
+        });
         popupDescription.UpdateTransform(new Vector3(1000, 1000));
         damagePopupPool = new AddressablesPool<DamagePopup>(damagePopupAsset, 10, canvasRect);
         inventoryButton.onClick.AddListener(() => InventoryManager.Instance.Show());

@@ -83,7 +83,7 @@ public class GameSystem : MonoBehaviour
         readyActionPool = new AddressablesPool<ReadyActionUIBehaviour>(readyActionPrefab, 10);
         statusEffectPool = new AddressablesPool<StatusEffectUIBehaviour>(statusEffectPrefab, 10);
         diceBuffPool = new AddressablesPool<DiceBuffUIBehaviour>(diceBuffPrefab, 10);
-        Setup();
+        //Setup();
         enemies = new List<Unit>();
         actionQueue = new List<Unit>();
         isInAction = false;
@@ -584,6 +584,7 @@ public class GameSystem : MonoBehaviour
                 Card cardToDraw = drawPileCards[drawPileCards.Count - 1];
                 AddToHand(cardToDraw);
                 drawPileCards.RemoveAt(drawPileCards.Count - 1);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.DrawCard);
             }
             else
             {
@@ -591,6 +592,7 @@ public class GameSystem : MonoBehaviour
                 {
                     ReshuffleDiscardIntoDraw();
                     i--;
+                    AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.DrawCard);
                 }
                 else
                 {
