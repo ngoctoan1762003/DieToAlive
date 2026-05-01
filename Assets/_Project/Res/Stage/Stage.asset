@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: Stage
   m_EditorClassIdentifier: 
   nodes:
+  - nodeID: 1.0
+    node: {fileID: 11400000, guid: bf71c6825f0f0244e8548ff475356c68, type: 2}
+    position: {x: 0, y: 100}
+    nextNodeIDs:
+    - 1.1
+    isUnlocked: 0
+    isVisited: 0
   - nodeID: 1.1
     node: {fileID: 11400000, guid: 534f5e5169bf5ea4fb9e7eed1b3c1429, type: 2}
-    position: {x: 0, y: 100}
+    position: {x: 0, y: 250}
     nextNodeIDs:
     - 1.2.a
     - 1.2.b
@@ -23,21 +30,21 @@ MonoBehaviour:
     isVisited: 0
   - nodeID: 1.2.a
     node: {fileID: 11400000, guid: d3af457c80980ba40a1c65becc52be8f, type: 2}
-    position: {x: -100, y: 250}
+    position: {x: -100, y: 350}
     nextNodeIDs:
     - 1.3
     isUnlocked: 0
     isVisited: 0
   - nodeID: 1.2.b
     node: {fileID: 11400000, guid: 3b102bb436206c149a8bd5f62604163d, type: 2}
-    position: {x: 100, y: 250}
+    position: {x: 100, y: 350}
     nextNodeIDs:
     - 1.3
     isUnlocked: 0
     isVisited: 0
   - nodeID: 1.3
     node: {fileID: 11400000, guid: b0c9e478d5c153549998dcb78df1d913, type: 2}
-    position: {x: 0, y: 400}
+    position: {x: 0, y: 500}
     nextNodeIDs:
     - 1.4.a
     - 1.4.b
@@ -46,42 +53,42 @@ MonoBehaviour:
     isVisited: 0
   - nodeID: 1.4.a
     node: {fileID: 11400000, guid: b12d4f7bb2d7cad408770298e4bde62f, type: 2}
-    position: {x: -100, y: 550}
+    position: {x: -100, y: 650}
     nextNodeIDs:
     - 2.1
     isUnlocked: 0
     isVisited: 0
   - nodeID: 1.4.b
     node: {fileID: 11400000, guid: 8a7a6f151b21d594489653a17a73d69c, type: 2}
-    position: {x: 0, y: 550}
+    position: {x: 0, y: 650}
     nextNodeIDs:
     - 2.1
     isUnlocked: 0
     isVisited: 0
   - nodeID: 1.4.c
     node: {fileID: 11400000, guid: a51cb9307ee0f964497eb747e5033189, type: 2}
-    position: {x: 100, y: 550}
+    position: {x: 100, y: 650}
     nextNodeIDs:
     - 2.1
     isUnlocked: 0
     isVisited: 0
   - nodeID: 2.1
     node: {fileID: 11400000, guid: bdc7832ca34b3c048ad4175174c34183, type: 2}
-    position: {x: 0, y: 700}
+    position: {x: 0, y: 800}
     nextNodeIDs:
     - 2.2
     isUnlocked: 0
     isVisited: 0
   - nodeID: 2.2
     node: {fileID: 11400000, guid: f3533fcbd0e368041bf67c9656e34bb7, type: 2}
-    position: {x: 0, y: 850}
+    position: {x: 0, y: 950}
     nextNodeIDs:
     - 2.3
     isUnlocked: 0
     isVisited: 0
   - nodeID: 2.3
     node: {fileID: 11400000, guid: 616d5595426f38a4b856900fe4dfd736, type: 2}
-    position: {x: 0, y: 1000}
+    position: {x: 0, y: 1100}
     nextNodeIDs:
     - 2.4.a
     - 2.4.b
@@ -90,28 +97,28 @@ MonoBehaviour:
     isVisited: 0
   - nodeID: 2.4.a
     node: {fileID: 11400000, guid: 3c4ebb4a7effb794fb4c17044d069b61, type: 2}
-    position: {x: -100, y: 1150}
+    position: {x: -100, y: 1250}
     nextNodeIDs:
     - 3.1.a
     isUnlocked: 0
     isVisited: 0
   - nodeID: 2.4.b
     node: {fileID: 11400000, guid: d6df530b6d2c60040b5a39105c16d167, type: 2}
-    position: {x: 0, y: 1150}
+    position: {x: 0, y: 1250}
     nextNodeIDs:
     - 3.1.a
     isUnlocked: 0
     isVisited: 0
   - nodeID: 2.4.c
     node: {fileID: 11400000, guid: 82736341668782b45b12bc208bf59eb3, type: 2}
-    position: {x: 100, y: 1150}
+    position: {x: 100, y: 1250}
     nextNodeIDs:
     - 3.1.b
     isUnlocked: 0
     isVisited: 0
   - nodeID: 3.1.a
     node: {fileID: 11400000, guid: 874be0132e7574a42b05d232026acd61, type: 2}
-    position: {x: -100, y: 1300}
+    position: {x: -100, y: 1400}
     nextNodeIDs:
     - 3.2.a
     - 3.2.b
@@ -119,35 +126,35 @@ MonoBehaviour:
     isVisited: 0
   - nodeID: 3.1.b
     node: {fileID: 11400000, guid: a44f352f18e3c6140b2a105b8183c599, type: 2}
-    position: {x: 100, y: 1300}
+    position: {x: 100, y: 1400}
     nextNodeIDs:
     - 3.2.c
     isUnlocked: 0
     isVisited: 0
   - nodeID: 3.2.a
     node: {fileID: 11400000, guid: a0db97694e7c0724aa4f901dd5a10798, type: 2}
-    position: {x: -100, y: 1450}
+    position: {x: -100, y: 1550}
     nextNodeIDs:
     - 3.3
     isUnlocked: 0
     isVisited: 0
   - nodeID: 3.2.b
     node: {fileID: 11400000, guid: 943ef6d8c79054043b573c5dfd4d8c87, type: 2}
-    position: {x: 0, y: 1450}
+    position: {x: 0, y: 1550}
     nextNodeIDs:
     - 3.3
     isUnlocked: 0
     isVisited: 0
   - nodeID: 3.2.c
     node: {fileID: 11400000, guid: 60072eeb89bf3c6438b8abb31765df46, type: 2}
-    position: {x: 100, y: 1450}
+    position: {x: 100, y: 1550}
     nextNodeIDs:
     - 3.3
     isUnlocked: 0
     isVisited: 0
   - nodeID: 3.3
     node: {fileID: 11400000, guid: 83266747eed76704da00ce868a89cc8d, type: 2}
-    position: {x: 0, y: 1600}
+    position: {x: 0, y: 1700}
     nextNodeIDs:
     - 3.3
     isUnlocked: 0
