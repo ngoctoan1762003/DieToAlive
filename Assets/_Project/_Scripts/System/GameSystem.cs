@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -57,6 +57,16 @@ public class GameSystem : MonoBehaviour
 
     private Unit currentEnemyAction;
 
+    private CombatNodeConfig currentCombatConfig;
+    private bool combatEnded = false;
+
+    private Vector3 playerStartPos;
+    private Transform playerStartParent;
+
+    private int savedHP;
+    private int savedMaxHP;
+    private bool isReplay = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -77,8 +87,180 @@ public class GameSystem : MonoBehaviour
         enemies = new List<Unit>();
         actionQueue = new List<Unit>();
         isInAction = false;
-        player.Setup(UnitID.Main);
-        SetupUnit(UnitID.WolfLeader);
+        //player.Setup(UnitID.Main);
+        //SetupUnit(UnitID.WolfLeader);
+
+        playerStartPos = player.transform.localPosition;
+        playerStartParent = player.transform.parent;
+    }
+    public void StartCombat(CombatNodeConfig config)
+    {
+        UIManager.Instance.ResetUI();
+        InventoryManager.Instance.SaveSnapshot();
+        ResetToInitialState();
+        player.transform.SetParent(playerStartParent);
+        player.transform.localPosition = playerStartPos;
+        player.transform.localRotation = Quaternion.identity;
+
+        combatEnded = false;
+        currentCombatConfig = config;
+
+        ClearCombat();
+        ClearAllCards();
+
+        player.Setup(UnitID.Main, false);
+
+        if (!isReplay)
+        {
+            savedHP = (int)player.CurrentHP;
+        }
+
+
+        if (isReplay)
+        {
+            player.SetHP(savedHP);
+        }
+
+        foreach (var enemyID in config.enemies)
+        {
+            SetupUnit(enemyID);
+        }
+
+        Setup();
+    }
+
+    public void ReplayCombat()
+    {
+        if (currentCombatConfig == null) return;
+
+        Debug.Log("Replay combat");
+
+        isReplay = true;
+
+        InventoryManager.Instance.RestoreSnapshot();
+        ResetToInitialState();
+        StartCombat(currentCombatConfig);
+
+        isReplay = false;
+    }
+
+    public void ClearCombat()
+    {
+        foreach (var enemy in enemies)
+        {
+            enemy.gameObject.SetActive(false);
+        }
+        enemies.Clear();
+
+        actionQueue.Clear();
+
+        // clear cards
+        foreach (var c in handCards) c.gameObject.SetActive(false);
+        foreach (var c in drawPileCards) c.gameObject.SetActive(false);
+        foreach (var c in discardCards) c.gameObject.SetActive(false);
+
+        handCards.Clear();
+        drawPileCards.Clear();
+        discardCards.Clear();
+        readyCards.Clear();
+    }
+
+    private void ResetUI()
+    {
+        UIManager.Instance.HideInventoryNeed();
+        ShowTarget(false);
+        selectedCard = null;
+    }
+
+    public void ResetToInitialState()
+    {
+        combatEnded = false;
+        isInAction = false;
+        isInDraw = false;
+
+        actionQueue.Clear();
+        currentEnemyAction = null;
+        selectedCard = null;
+
+        player.gameObject.SetActive(true);
+        player.ResetUnit();
+
+        player.transform.SetParent(playerStartParent);
+        player.transform.localPosition = playerStartPos;
+        player.transform.localRotation = Quaternion.identity;
+
+        foreach (var enemy in enemies)
+        {
+            enemy.ResetUnit();
+            enemy.gameObject.SetActive(false);
+        }
+        enemies.Clear();
+
+        ClearAllCards();
+
+        currentEquipWeapon = null;
+
+        ResetUI();
+    }
+
+    private void ClearAllCards()
+    {
+        List<Card> allCards = new();
+        allCards.AddRange(handCards);
+        allCards.AddRange(drawPileCards);
+        allCards.AddRange(discardCards);
+        allCards.AddRange(readyCards);
+
+        foreach (var c in allCards)
+        {
+            c.gameObject.SetActive(false);
+            c.transform.SetParent(null);
+        }
+
+        handCards.Clear();
+        drawPileCards.Clear();
+        discardCards.Clear();
+        readyCards.Clear();
+    }
+
+
+    public void OnUnitDead(Unit unit)
+    {
+        if (unit == player)
+        {
+            if (enemies.Any(e => e.gameObject.activeSelf))
+            {
+                EndCombat(false);
+            }
+            return;
+        }
+
+        enemies.Remove(unit);
+
+        if (!enemies.Any(e => e.gameObject.activeSelf))
+        {
+            EndCombat(true);
+        }
+    }
+    private void EndCombat(bool isWin)
+    {
+        if (combatEnded) return;
+        combatEnded = true;
+
+        isInAction = true;
+
+        if (isWin)
+        {
+            CombatResultUI.Instance.Win();
+            Debug.Log("Win");
+        }
+        else
+        {
+            CombatResultUI.Instance.Lose();
+            Debug.Log("Lose");
+        }
+
+        CombatResultUI.Instance.gameObject.SetActive(true);
     }
 
     private void Update()
@@ -112,7 +294,7 @@ public class GameSystem : MonoBehaviour
         }
 
         List<Card> newCards = drawPileCards.Where(c => c.Source == item).ToList();
-        Draw(2);
+        Draw(2, false);
         InventoryManager.Instance.RemoveItem(currentEquipWeapon);
     }
 
@@ -124,15 +306,15 @@ public class GameSystem : MonoBehaviour
                 player.RemoveStatusEffectByID(StatusID.Bleed);
                 break;
             case ToolID.Bomb:
-                foreach (var enemy in enemies)
+                foreach (var enemy in enemies.ToList())
                 {
                     enemy.TakeDamage(null, 10);
                 }
                 break;
             case ToolID.Cursed:
-                foreach (var enemy in enemies)
+                foreach (var enemy in enemies.ToList())
                 {
-                    enemy.AddStatusEffect(new FragileStatusEffect(StatusID.Fragile, enemy).SetValue(new List<float>(){1}), 5);
+                    enemy.AddStatusEffect(new FragileStatusEffect(StatusID.Fragile, enemy).SetValue(new List<float>() { 1 }), 5);
                 }
                 break;
             case ToolID.Energy:

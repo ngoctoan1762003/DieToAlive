@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3549857057ace945bc22e6ec2935924, type: 3}
   m_Name: Energy
   m_EditorClassIdentifier: 
-  itemName: Trap
+  itemName: Energy
   type: 1
   weaponID: 0
   toolID: 80

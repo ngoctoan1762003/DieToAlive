@@ -141,7 +141,18 @@ public class MapManager : MonoBehaviour
         {
             case NodeType.Combat:
                 MapUIManager.Instance.CloseMap();
-                Debug.Log("Combat node");
+
+                var combatConfig = currentNode.node as CombatNodeConfig;
+
+                if (combatConfig != null)
+                {
+                    GameSystem.Instance.StartCombat(combatConfig);
+                }
+                else
+                {
+                    Debug.LogError("Node is Combat but config is wrong!");
+                }
+
                 break;
 
             case NodeType.Rest:

@@ -9,10 +9,33 @@ public class InventoryManager : MonoBehaviour
     public float MaxWeight = 15f;
     public Action OnInventoryChanged;
     [SerializeField] private CanvasGroup canvasGroup;
+    private List<InventoryItem> snapshotItems = new();
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    public void SaveSnapshot()
+    {
+        snapshotItems.Clear();
+
+        foreach (var item in items)
+        {
+            snapshotItems.Add(new InventoryItem(item.config, item.quantity));
+        }
+    }
+
+    public void RestoreSnapshot()
+    {
+        items.Clear();
+
+        foreach (var item in snapshotItems)
+        {
+            items.Add(new InventoryItem(item.config, item.quantity));
+        }
+
+        OnInventoryChanged?.Invoke();
     }
 
     public float CurrentWeight
