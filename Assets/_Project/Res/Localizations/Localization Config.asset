@@ -67,3 +67,21 @@ MonoBehaviour:
     en: Remove related cards, gain RetrieveSpear, draw 2
   - key: RetrieveSpearDes
     en: Retrieve spear to inventory
+  - key: ParalyzeDes
+    en: Reduce dice value by stack, reduce 1 life turn when roll
+  - key: BleedDes
+    en: Take damage when take turn, reduce 1 life turn when happen
+  - key: StunDes
+    en: Won't reduce action, reduce 1 when happen
+  - key: ProtectionDes
+    en: Reduce damage taken by (stack * 10)%, reduce 1 lifeturn when take damage
+  - key: FragileDes
+    en: Increase damage taken by (stack * 10)%, reduce 1 lifeturn when take damage
+  - key: WeakenDes
+    en: Decrease damage deal by (stack * 10)%, reduce 1 lifeturn when deal damage
+  - key: WoundDes
+    en: Decrease heal by (stack * 10)%, reduce 1 lifeturn when heal
+  - key: BuffStrengthDes
+    en: Increase dice value by stack, reduce 1 life turn when roll
+  - key: RetrieveSpearDes
+    en: Retrieve spear to inventory

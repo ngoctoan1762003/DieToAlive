@@ -17,7 +17,7 @@ public class CardPopupDescription : MonoBehaviour
     public void ShowInformation(StatusEffect statusEffect)
     {
         nameText.text = statusEffect.GetID().ToString();
-        description.text = statusEffect.GetID().ToString();
+        description.text = DataManager.Instance.GetLocalization(statusEffect.GetID() + "Des");
     }
 
     public void UpdateTransform(Vector2 trans)

@@ -46,7 +46,7 @@ public class DataManager : MonoBehaviour
     
     public InventoryItemConfigs GetWeaponConfig(WeaponID weaponID)
     {
-        return toolConfigs.FirstOrDefault(t => t.weaponID == weaponID);
+        return weaponConfigs.FirstOrDefault(t => t.weaponID == weaponID);
     }
 
     public string GetLocalization(string key)
