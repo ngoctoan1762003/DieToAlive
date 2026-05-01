@@ -99,6 +99,11 @@ public class AudioManager : MonoBehaviour{
     {
         RuntimeManager.PlayOneShot(sound, worldPos);
     }
+    
+    public void PlayOneShotMono(EventReference sound)
+    {
+        RuntimeManager.PlayOneShot(sound);
+    }
 
     public EventInstance CreateInstance(EventReference eventReference)
     {
