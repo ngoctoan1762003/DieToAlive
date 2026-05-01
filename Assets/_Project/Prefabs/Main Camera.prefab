@@ -191,7 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StudioListener: {fileID: 3402630457470096601}
   masterVolume: 1
-  musicVolume: 1
+  musicVolume: 0
   ambienceVolume: 1
   SFXVolume: 1
   Heart: 0
@@ -260,3 +260,31 @@ MonoBehaviour:
       Data3: 1992539823
       Data4: 649342033
     Path: event:/Music/Level/LichMusic
+  <DrawCard>k__BackingField:
+    Guid:
+      Data1: -1907126084
+      Data2: 1091597792
+      Data3: -757651561
+      Data4: 298574217
+    Path: event:/SFX/DrawCard
+  <Hit>k__BackingField:
+    Guid:
+      Data1: 1934034475
+      Data2: 1148546720
+      Data3: -1869397886
+      Data4: 1958072181
+    Path: event:/SFX/Hit
+  <Debuff>k__BackingField:
+    Guid:
+      Data1: -324566999
+      Data2: 1108704011
+      Data3: -1280587369
+      Data4: -1453616314
+    Path: event:/SFX/Debuff
+  <Buff>k__BackingField:
+    Guid:
+      Data1: 2081548962
+      Data2: 1103745896
+      Data3: 85356176
+      Data4: -847249918
+    Path: event:/SFX/Buff
