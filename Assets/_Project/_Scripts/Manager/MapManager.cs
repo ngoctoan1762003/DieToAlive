@@ -147,6 +147,7 @@ public class MapManager : MonoBehaviour
                 if (combatConfig != null)
                 {
                     GameSystem.Instance.StartCombat(combatConfig);
+                    BackGroundManager.Instance.SetUpBG(combatConfig.BackGroundImage);
                 }
                 else
                 {

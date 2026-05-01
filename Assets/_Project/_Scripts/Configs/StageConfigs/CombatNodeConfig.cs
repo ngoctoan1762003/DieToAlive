@@ -5,4 +5,5 @@ using UnityEngine;
 public class CombatNodeConfig : NodeConfigs
 {
     public List<UnitID> enemies;
+    public Sprite BackGroundImage;
 }

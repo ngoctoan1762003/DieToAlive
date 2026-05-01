@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeID: 1.3
   nodeType: 3
-  cardRewards:
-  - cardID: 10
-    quantity: 1
+  cardRewards: []
   weaponRewards:
   - weaponID: 10
     quantity: 1

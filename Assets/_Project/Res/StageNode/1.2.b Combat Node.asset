@@ -15,3 +15,4 @@ MonoBehaviour:
   nodeID: 1.2.b
   nodeType: 0
   enemies: 10270000
+  BackGroundImage: {fileID: 21300000, guid: 4e7797519354e73498cdef47f90ca676, type: 3}
