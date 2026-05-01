@@ -16,5 +16,6 @@ public class ToolShopItem : ShopItem
     protected override void OnBuySuccess()
     {
         Debug.Log("Buy Tool: " + toolID);
+        InventoryManager.Instance.AddItem(DataManager.Instance.GetToolConfig(toolID), 1);
     }
 }

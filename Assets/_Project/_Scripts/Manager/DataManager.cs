@@ -24,6 +24,9 @@ public class DataManager : MonoBehaviour
     [SerializeField] private Material glowUIMat;
     public Material GlowUIMat => glowUIMat;
     
+    public List<InventoryItemConfigs> toolConfigs;
+    public List<InventoryItemConfigs> weaponConfigs;
+    
     private void Awake()
     {
         if (instance == null)
@@ -34,6 +37,16 @@ public class DataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public InventoryItemConfigs GetToolConfig(ToolID toolID)
+    {
+        return toolConfigs.FirstOrDefault(t => t.toolID == toolID);
+    }
+    
+    public InventoryItemConfigs GetWeaponConfig(WeaponID weaponID)
+    {
+        return toolConfigs.FirstOrDefault(t => t.weaponID == weaponID);
     }
 
     public string GetLocalization(string key)

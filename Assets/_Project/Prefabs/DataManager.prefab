@@ -105,3 +105,25 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 2048470c888e97c41b59e5f346c23b64, type: 3}
   localizationConfigs: {fileID: 11400000, guid: fad2d7efff6678548b97d3af074aa831, type: 2}
   glowUIMat: {fileID: 2100000, guid: ba48e1a6edb3b8c4db65a8170370c2ba, type: 2}
+  toolConfigs:
+  - {fileID: 11400000, guid: 5583cf320d941a14ea8aad8b2c0804b9, type: 2}
+  - {fileID: 11400000, guid: 594ff19b9fdd27a4db7659095453d3ef, type: 2}
+  - {fileID: 11400000, guid: b0924990b14b3934d98d0dc063af5772, type: 2}
+  - {fileID: 11400000, guid: ab75a8187f86d42438b93a05104826d9, type: 2}
+  - {fileID: 11400000, guid: 918964ead806c1049b5b333947bd9954, type: 2}
+  - {fileID: 11400000, guid: e1b6cbb669ebcc4498a2f4bb44296db2, type: 2}
+  - {fileID: 11400000, guid: a10df03f0e6aa1d46bd4ed38dc72a444, type: 2}
+  - {fileID: 11400000, guid: 139d55ffa8966ed428b0f819a4c87917, type: 2}
+  - {fileID: 11400000, guid: a1de24abd7532f2499bf45d85f64ccc0, type: 2}
+  - {fileID: 11400000, guid: 412697e26b9b0db43a563ffa657f1662, type: 2}
+  - {fileID: 11400000, guid: 74744ad1e8f57d243af8f55a9860c3d4, type: 2}
+  - {fileID: 11400000, guid: dbae9182cd5f4c24a9aa1a1495e4aca1, type: 2}
+  weaponConfigs:
+  - {fileID: 11400000, guid: 05c89c4db429a5948bf97568c2981c19, type: 2}
+  - {fileID: 11400000, guid: 29b01bddd2ed7b9439fa01691fda481e, type: 2}
+  - {fileID: 11400000, guid: d1024da9c04b2c4449796707e617bf2e, type: 2}
+  - {fileID: 11400000, guid: 4a4cf06c1352cd1469a69758d8efe047, type: 2}
+  - {fileID: 11400000, guid: c2e7ccbe2662ce947986656b92aaec3f, type: 2}
+  - {fileID: 11400000, guid: 7ffcb8e3c6da8254d8070f936873589c, type: 2}
+  - {fileID: 11400000, guid: c75a3eaf63322864cb00b4677b1ae049, type: 2}
+  - {fileID: 11400000, guid: 292d7133b444263438e96dbfacac8915, type: 2}

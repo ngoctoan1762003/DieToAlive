@@ -700,18 +700,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327a86d11a5d9384680ebf69afbd8879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - config: {fileID: 11400000, guid: 05c89c4db429a5948bf97568c2981c19, type: 2}
-    quantity: 1
-  - config: {fileID: 11400000, guid: 29b01bddd2ed7b9439fa01691fda481e, type: 2}
-    quantity: 2
-  - config: {fileID: 11400000, guid: d1024da9c04b2c4449796707e617bf2e, type: 2}
-    quantity: 3
-  - config: {fileID: 11400000, guid: 4a4cf06c1352cd1469a69758d8efe047, type: 2}
-    quantity: 4
-  - config: {fileID: 11400000, guid: c2e7ccbe2662ce947986656b92aaec3f, type: 2}
-    quantity: 5
+  items: []
   MaxWeight: 15
+  canvasGroup: {fileID: 0}
 --- !u!114 &7871873921285217510
 MonoBehaviour:
   m_ObjectHideFlags: 0

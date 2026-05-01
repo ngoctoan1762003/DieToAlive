@@ -16,5 +16,6 @@ public class WeaponShopItem : ShopItem
     protected override void OnBuySuccess()
     {
         Debug.Log("Buy Weapon: " + weaponID);
+        InventoryManager.Instance.AddItem(DataManager.Instance.GetWeaponConfig(weaponID), 1);
     }
 }

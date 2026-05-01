@@ -84,6 +84,7 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  readyCards: []
   drawPileCardsTransform: {fileID: 0}
   discardPileCardsTransform: {fileID: 0}
   handCardsTransform: {fileID: 0}

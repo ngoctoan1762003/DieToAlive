@@ -281,6 +281,7 @@ public class GameSystem : MonoBehaviour
             {
                 currentEnemyAction = actionQueue[0];
                 actionQueue.Remove(currentEnemyAction);
+                if (currentEnemyAction.ActionCount > 0) return;
                 currentEnemyAction.onStartAction?.Invoke();
                 currentEnemyAction.Execute();
                 isInAction = true;

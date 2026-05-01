@@ -349,6 +349,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     public void Execute()
     {
         actionCard.Execute(GameSystem.Instance.Player);
+        actionCard = null;
     }
 
     public void AddStatusEffect(StatusEffect statusEffect, int lifeTurn)
