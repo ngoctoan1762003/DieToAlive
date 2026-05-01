@@ -145,6 +145,11 @@ public class GameSystem : MonoBehaviour
         isReplay = false;
     }
 
+    public void SaveCurrentHP()
+    {
+        savedHP = (int)player.CurrentHP;
+    }
+
     public void ClearCombat()
     {
         foreach (var enemy in enemies)

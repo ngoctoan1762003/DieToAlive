@@ -157,6 +157,7 @@ public class MapManager : MonoBehaviour
 
             case NodeType.Rest:
                 MapUIManager.Instance.CloseMap();
+                RestUI.Instance.ShowRestUI();
                 Debug.Log("Rest node");
                 break;
 
@@ -179,7 +180,17 @@ public class MapManager : MonoBehaviour
 
             case NodeType.Chest:
                 MapUIManager.Instance.CloseMap();
-                Debug.Log("Chest node");
+
+                var chestConfig = currentNode.node as ChestNodeConfig;
+
+                if (chestConfig != null)
+                {
+                    ChestUI.Instance.ShowChestPanel(chestConfig);
+                }
+                else
+                {
+                    Debug.LogError("Chest config sai!");
+                }
                 break;
         }
     }

@@ -529,5 +529,6 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
 
     public void OnDead()
     {
+
     }
 }
