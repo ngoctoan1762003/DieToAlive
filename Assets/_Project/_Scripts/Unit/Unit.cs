@@ -309,6 +309,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         UIManager.Instance.ShowDamage(damage.ToString(), transform.position);
         CountdownTakeDamageStatusEffect();
         onTakeDamage?.Invoke();
+        AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Hit);
     }
 
     public void Dead()
@@ -374,46 +375,55 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new StatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()),
                     lifeTurn);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Debuff);
                 break;
             case StatusID.Bleed:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new BleedStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Debuff);
                 break;
             case StatusID.BuffStrength:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new BuffStrengthStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Buff);
                 break;
             case StatusID.Paralyze:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new ParalyzeStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Debuff);
                 break;
             case StatusID.Protection:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new ProtectionStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Buff);
                 break;
             case StatusID.Stun:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new StunStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Debuff);
                 break;
             case StatusID.Fragile:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new FragileStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Debuff);
                 break;
             case StatusID.Weaken:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new WeakenStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Debuff);
                 break;
             case StatusID.Wound:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new WoundStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
+                AudioManager.Instance.PlayOneShotMono(FMODEvents.Instance.Debuff);
                 break;
         }
         
