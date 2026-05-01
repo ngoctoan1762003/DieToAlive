@@ -157,6 +157,7 @@ public class MapManager : MonoBehaviour
 
             case NodeType.Rest:
                 MapUIManager.Instance.CloseMap();
+                RestUI.Instance.ShowRestUI();
                 Debug.Log("Rest node");
                 break;
 
