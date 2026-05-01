@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class BulwarkLogic : CardLogic
 {
-    protected override void OnCompleted(int val)
+    protected override void OnDefense()
     {
-        base.OnCompleted(val);
+        base.OnDefense();
         unit.Heal(Random.Range(8, 12));
     }
 }

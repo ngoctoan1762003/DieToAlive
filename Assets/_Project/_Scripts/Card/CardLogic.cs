@@ -128,12 +128,14 @@ public class CardLogic
                 break;
 
             case CardType.Defensive:
-                if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, cardConfig.haste);
+                if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card);
                 UIManager.Instance.ShowDamage(cardConfig.cardID.ToString(), unit.transform.position);
                 GameSystem.Instance.CompletedAction();
                 UIManager.Instance.BlackCover.gameObject.SetActive(false);
                 if (cardConfig.cardID.ToString().Contains("Evade")) unit.onEvadeSuccess?.Invoke();
+                if (cardConfig.cardID.ToString().Contains("Block")) unit.onBlockSuccess?.Invoke();
                 UIManager.Instance.CardContainer.SetActive(true);
+                OnDefense();
                 break;
 
         }
@@ -141,7 +143,7 @@ public class CardLogic
 
     protected virtual void OnCompleted(int val)
     {
-        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, cardConfig.haste || decreaseEnemyAction);
+        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, decreaseEnemyAction);
         else unit.SetupActionCard();
         UIManager.Instance.BlackCover.gameObject.SetActive(false);
         unit.DeHighlight();
@@ -177,7 +179,7 @@ public class CardLogic
         {
             clashCard.SetClashCard(null);
             clashCard.decreaseEnemyAction = clashCard.unopposedAttack || target != GameSystem.Instance.Player;
-            if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, cardConfig.haste || decreaseEnemyAction);
+            if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, decreaseEnemyAction);
             clashCard.Execute(unit);
             clashCard = null;
             unit.ShowLoseClash();
@@ -192,6 +194,7 @@ public class CardLogic
     {
         DOVirtual.DelayedCall(2, () =>
         {
+            Debug.Log(cardConfig.cardID);
             GameSystem.Instance.ThrowWeapon();
             
             switch (CardConfig.cardID)
@@ -229,5 +232,10 @@ public class CardLogic
     protected virtual void RetrieveWeapon()
     {
         UIManager.Instance.ShowDamage("Retrieved " + cardConfig.weaponID.ToString(), GameSystem.Instance.Player.transform.position);
+    }
+
+    protected virtual void OnDefense()
+    {
+        
     }
 }

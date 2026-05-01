@@ -8,7 +8,7 @@ public class ReadyActionUIBehaviour : MonoBehaviour, IInPool, IPointerEnterHandl
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UIManager.Instance.ShowDescription(config, eventData.position);
+        UIManager.Instance.ShowDescription(unit.UnitID, config, eventData.position);
     }
     
     public void OnPointerMove(PointerEventData eventData)

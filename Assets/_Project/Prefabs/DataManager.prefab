@@ -49,12 +49,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e7f045c87b93bfb4683c039f098cd186, type: 2}
   - {fileID: 11400000, guid: e04eea3786453c14eb9d88b266590f14, type: 2}
   - {fileID: 11400000, guid: dc5ec7fed8cfecb43a3a6c45797b9745, type: 2}
+  - {fileID: 11400000, guid: c909c73972045ec40b51b76bfcf175ae, type: 2}
+  - {fileID: 11400000, guid: 35f6b58d43379024b850854a3d663b97, type: 2}
+  - {fileID: 11400000, guid: 08bfd57408870c745a46f17ff926f7c6, type: 2}
   passiveConfigs:
   - {fileID: 11400000, guid: 42990e5274b3e764d87b69a2ef8871e1, type: 2}
   - {fileID: 11400000, guid: cf5f03d497c043c4cb2bdba293b4d748, type: 2}
   - {fileID: 11400000, guid: e9bbd94537ace9248a5c8c85683fd125, type: 2}
   - {fileID: 11400000, guid: a8b0d40076ff56544b7ebb7aecd09b4f, type: 2}
   - {fileID: 11400000, guid: 5bf9a526b8fc5734c89d04159f460d45, type: 2}
+  - {fileID: 11400000, guid: 31079cb2ced866a47aa0fe72cc817636, type: 2}
+  - {fileID: 11400000, guid: a805ab82ded956f4183789fd18ab2d66, type: 2}
+  - {fileID: 11400000, guid: 7e7e82fe0293fe6479f8a23c32fc0012, type: 2}
   cardConfigs:
   - {fileID: 11400000, guid: 2fd0df3169897eb4f96adcb6652ae178, type: 2}
   - {fileID: 11400000, guid: 7d91764b5cde6cf478c09afdba3cfdb3, type: 2}
@@ -66,6 +72,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad896dc6d6a73034db214c0ee3c116e2, type: 2}
   - {fileID: 11400000, guid: ddf5a7293d40a334dae33e4ea372e701, type: 2}
   - {fileID: 11400000, guid: 72c45284287df274d80e728206012f67, type: 2}
+  - {fileID: 11400000, guid: 22e7254ca6644c14abd6c44f182ed03d, type: 2}
   slash: {fileID: 21300000, guid: 769e378c453286148ba2506cf01590cf, type: 3}
   pierce: {fileID: 21300000, guid: d725981353fc179428da63f4490d6205, type: 3}
   blunt: {fileID: 21300000, guid: d09f855ec5bd1884abe4603c91f74138, type: 3}
@@ -96,4 +103,5 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 2048470c888e97c41b59e5f346c23b64, type: 3}
   - id: 11
     icon: {fileID: 21300000, guid: 2048470c888e97c41b59e5f346c23b64, type: 3}
+  localizationConfigs: {fileID: 11400000, guid: fad2d7efff6678548b97d3af074aa831, type: 2}
   glowUIMat: {fileID: 2100000, guid: ba48e1a6edb3b8c4db65a8170370c2ba, type: 2}

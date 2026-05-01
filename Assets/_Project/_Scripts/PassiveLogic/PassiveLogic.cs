@@ -25,11 +25,17 @@ public class PassiveLogic
             case PassiveActivationType.OnEvadeSuccess:
                 unit.onEvadeSuccess += Execute;
                 break;
+            case PassiveActivationType.OnBlockSuccess:
+                unit.onBlockSuccess += Execute;
+                break;
             case PassiveActivationType.OnClash:
                 unit.onClash += Execute;
                 break;
             case PassiveActivationType.OnChangeStat:
                 unit.onChangeStat += Execute;
+                break;
+            case PassiveActivationType.OnTakeDamage:
+                unit.onTakeDamage += Execute;
                 break;
         }
     }

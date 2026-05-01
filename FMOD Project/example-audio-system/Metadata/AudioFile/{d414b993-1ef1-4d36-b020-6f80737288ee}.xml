@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{d414b993-1ef1-4d36-b020-6f80737288ee}">
+		<property name="assetPath">
+			<value>SFX/Buff.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.2566439909297054</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{550daaec-e186-4044-90d7-07853a852e9e}</destination>
+		</relationship>
+	</object>
+</objects>

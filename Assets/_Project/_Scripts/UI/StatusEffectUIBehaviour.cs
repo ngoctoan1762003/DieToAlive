@@ -14,7 +14,7 @@ public class StatusEffectUIBehaviour : MonoBehaviour, IInPool, IPointerEnterHand
     {
         this.statusEffect = statusEffect;
         icon.sprite = DataManager.Instance.GetStatusEffectIcon(statusEffect.GetID());
-        if (statusEffect.GetValues().Count > 0)
+        if (statusEffect.GetValues() != null && statusEffect.GetValues().Count > 0)
         {
             value.text = statusEffect.GetValues()[0].ToString();
             value.gameObject.SetActive(true);

@@ -13,7 +13,12 @@ public class FMODEvents : MonoBehaviour{
     [field: Header("Music")]
     [field: SerializeField] public EventReference Music { get; private set; }
 
-    //[field: Header("Player SFX")]
+    [field: Header("Player SFX")]
+    [field: SerializeField] public EventReference DrawCard { get; private set; }
+    [field: SerializeField] public EventReference Hit { get; private set; }
+    [field: SerializeField] public EventReference Debuff { get; private set; }
+    [field: SerializeField] public EventReference Buff { get; private set; }
+
 
     //[field: SerializeField] public EventReference coinCollected { get; private set; }
     //[field: SerializeField] public EventReference coinIdle { get; private set; }

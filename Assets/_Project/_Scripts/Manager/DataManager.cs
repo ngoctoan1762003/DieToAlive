@@ -146,6 +146,16 @@ public class DataManager : MonoBehaviour
                 return new PiercingLogic();
             case CardID.Sweep:
                 return new SweepLogic();
+            case CardID.Evolve:
+                return new ParasiteEvolveSkillLogic();
+            case CardID.Absorb:
+                return new ParasiteAbsorbSkillLogic();
+            case CardID.Throw:
+                return new ParasiteThrowSkillLogic();
+            case CardID.Roll:
+                return new ParasiteRollSkillLogic();
+            case CardID.QuickBite:
+                return new SmallParasiteBiteSkillLogic();
         }
 
         return new CardLogic();

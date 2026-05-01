@@ -46,7 +46,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         {
             actionCount = value;
             actionCountText.text = actionCount.ToString();
-            if (actionCount <= 0)
+            if (actionCount <= 0 && actionCard != null)
             {
                 GameSystem.Instance.AddActionRequest(this);
             }
@@ -80,8 +80,12 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     public Action onEndAction;
     public Action onStartAction;
     public Action onEvadeSuccess;
+    public Action onBlockSuccess;
     public Action onClash;
     public Action onChangeStat;
+    public Action onTakeDamage;
+    private UnitID unitID;
+    public UnitID UnitID => unitID;
 
     private List<StatusEffectHolder> statusEffectHolders = new();
     public List<StatusEffectHolder> GetListStatusEffectHolders => statusEffectHolders;
@@ -136,6 +140,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         ResetCardAction();
         ResetPassiveTrigger();
 
+        this.unitID = id;
         UnitConfigs config = DataManager.Instance.GetUnitConfig(id);
         SetupStat(config, resetHP);
         SetupPassive(config);
@@ -202,7 +207,10 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         onEndAction = null;
         onStartAction = null;
         onEvadeSuccess = null;
+        onBlockSuccess = null;
         onClash = null;
+        onChangeStat = null;
+        onTakeDamage = null;
     }
 
     private void ResetCardAction()
@@ -242,6 +250,16 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
             ActionCount = priorityConfig.actionNeed;
             priorityCard = CardID.None;
             return;
+        }
+
+        if (cardMechanics.Length == 0)
+        {
+            currentActionIcon.transform.parent.gameObject.SetActive(false);
+            return;
+        }
+        else
+        {
+            currentActionIcon.transform.parent.gameObject.SetActive(true);
         }
         CardConfig config = DataManager.Instance.GetCardConfig(cardMechanics[currentMechanicIndex]);
         actionCard = DataManager.Instance.GetCardLogic(cardMechanics[currentMechanicIndex]);
@@ -290,9 +308,10 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         CurrentHP -= Mathf.CeilToInt(damage);
         UIManager.Instance.ShowDamage(damage.ToString(), transform.position);
         CountdownTakeDamageStatusEffect();
+        onTakeDamage?.Invoke();
     }
 
-    private void Dead()
+    public void Dead()
     {
         gameObject.SetActive(false);
         GameSystem.Instance.OnUnitDead(this);
@@ -300,6 +319,12 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
 
     public void DecreaseAction()
     {
+        var status = statusEffectHolders.FirstOrDefault(s => s.StatusEffect.GetID() == StatusID.Stun);
+        if (status != null)
+        {
+            status.TakeTurn();
+            return;
+        }
         ActionCount--;
 
         if (ActionCount < 0)
@@ -347,6 +372,11 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
             case StatusID.Poison:
                 statusEffectHolder.Init(statusEffectUIBehaviour,
                     new StatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()),
+                    lifeTurn);
+                break;
+            case StatusID.Bleed:
+                statusEffectHolder.Init(statusEffectUIBehaviour,
+                    new BleedStatusEffect(statusEffect.GetID(), this, statusEffect.MaxStack()).SetValue(statusEffect.GetValues()),
                     lifeTurn);
                 break;
             case StatusID.BuffStrength:

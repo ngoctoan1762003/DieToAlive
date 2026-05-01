@@ -41,10 +41,10 @@ MonoBehaviour:
     en: Remove related cards, gain RetrieveSword, draw 2
   - key: RetrieveSwordDes
     en: Retrieve sword to inventory
-  - key: Fleche
+  - key: FlecheDes
     en: Inflict 2 Wound for 2 turn
   - key: RapierCounterDes
-    en: Inflict 2 Wound for 1 turn
+    en: Inflict 2 Paralyze for 1 turn
   - key: FlurryDes
     en: Inflict 2 Fragile for 1 turn
   - key: ThrowRapierDes
