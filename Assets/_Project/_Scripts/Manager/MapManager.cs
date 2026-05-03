@@ -175,7 +175,6 @@ public class MapManager : MonoBehaviour
                     Debug.LogError("Node is Shop but config is not ShopNodeConfig!");
                 }
 
-                Debug.Log("Shop node");
                 break;
 
             case NodeType.Chest:

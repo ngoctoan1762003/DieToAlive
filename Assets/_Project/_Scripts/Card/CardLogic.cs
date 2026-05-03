@@ -59,6 +59,7 @@ public class CardLogic
 
     public virtual void Execute(Unit enemy)
     {
+        GameSystem.Instance.SetInAction();
         if (cardConfig.cardType == CardType.UnInterruptable && cardConfig.cardID.ToString().Contains("Retrieve"))
         {
             GameSystem.Instance.SelectedCard.gameObject.SetActive(false);
@@ -74,7 +75,7 @@ public class CardLogic
         target = enemy;
 
         // Define your threshold and target position
-        float attackThreshold = 3f;
+        float attackThreshold = UnityEngine.Random.Range(2.5f, 3.5f);
         Vector3 targetPos = target.transform.position;
 
         UIManager.Instance.CardContainer.SetActive(false);
@@ -108,7 +109,7 @@ public class CardLogic
                         clashCard.CardConfig.cardID.ToString(), target, OnCompletedClash);
                     return;
                 }
-                else if (target.ReadyCards.Count > 0)
+                if (target.ReadyCards.Count > 0)
                 {
                     CardLogic targetCard = target.ReadyCards[0];
                     target.ReadyCards.RemoveAt(0);
@@ -129,8 +130,8 @@ public class CardLogic
 
             case CardType.Defensive:
                 if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card);
+                else GameSystem.Instance.CompletedAction();
                 UIManager.Instance.ShowDamage(cardConfig.cardID.ToString(), unit.transform.position);
-                GameSystem.Instance.CompletedAction();
                 UIManager.Instance.BlackCover.gameObject.SetActive(false);
                 if (cardConfig.cardID.ToString().Contains("Evade")) unit.onEvadeSuccess?.Invoke();
                 if (cardConfig.cardID.ToString().Contains("Block")) unit.onBlockSuccess?.Invoke();
@@ -143,8 +144,8 @@ public class CardLogic
 
     protected virtual void OnCompleted(int val)
     {
-        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, decreaseEnemyAction);
-        else unit.SetupActionCard();
+        CompleteLogic();
+
         UIManager.Instance.BlackCover.gameObject.SetActive(false);
         unit.DeHighlight();
         target.DeHighlight();
@@ -160,31 +161,9 @@ public class CardLogic
 
     protected virtual void OnCompletedClash(bool win, int val)
     {
-        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, false);
-        else if (unit.ActionCount <= 0) unit.SetupActionCard();
-        if (target == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(clashCard.card, false);
-        else if (target.ActionCount <= 0) target.SetupActionCard();
-        UIManager.Instance.BlackCover.gameObject.SetActive(false);
-
-        if (win)
-        {
-            clashCard.SetClashCard(null);
-            decreaseEnemyAction = unopposedAttack || unit != GameSystem.Instance.Player;
-            clashCard = null;
-            Execute(target);
-            target.ShowLoseClash();
-            target.Push(target.transform.position.x > unit.transform.position.x ? Vector3.right : Vector3.left, 3);
-        }
-        else
-        {
-            clashCard.SetClashCard(null);
-            clashCard.decreaseEnemyAction = clashCard.unopposedAttack || target != GameSystem.Instance.Player;
-            if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, decreaseEnemyAction);
-            clashCard.Execute(unit);
-            clashCard = null;
-            unit.ShowLoseClash();
-            unit.Push(target.transform.position.x > unit.transform.position.x ? Vector3.left : Vector3.right, 3);
-        }
+        ClashResultHandle(win);
+        CompleteLogic();
+        clashCard.CompleteLogic();
         
         unit.CountdownClashStatusEffect();
         target.CountdownClashStatusEffect();
@@ -237,5 +216,32 @@ public class CardLogic
     protected virtual void OnDefense()
     {
         
+    }
+
+    protected virtual void CompleteLogic()
+    {
+        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, decreaseEnemyAction);
+        else if (unit.ActionCount <= 0) unit.SetupActionCard();
+    }
+
+    protected virtual void ClashResultHandle(bool win)
+    {
+        if (win)
+        {
+            clashCard.SetClashCard(null);
+            clashCard = null;
+            Execute(target);
+            target.ShowLoseClash();
+            target.Push(target.transform.position.x > unit.transform.position.x ? Vector3.right : Vector3.left, 3);
+        }
+        else
+        {
+            clashCard.SetClashCard(null);
+            clashCard.decreaseEnemyAction = clashCard.unopposedAttack || target != GameSystem.Instance.Player;
+            clashCard.Execute(unit);
+            clashCard = null;
+            unit.ShowLoseClash();
+            unit.Push(target.transform.position.x > unit.transform.position.x ? Vector3.left : Vector3.right, 3);
+        }
     }
 }

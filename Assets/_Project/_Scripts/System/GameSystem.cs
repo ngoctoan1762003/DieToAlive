@@ -130,6 +130,11 @@ public class GameSystem : MonoBehaviour
         Setup();
     }
 
+    public void SetInAction()
+    {
+        isInAction = true;
+    }
+    
     public void ReplayCombat()
     {
         if (currentCombatConfig == null) return;
@@ -355,7 +360,6 @@ public class GameSystem : MonoBehaviour
 
     public void AddToDrawPile(CardID cardID, InventoryItem item)
     {
-        Debug.Log(cardID);
         Card card = cardPool.GetObjectAndActive(drawPileCardsTransform);
         card.Setup(player, cardID, item);
         card.transform.localScale = Vector3.one;
@@ -656,7 +660,6 @@ public class GameSystem : MonoBehaviour
 
     public void AddActionRequest(Unit unit)
     {
-        Debug.Log("add action");
         actionQueue.Add(unit);
     }
 

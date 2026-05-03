@@ -92,9 +92,9 @@ public class UIManager : MonoBehaviour
         
         DOVirtual.DelayedCall(2, () =>
         {
-            onComplete?.Invoke(clashVal >= readyVal, 0);
             clash.ShowClash(false);
             ready.ShowClash(false);
+            onComplete?.Invoke(clashVal >= readyVal, 0);
         });
     }
 
@@ -115,7 +115,6 @@ public class UIManager : MonoBehaviour
 
     public void ShowDescription(UnitID unitID, CardConfig config, Vector2 mousePos)
     {
-        Debug.Log(unitID);
         popupDescription.gameObject.SetActive(true);
         popupDescription.ShowInformation(unitID, config);
 
