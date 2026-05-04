@@ -4,5 +4,6 @@ using System.Collections.Generic;
 public class LibrarySaveData
 {
     public int observationPoints;
+    public string doneTutorial;
     public List<LibraryItemState> states;
 }

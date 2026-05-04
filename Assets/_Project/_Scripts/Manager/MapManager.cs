@@ -134,6 +134,11 @@ public class MapManager : MonoBehaviour
         return result;
     }
 
+    public StageNodeData GetNodeConfigs(string keys)
+    {
+        return nodeDict[keys];
+    }
+
     void ExecuteNode(NodeConfigs config)
     {
         switch (config.nodeType)

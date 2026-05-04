@@ -23,7 +23,8 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private List<Card> handCards;
     [SerializeField] private List<Card> drawPileCards;
     [SerializeField] private List<Card> discardCards;
-
+    [SerializeField] private List<CardID> tutorialDeckIDs;
+    
     [SerializeField] private AssetReference cardPrefab;
     private AddressablesPool<Card> cardPool;
     [SerializeField] private AssetReference readyActionPrefab;
@@ -35,11 +36,6 @@ public class GameSystem : MonoBehaviour
     public Card SelectedCard => selectedCard;
 
     [SerializeField] private List<Card> readyCards = new();
-
-    [SerializeField] private Transform drawPileCardsTransform;
-    [SerializeField] private Transform discardPileCardsTransform;
-    [SerializeField] private Transform handCardsTransform;
-    [SerializeField] private Transform readyCardsTransform;
 
     private List<Unit> enemies;
     public List<Unit> Enemies => enemies;
@@ -287,6 +283,7 @@ public class GameSystem : MonoBehaviour
                 currentEnemyAction = actionQueue[0];
                 actionQueue.Remove(currentEnemyAction);
                 if (currentEnemyAction.ActionCount > 0) return;
+                if (currentEnemyAction.IsDead) return;
                 currentEnemyAction.onStartAction?.Invoke();
                 currentEnemyAction.Execute();
                 isInAction = true;
@@ -360,7 +357,7 @@ public class GameSystem : MonoBehaviour
 
     public void AddToDrawPile(CardID cardID, InventoryItem item)
     {
-        Card card = cardPool.GetObjectAndActive(drawPileCardsTransform);
+        Card card = cardPool.GetObjectAndActive(UIManager.Instance.drawPileCardsTransform);
         card.Setup(player, cardID, item);
         card.transform.localScale = Vector3.one;
         card.transform.localPosition = Vector3.zero;
@@ -472,15 +469,25 @@ public class GameSystem : MonoBehaviour
     {
         drawPileCards = new List<Card>();
 
-        foreach (CardID cardID in deckIDs)
+        if (ScriptController.Instance.isScriptRun)
         {
-            AddToDrawPile(cardID, null);
+            foreach (CardID cardID in tutorialDeckIDs)
+            {
+                AddToDrawPile(cardID, null);
+            }
         }
-
-        for (int i = drawPileCards.Count - 1; i > 0; i--)
+        else
         {
-            int randomIndex = Random.Range(0, i + 1);
-            (drawPileCards[i], drawPileCards[randomIndex]) = (drawPileCards[randomIndex], drawPileCards[i]);
+            foreach (CardID cardID in deckIDs)
+            {
+                AddToDrawPile(cardID, null);
+            }
+
+            for (int i = drawPileCards.Count - 1; i > 0; i--)
+            {
+                int randomIndex = Random.Range(0, i + 1);
+                (drawPileCards[i], drawPileCards[randomIndex]) = (drawPileCards[randomIndex], drawPileCards[i]);
+            }
         }
 
         Draw(6, false);
@@ -508,14 +515,16 @@ public class GameSystem : MonoBehaviour
         {
             card.Execute(null);
         }
+        
+        ObserverManager.Invoke(GameEventID.OnChooseCard);
     }
 
     private void CalculateDrawTransform()
     {
         Vector2 left = new Vector2(0f, 0.5f);
-        for (int i = 0; i < drawPileCardsTransform.childCount; i++)
+        for (int i = 0; i < UIManager.Instance.drawPileCardsTransform.childCount; i++)
         {
-            RectTransform trans = drawPileCardsTransform.GetChild(i).GetComponent<RectTransform>();
+            RectTransform trans = UIManager.Instance.drawPileCardsTransform.GetChild(i).GetComponent<RectTransform>();
             trans.pivot = left;
             trans.DOAnchorPos(new Vector3(-380 + 10 * i, 0, 0), 0.5f);
         }
@@ -523,10 +532,10 @@ public class GameSystem : MonoBehaviour
 
     public void CalculateHandTransform()
     {
-        float start = -handCardsTransform.childCount * 50 / 2;
-        for (int i = 0; i < handCardsTransform.childCount; i++)
+        float start = -UIManager.Instance.handCardsTransform.childCount * 50 / 2;
+        for (int i = 0; i < UIManager.Instance.handCardsTransform.childCount; i++)
         {
-            RectTransform trans = handCardsTransform.GetChild(i).GetComponent<RectTransform>();
+            RectTransform trans = UIManager.Instance.handCardsTransform.GetChild(i).GetComponent<RectTransform>();
             trans.pivot = Vector2.one * 0.5f;
             trans.DOAnchorPos(new Vector3(start + 50 * i, 0, 0), 0.5f);
             trans.GetComponent<Card>().SetOrigin(new Vector3(start + 50 * i, 0, 0));
@@ -535,10 +544,10 @@ public class GameSystem : MonoBehaviour
 
     private void CalculateReadyTransform()
     {
-        float start = -readyCardsTransform.childCount * 50 / 2;
-        for (int i = 0; i < readyCardsTransform.childCount; i++)
+        float start = -UIManager.Instance.readyCardsTransform.childCount * 50 / 2;
+        for (int i = 0; i < UIManager.Instance.readyCardsTransform.childCount; i++)
         {
-            RectTransform trans = readyCardsTransform.GetChild(i).GetComponent<RectTransform>();
+            RectTransform trans = UIManager.Instance.readyCardsTransform.GetChild(i).GetComponent<RectTransform>();
             trans.pivot = Vector2.one * 0.5f;
             trans.DOAnchorPos(new Vector3(start + 50 * i, 0, 0), 0.5f);
         }
@@ -547,9 +556,9 @@ public class GameSystem : MonoBehaviour
     private void CalculateDiscardTransform()
     {
         Vector2 right = new Vector2(1f, 0.5f);
-        for (int i = discardPileCardsTransform.childCount - 1; i >= 0; i--)
+        for (int i = UIManager.Instance.discardPileCardsTransform.childCount - 1; i >= 0; i--)
         {
-            RectTransform trans = discardPileCardsTransform.GetChild(i).GetComponent<RectTransform>();
+            RectTransform trans = UIManager.Instance.discardPileCardsTransform.GetChild(i).GetComponent<RectTransform>();
             trans.pivot = right;
             trans.DOAnchorPos(new Vector3(355 - 10 * i, 0, 0), 0.5f);
         }
@@ -560,7 +569,7 @@ public class GameSystem : MonoBehaviour
         handCards.Remove(card);
         discardCards.Add(card);
         readyCards.Remove(card);
-        card.transform.SetParent(discardPileCardsTransform);
+        card.transform.SetParent(UIManager.Instance.discardPileCardsTransform);
         CalculateHandTransform();
         CalculateDiscardTransform();
         if (decreaseEnemyAction) DecreaseActionEnemy();
@@ -619,7 +628,7 @@ public class GameSystem : MonoBehaviour
 
     public void AddToHand(Card cardToDraw)
     {
-        cardToDraw.GetComponent<RectTransform>().SetParent(handCardsTransform);
+        cardToDraw.GetComponent<RectTransform>().SetParent(UIManager.Instance.handCardsTransform);
         handCards.Add(cardToDraw);
         CalculateHandTransform();
     }
@@ -633,7 +642,7 @@ public class GameSystem : MonoBehaviour
     {
         foreach (var card in discardCards)
         {
-            card.transform.SetParent(drawPileCardsTransform);
+            card.transform.SetParent(UIManager.Instance.drawPileCardsTransform);
         }
 
         drawPileCards.AddRange(discardCards);
@@ -675,7 +684,7 @@ public class GameSystem : MonoBehaviour
     {
         readyCards.Add(readyCard);
         readyCard.CardLogic.AddReadyCard(targetCard);
-        readyCard.transform.SetParent(readyCardsTransform);
+        readyCard.transform.SetParent(UIManager.Instance.readyCardsTransform);
         CalculateHandTransform();
         CalculateReadyTransform();
         ShowTarget(false);

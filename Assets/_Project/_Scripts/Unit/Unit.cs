@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     private float _currentHP;
 
     [SerializeField] private Transform statusEffectTrans;
+    [SerializeField] private Canvas canvas;
 
     public float CurrentHP
     {
@@ -53,10 +54,14 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         }
     }
 
+    private bool isDead;
+    public bool IsDead => isDead;
+    
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Image target;
     [SerializeField] private Button targetBtn;
     [SerializeField] private Image diceTarget;
+    public Image DiceTarget => diceTarget;
     [SerializeField] private Button diceTargetBtn;
     [SerializeField] private TextMeshProUGUI actionCountText;
     [SerializeField] private HealthBarBehaviour healthBarBehaviour;
@@ -97,12 +102,15 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
             if (GameSystem.Instance.SelectedCard == null) return;
             if (target.enabled == false) return;
             GameSystem.Instance.UseCard(this);
+            ObserverManager.Invoke(GameEventID.OnUseCard);
         });
         diceTargetBtn.onClick.AddListener(() =>
         {
             if (GameSystem.Instance.SelectedCard == null) return;
+            if (UIManager.Instance.LockReadyCard) return;
             if (diceTarget.enabled == false) return;
             GameSystem.Instance.ReadyCard(GameSystem.Instance.SelectedCard, actionCard);
+            ObserverManager.Invoke(GameEventID.OnReadyCard);
         });
     }
 
@@ -315,6 +323,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     public void Dead()
     {
         gameObject.SetActive(false);
+        isDead = true;
         GameSystem.Instance.OnUnitDead(this);
     }
 
@@ -506,6 +515,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
 
     public void ResetUnit()
     {
+        isDead = false;
         for (int i = statusEffectHolders.Count - 1; i >= 0; i--)
         {
             RemoveStatusEffect(statusEffectHolders[i]);
@@ -525,13 +535,15 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
     public void Highlight()
     {
         sprite.sortingLayerName = "UI";
-        sprite.sortingOrder = 0;
+        sprite.sortingOrder = 2000;
+        canvas.sortingOrder = 2000;
     }
     
     public void DeHighlight()
     {
         sprite.sortingLayerName = "Default";
         sprite.sortingOrder = 10;
+        canvas.sortingOrder = 0;
     }
 
     public void OnSpawn()

@@ -511,6 +511,7 @@ MonoBehaviour:
   maxHP:
     baseValue: 0
   statusEffectTrans: {fileID: 5018400265853743184}
+  canvas: {fileID: 6524510987420904483}
   sprite: {fileID: 5499627270558751556}
   target: {fileID: 6106178307487334760}
   targetBtn: {fileID: 2542345155324837434}

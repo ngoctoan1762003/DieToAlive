@@ -19,6 +19,7 @@ public class LibraryPanel : MonoBehaviour
         {
             canvasGroup.alpha = 0;
             canvasGroup.blocksRaycasts = false;
+            ObserverManager.Invoke(GameEventID.OnCloseLibrary);
         });
         observationPointTXT.text = "Observation Point: " + LibraryManager.Instance.ObservationPoints.ToString();
         skillAndPassivePanel.gameObject.SetActive(false);
@@ -52,5 +53,6 @@ public class LibraryPanel : MonoBehaviour
     {
         skillAndPassivePanel.gameObject.SetActive(true);
         skillAndPassivePanel.Init(unit);
+        ObserverManager.Invoke(GameEventID.OnOpenUnitInformation);
     }
 }

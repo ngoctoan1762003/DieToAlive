@@ -9,6 +9,7 @@ public class CardInfo : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameTXT;
     [SerializeField] private TextMeshProUGUI descriptionTXT;
     [SerializeField] private GameObject lockGO;
+    public GameObject LockGO => lockGO;
     [SerializeField] private Button unlockBtn;
 
     private UnitID unitID;
@@ -35,7 +36,6 @@ public class CardInfo : MonoBehaviour
         {
             LibraryManager.Instance.UnlockSkill(unitID, cardID);
             Init(true, unitID, icon.sprite, GameDatabase.Instance.GetCard(cardID).cardName, GameDatabase.Instance.GetCard(cardID).description);
-            return;
         }
         
         if (passiveID != PassiveID.None)
@@ -43,6 +43,8 @@ public class CardInfo : MonoBehaviour
             LibraryManager.Instance.UnlockPassive(unitID, passiveID);
             Init(true, unitID, icon.sprite, GameDatabase.Instance.GetPassive(passiveID).passiveName, GameDatabase.Instance.GetPassive(passiveID).description);
         }
+        
+        ObserverManager.Invoke(GameEventID.OnUnlockInformation);
     }
 
     public void SetCardID(CardID cardID)

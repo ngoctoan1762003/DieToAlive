@@ -128,10 +128,19 @@ public class MenuManager : MonoBehaviour
         PlayButton.onClick.AddListener(delegate
         {
             CurrentPanel = SelectModePanel;
-            CurrentPanel.SetActive(true);
-            PlayStandardButtonBounce();
-            TweenOut();
-            MapUIManager.Instance.ScrollAnimationROutine();
+            if (SaveLoadManager.Instance.CheckTutorialDone("Tutorial"))
+            {
+                CurrentPanel.SetActive(true);
+                PlayStandardButtonBounce();
+                TweenOut();
+                MapUIManager.Instance.ScrollAnimationROutine();
+            }
+            else
+            {
+                gameObject.SetActive(false);
+                MapUIManager.Instance.CloseMap();
+                ScriptController.Instance.RunProcessGuideStage();
+            }
         });
         SettingButton.onClick.AddListener(delegate
         {

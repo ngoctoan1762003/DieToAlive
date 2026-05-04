@@ -281,3 +281,16 @@ public enum LineState //For line node UI
     Unlocked,
     Visited
 }
+
+public enum GameEventID
+{
+    // Main Game
+    OnChooseCard = 10000,
+    OnOpenLibrary = 10010,
+    OnOpenUnitInformation = 10020,
+    OnUnlockInformation = 10030,
+    OnCloseLibrary = 10040,
+    OnUseCard = 10050,
+    OnReadyCard = 10060,
+    OnDrawCard = 10070,
+}

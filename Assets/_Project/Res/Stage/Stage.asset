@@ -18,7 +18,7 @@ MonoBehaviour:
     position: {x: 0, y: 100}
     nextNodeIDs:
     - 1.1
-    isUnlocked: 0
+    isUnlocked: 1
     isVisited: 0
   - nodeID: 1.1
     node: {fileID: 11400000, guid: 534f5e5169bf5ea4fb9e7eed1b3c1429, type: 2}
@@ -157,5 +157,11 @@ MonoBehaviour:
     position: {x: 0, y: 1700}
     nextNodeIDs:
     - 3.3
+    isUnlocked: 0
+    isVisited: 0
+  - nodeID: Tutorial
+    node: {fileID: 11400000, guid: 2386863c98f5392449f6ea6bfa2b39f1, type: 2}
+    position: {x: 0, y: 1700}
+    nextNodeIDs: []
     isUnlocked: 0
     isVisited: 0

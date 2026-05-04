@@ -17,7 +17,10 @@ public class UIManager : MonoBehaviour
     
     [Header("UI References")]
     [SerializeField] private Button drawButton;
+
+    public Button DrawButton => drawButton;
     [SerializeField] private CardPopupDescription popupDescription;
+    public CardPopupDescription PopupDescription => popupDescription;
     [SerializeField] private Image blackCover;
     public Image BlackCover => blackCover;
     [SerializeField] private AssetReference damagePopupAsset;
@@ -29,7 +32,20 @@ public class UIManager : MonoBehaviour
     // Inventory
     [SerializeField] private Button inventoryButton;
     [SerializeField] private Button libraryButton;
+    public Button LibraryButton => libraryButton;
+    public Transform LibraryUnitContainer;
+    public Transform LibraryCardContainer;
+    public Transform LibraryBackButton;
+    public Transform SkillAndPassivePanel;
     [SerializeField] private CanvasGroup libraryCanvas;
+    public CanvasGroup LibraryCanvas => libraryCanvas;
+    
+    public Transform drawPileCardsTransform;
+    public Transform discardPileCardsTransform;
+    public Transform handCardsTransform;
+    public Transform readyCardsTransform;
+    
+    public bool LockReadyCard { get; private set; }
     
     private void Awake()
     {
@@ -39,6 +55,7 @@ public class UIManager : MonoBehaviour
         drawButton.onClick.AddListener(() =>
         {
             GameSystem.Instance.Draw(1);
+            ObserverManager.Invoke(GameEventID.OnDrawCard);
         });
         popupDescription.UpdateTransform(new Vector3(1000, 1000));
         damagePopupPool = new AddressablesPool<DamagePopup>(damagePopupAsset, 10, canvasRect);
@@ -47,7 +64,13 @@ public class UIManager : MonoBehaviour
         {
             libraryCanvas.alpha = 1;
             libraryCanvas.blocksRaycasts = true;
+            ObserverManager.Invoke(GameEventID.OnOpenLibrary);
         });
+    }
+
+    public void SetLockReadyCard(bool val)
+    {
+        LockReadyCard = val;
     }
 
     public void ShowInventoryNeed(InventoryItemType type)
