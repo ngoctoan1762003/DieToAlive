@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{5a72ae6e-bede-457c-8064-94207565497b}">
+	<object class="AudioFile" id="{947f4a11-dd1e-4cae-b032-915d8fb0769f}">
 		<property name="assetPath">
 			<value>SFX/Hit.ogg</value>
 		</property>
@@ -11,7 +11,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>4</value>
+			<value>2</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{550daaec-e186-4044-90d7-07853a852e9e}</destination>
