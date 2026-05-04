@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27031416913a696488c9c129bf2465e4, type: 3}
   m_Name: LittleWolfConfig
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: d3fc1fae680e25d47baa8f1931a282e8, type: 3}
+  sprite: {fileID: 21300000, guid: 1e94b3068fc5dc841bbfe7f6a20d4036, type: 3}
   unitID: 10020
   cardIDs: 742700007e270000a0860100aa860100
   passiveIDs: 640000006e00000078000000

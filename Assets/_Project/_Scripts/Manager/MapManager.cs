@@ -87,16 +87,22 @@ public class MapManager : MonoBehaviour
         }
 
     }
-
-
-    private void Update()
+    
+    public void ResetRun()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (stageConfigs.nodes == null || stageConfigs.nodes.Count == 0)
         {
-            CompleteNode();
+            Debug.LogError("StageConfigs is empty!");
+            return;
         }
-    }
 
+        previousNodeID = null;
+        selectedNodeID = null;
+
+        StartMap(stageConfigs.nodes[0].nodeID);
+        MapUIManager.Instance.OpenMap();
+    }
+    
     public void CompleteNode()
     {
         currentNode.isVisited = true;

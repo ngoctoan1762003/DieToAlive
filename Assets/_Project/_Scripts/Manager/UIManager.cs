@@ -25,6 +25,9 @@ public class UIManager : MonoBehaviour
     public Image BlackCover => blackCover;
     [SerializeField] private AssetReference damagePopupAsset;
     private AddressablesPool<DamagePopup> damagePopupPool;
+    [SerializeField] private AssetReference statisticAsset;
+    [SerializeField] private Transform statisticTrans;
+    private AddressablesPool<StatisticText> statisticPool;
     [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private GameObject cardContainer;
     public GameObject CardContainer => cardContainer;
@@ -59,6 +62,7 @@ public class UIManager : MonoBehaviour
         });
         popupDescription.UpdateTransform(new Vector3(1000, 1000));
         damagePopupPool = new AddressablesPool<DamagePopup>(damagePopupAsset, 10, canvasRect);
+        statisticPool = new AddressablesPool<StatisticText>(statisticAsset, 10, statisticTrans);
         inventoryButton.onClick.AddListener(() => InventoryManager.Instance.Show());
         libraryButton.onClick.AddListener(() =>
         {
@@ -186,5 +190,16 @@ public class UIManager : MonoBehaviour
     {
         BlackCover.gameObject.SetActive(false);
         cardContainer.gameObject.SetActive(true);
+    }
+
+    public void UpdateStatistic()
+    {
+        for (int i = 0; i < statisticTrans.childCount; i++)
+        {
+            statisticTrans.GetChild(i).gameObject.SetActive(false);
+        }
+        var statistic = statisticPool.GetObjectAndActive();
+        statistic.SetText("Is In Action: " + GameSystem.Instance.IsInAction);
+        statistic.transform.localPosition = Vector3.zero;
     }
 }

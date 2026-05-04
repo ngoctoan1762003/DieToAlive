@@ -325,6 +325,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         gameObject.SetActive(false);
         isDead = true;
         GameSystem.Instance.OnUnitDead(this);
+        ResetUnit();
     }
 
     public void DecreaseAction()
@@ -530,6 +531,7 @@ public class Unit : MonoBehaviour, IDamagable, IInPool
         {
             readyActionTransform.GetChild(i).gameObject.SetActive(false);
         }
+        DeHighlight();
     }
 
     public void Highlight()

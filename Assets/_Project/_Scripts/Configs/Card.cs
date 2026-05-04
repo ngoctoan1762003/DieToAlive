@@ -55,8 +55,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (cardLogic.ClashCard != null)
         {
             cardLogic.ClashCard.Unit.GlowActionCard();
+            return;
         }
-        else if (GameSystem.Instance.IsInHand(this))
+        if (transform.parent != UIManager.Instance.handCardsTransform) return;
+        if (GameSystem.Instance.IsInHand(this))
         {
             rectTransform.DOAnchorPosY(origin.y + 90f, 0.3f);
         }

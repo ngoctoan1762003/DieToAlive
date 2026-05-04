@@ -580,12 +580,12 @@ public class ScriptController : MonoBehaviour
                 PanelHint.Instance.ShowHint(24);
                 DOVirtual.DelayedCall(1, () =>
                 {
-                    Time.timeScale = 0;
+                    Time.timeScale = 0.05f;
                 });
             },
             () =>
             {
-                Time.timeScale = 1;
+                Time.timeScale = 1f;
                 PanelHighlight.Instance.AllComeToOldParent();
                 PanelHint.Instance.HideAll();
                 SetCanNextStep();
@@ -596,7 +596,7 @@ public class ScriptController : MonoBehaviour
             () =>
             {
                 PanelHint.Instance.ShowHint(25);
-                Time.timeScale = 0;
+                Time.timeScale = 0.05f;
             },
             () =>
             {
@@ -819,11 +819,118 @@ public class ScriptController : MonoBehaviour
         StartRunScript();
         GameSystem.Instance.StartCombat(MapManager.Instance.GetNodeConfigs("Tutorial").node as CombatNodeConfig);
     }
+
+    public void RunProcessGuideStage2()
+    {
+        _listScriptStep = new List<ScriptStep>();
+        currentTutorialID = TutorialID.Second;
+
+        PanelHighlight.Instance.SetActive(true);
+
+        AddScriptStep(new ScriptAnyActionNext(_listScriptStep.Count, 0.25f, 0.1f,
+            () =>
+            {
+                PanelHint.Instance.ShowHint(0);
+            },
+            () =>
+            {
+                PanelHighlight.Instance.AllComeToOldParent();
+                PanelHint.Instance.HideAll();
+                SetCanNextStep();
+            }
+        ));
+        
+        AddScriptStep(new ScriptAnyActionNext(_listScriptStep.Count, 0.25f, 0.1f,
+            () =>
+            {
+                PanelHint.Instance.ShowHint(1);
+            },
+            () =>
+            {
+                PanelHighlight.Instance.AllComeToOldParent();
+                PanelHighlight.Instance.SetActive(false);
+                PanelHint.Instance.HideAll();
+                InventoryManager.Instance.RestoreSnapshot();
+                SaveLoadManager.Instance.SaveDoneTutorial("Tutorial2");
+                GameSystem.Instance.StartCombat(MapManager.Instance.GetNodeConfigs("Tutorial2").node as CombatNodeConfig);
+                SetCanNextStep();
+            }
+        ));
+        
+        StartRunScript();
+    }
+    
+    public void RunProcessGuideStage3()
+    {
+        _listScriptStep = new List<ScriptStep>();
+        currentTutorialID = TutorialID.Third;
+
+        PanelHighlight.Instance.SetActive(true);
+
+        AddScriptStep(new ScriptAnyActionNext(_listScriptStep.Count, 0.25f, 0.1f,
+            () =>
+            {
+                PanelHint.Instance.ShowHint(0);
+            },
+            () =>
+            {
+                PanelHighlight.Instance.AllComeToOldParent();
+                PanelHint.Instance.HideAll();
+                SetCanNextStep();
+            }
+        ));
+        
+        AddScriptStep(new ScriptAnyActionNext(_listScriptStep.Count, 0.25f, 0.1f,
+            () =>
+            {
+                PanelHint.Instance.ShowHint(1);
+            },
+            () =>
+            {
+                PanelHighlight.Instance.AllComeToOldParent();
+                PanelHint.Instance.HideAll();
+                SetCanNextStep();
+            }
+        ));
+        
+        AddScriptStep(new ScriptAnyActionNext(_listScriptStep.Count, 0.25f, 0.1f,
+            () =>
+            {
+                PanelHint.Instance.ShowHint(2);
+            },
+            () =>
+            {
+                PanelHighlight.Instance.AllComeToOldParent();
+                PanelHint.Instance.HideAll();
+                SetCanNextStep();
+            }
+        ));
+        
+        AddScriptStep(new ScriptAnyActionNext(_listScriptStep.Count, 0.25f, 0.1f,
+            () =>
+            {
+                PanelHint.Instance.ShowHint(3);
+            },
+            () =>
+            {
+                PanelHighlight.Instance.AllComeToOldParent();
+                PanelHighlight.Instance.SetActive(false);
+                PanelHint.Instance.HideAll();
+                SaveLoadManager.Instance.SaveDoneTutorial("Tutorial3");
+                SetCanNextStep();
+                MapManager.Instance.ResetRun();
+            }
+        ));
+        
+        StartRunScript();
+    }
     
     #endregion
 }
 
 public enum TutorialID
 {
-    First
+    First,
+    Second,
+    Third
 }

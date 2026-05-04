@@ -64,8 +64,9 @@ public class CardLogic
         {
             GameSystem.Instance.SelectedCard.gameObject.SetActive(false);
             GameSystem.Instance.SelectedCard.transform.SetParent(null);
+            GameSystem.Instance.CompletedAction();
+            GameSystem.Instance.RemoveCardFromHand(card);
             RetrieveWeapon();
-            // GameSystem.Instance.ToDiscard(GameSystem.Instance.SelectedCard, cardConfig.haste);
             return;
         }
         
@@ -129,8 +130,8 @@ public class CardLogic
                 break;
 
             case CardType.Defensive:
-                if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card);
-                else GameSystem.Instance.CompletedAction();
+                if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, false);
+                GameSystem.Instance.CompletedAction();
                 UIManager.Instance.ShowDamage(cardConfig.cardID.ToString(), unit.transform.position);
                 UIManager.Instance.BlackCover.gameObject.SetActive(false);
                 if (cardConfig.cardID.ToString().Contains("Evade")) unit.onEvadeSuccess?.Invoke();
@@ -161,9 +162,9 @@ public class CardLogic
 
     protected virtual void OnCompletedClash(bool win, int val)
     {
-        ClashResultHandle(win);
-        CompleteLogic();
         clashCard.CompleteLogic();
+        CompleteLogic();
+        ClashResultHandle(win);
         
         unit.CountdownClashStatusEffect();
         target.CountdownClashStatusEffect();
@@ -220,7 +221,7 @@ public class CardLogic
 
     protected virtual void CompleteLogic()
     {
-        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, decreaseEnemyAction);
+        if (unit == GameSystem.Instance.Player) GameSystem.Instance.ToDiscard(card, GameSystem.Instance.IsInReady(card) ? false : decreaseEnemyAction);
         else if (unit.ActionCount <= 0) unit.SetupActionCard();
     }
 

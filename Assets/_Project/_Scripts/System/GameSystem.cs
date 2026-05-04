@@ -46,6 +46,16 @@ public class GameSystem : MonoBehaviour
 
     private bool isInAction;
 
+    public bool IsInAction
+    {
+        get => isInAction;
+        set
+        {
+            isInAction = value;
+            UIManager.Instance.UpdateStatistic();
+        }
+    }
+
     private bool isInDraw;
 
     private InventoryItemConfigs currentEquipWeapon;
@@ -82,9 +92,7 @@ public class GameSystem : MonoBehaviour
         //Setup();
         enemies = new List<Unit>();
         actionQueue = new List<Unit>();
-        isInAction = false;
-        //player.Setup(UnitID.Main);
-        //SetupUnit(UnitID.WolfLeader);
+        IsInAction = false;
 
         playerStartPos = player.transform.localPosition;
         playerStartParent = player.transform.parent;
@@ -128,7 +136,7 @@ public class GameSystem : MonoBehaviour
 
     public void SetInAction()
     {
-        isInAction = true;
+        IsInAction = true;
     }
     
     public void ReplayCombat()
@@ -183,7 +191,7 @@ public class GameSystem : MonoBehaviour
     public void ResetToInitialState()
     {
         combatEnded = false;
-        isInAction = false;
+        IsInAction = false;
         isInDraw = false;
 
         actionQueue.Clear();
@@ -258,7 +266,7 @@ public class GameSystem : MonoBehaviour
         if (combatEnded) return;
         combatEnded = true;
 
-        isInAction = true;
+        IsInAction = true;
 
         if (isWin)
         {
@@ -276,17 +284,17 @@ public class GameSystem : MonoBehaviour
 
     private void Update()
     {
-        if (!isInAction)
+        if (!IsInAction)
         {
             if (actionQueue.Count > 0)
             {
                 currentEnemyAction = actionQueue[0];
                 actionQueue.Remove(currentEnemyAction);
                 if (currentEnemyAction.ActionCount > 0) return;
-                if (currentEnemyAction.IsDead) return;
                 currentEnemyAction.onStartAction?.Invoke();
+                if (!currentEnemyAction.gameObject.activeSelf) return;
                 currentEnemyAction.Execute();
-                isInAction = true;
+                IsInAction = true;
             }
         }
     }
@@ -441,7 +449,7 @@ public class GameSystem : MonoBehaviour
     {
         DOVirtual.DelayedCall(1f, () =>
         {
-            isInAction = false;
+            IsInAction = false;
             currentEnemyAction.onEndAction?.Invoke();
             currentEnemyAction = null;
         });
@@ -455,6 +463,11 @@ public class GameSystem : MonoBehaviour
     public bool IsInDiscard(Card card)
     {
         return discardCards.Contains(card);
+    }
+
+    public bool IsInReady(Card card)
+    {
+        return readyCards.Contains(card);
     }
 
     public void SetupUnit(UnitID unitID)
@@ -566,6 +579,7 @@ public class GameSystem : MonoBehaviour
 
     public void ToDiscard(Card card, bool decreaseEnemyAction = true)
     {
+        Debug.Log("Discard " + card.CardLogic.CardConfig.cardID + " " + decreaseEnemyAction);
         handCards.Remove(card);
         discardCards.Add(card);
         readyCards.Remove(card);

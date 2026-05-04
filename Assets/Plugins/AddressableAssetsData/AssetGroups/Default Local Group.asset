@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8dd568704e34134886b753488dd3049
+    m_Address: Assets/_Project/Prefabs/UI/Statistic.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c17d2c23df69b61429d3433731d15700
     m_Address: Assets/_Project/Prefabs/DiceBonus.prefab
     m_ReadOnly: 0

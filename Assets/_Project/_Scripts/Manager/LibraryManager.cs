@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LibraryManager : MonoBehaviour
@@ -16,6 +17,10 @@ public class LibraryManager : MonoBehaviour
     {
         Instance = this;
         Init();
+    }
+
+    private void Start()
+    {
         Load();
     }
 

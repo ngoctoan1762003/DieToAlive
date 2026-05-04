@@ -9,6 +9,8 @@ public class PanelHint : MonoBehaviour
     public static PanelHint Instance => instance;
 
     public List<GameObject> firstHint;
+    public List<GameObject> secondHint;
+    public List<GameObject> thirdHint;
 
     private void Awake()
     {
@@ -29,6 +31,12 @@ public class PanelHint : MonoBehaviour
             case TutorialID.First:
                 firstHint[index].SetActive(true);
                 break;
+            case TutorialID.Second:
+                secondHint[index].SetActive(true);
+                break;
+            case TutorialID.Third:
+                thirdHint[index].SetActive(true);
+                break;
         }
     }
 
@@ -38,6 +46,18 @@ public class PanelHint : MonoBehaviour
         {
             case TutorialID.First:
                 foreach (GameObject hint in firstHint)
+                {
+                    hint.SetActive(false);
+                }
+                break;
+            case TutorialID.Second:
+                foreach (GameObject hint in secondHint)
+                {
+                    hint.SetActive(false);
+                }
+                break;
+            case TutorialID.Third:
+                foreach (GameObject hint in thirdHint)
                 {
                     hint.SetActive(false);
                 }

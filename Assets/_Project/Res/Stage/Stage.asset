@@ -19,14 +19,14 @@ MonoBehaviour:
     nextNodeIDs:
     - 1.1
     isUnlocked: 1
-    isVisited: 0
+    isVisited: 1
   - nodeID: 1.1
     node: {fileID: 11400000, guid: 534f5e5169bf5ea4fb9e7eed1b3c1429, type: 2}
     position: {x: 0, y: 250}
     nextNodeIDs:
     - 1.2.a
     - 1.2.b
-    isUnlocked: 0
+    isUnlocked: 1
     isVisited: 0
   - nodeID: 1.2.a
     node: {fileID: 11400000, guid: d3af457c80980ba40a1c65becc52be8f, type: 2}
@@ -161,6 +161,12 @@ MonoBehaviour:
     isVisited: 0
   - nodeID: Tutorial
     node: {fileID: 11400000, guid: 2386863c98f5392449f6ea6bfa2b39f1, type: 2}
+    position: {x: 0, y: 1700}
+    nextNodeIDs: []
+    isUnlocked: 0
+    isVisited: 0
+  - nodeID: Tutorial2
+    node: {fileID: 11400000, guid: 07ebbb4e7f0e73846af43b03646f9110, type: 2}
     position: {x: 0, y: 1700}
     nextNodeIDs: []
     isUnlocked: 0

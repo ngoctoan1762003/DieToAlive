@@ -44,5 +44,5 @@ MonoBehaviour:
     chooseBetterDice: 0
     cardType: 2
     damageType: 0
-    weaponID: 0
+    weaponID: 30
     haste: 0

@@ -7,6 +7,7 @@ public class SkillCardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerE
     
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (unit.ActionCard == null) return;
         UIManager.Instance.ShowDescription(unit.UnitID, unit.ActionCard.CardConfig, eventData.position);
     }
     
